@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from utils import visualization as vis
 
-renew = 1
+renew = 0
 
 def parse_node2(url):
     item = url.split("/")

@@ -1,92 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from utils import file_opt
+import init
+from datetime import datetime
 
-def plot_link_classes(pr_pr,pr_iss,iss_pr,iss_iss):
-    y1 = np.array([len(pr_pr),len(pr_iss)])
-    y2 = np.array([len(iss_pr),len(iss_iss)])
-    y2 = np.array([len(iss_pr),len(iss_iss)])
-    x = ["pullRequests", "issues"]
-    plt.bar(x, y1,color='cornflowerblue',label='link to pullRequests')
-    plt.bar(x, y2,color='lightslategray',label='link to issues')
-    plt.legend()
-    plt.show()
-
-def plot_link_time(pr_pr,pr_iss,iss_pr,iss_iss):
-    time_list = []
-    for item in pr_pr+pr_iss+iss_pr+iss_iss:
-        time_list.append(item['timeInterval'])
-    y = np.array(time_list)
-    plt.hist(y,bins=10,color='lightslategray')
-    plt.legend()
-    plt.show()
-
-    # 截尾
-    time_list = sorted(time_list)
-    time_list_cencored = time_list[:time_list.index(800)]
-    plt.hist(time_list_cencored,bins=50,color='lightslategray')
-    plt.show()
-
-    #箱图
-    # plt.boxplot(time_list,sym='.',showmeans=True)
-    # plt.show()
-    #
-    # plt.boxplot(time_list_cencored,sym='.')
-    # plt.show()
-
-
-
-def plot_link_mode(dataset):
-    y1 = np.array([len(dataset[0]),len(dataset[3]),len(dataset[6]),len(dataset[9])])
-    y2 = np.array([len(dataset[1]),len(dataset[4]),len(dataset[7]),len(dataset[10])])
-    # y3 = np.array([len(dataset[2]),len(dataset[5]),len(dataset[6]),len(dataset[11])])
-    x = ["pr2pr","pr2iss", "iss2pr", "iss2iss"]
-    plt.bar(x, y1,color='cornflowerblue',label='1 to 1')
-    plt.bar(x, y2,color='lightslategray',label='1 to N')
-    # plt.bar(x, y3,color='bisque',label='1 to 1 to 1')
-    plt.legend()
-    plt.show()
-
-def plot_link_num(dataset):
-    num_list = []
-    for item in dataset:
-        num_list.append(len(item['target']))
-    y = np.array(num_list)
-    plt.hist(y,bins=40,color='lightslategray')
-    plt.show()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+def extract_pr_iss_list(owner, repo):
+    response_pr = file_opt.read_json_from_file(
+        init.local_data_filepath + owner + "/" + repo + "/response_pullRequests.json")
+    response_iss = file_opt.read_json_from_file(init.local_data_filepath + owner + "/" + repo + "/response_issues.json")
+    pr_list, pr_createAt, issue_list, issue_createAt = [], [], [], []
+    for item in response_pr['data']['repository']['pullRequests']['nodes']:
+        pr_list.append(item['number'])
+        pr_createAt.append(item['createdAt'])
+    for item in response_iss['data']['repository']['issues']['nodes']:
+        issue_list.append(item['number'])
+        issue_createAt.append(item['createdAt'])
+    return pr_list, pr_createAt, issue_list, issue_createAt
 
 
 def visualization_type(links):
@@ -191,25 +120,52 @@ def visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral):
     plt.bar(x, height=y, color='cornflowerblue')
     plt.show()
 
-def visualization_how_cluster(link_cluster):
-    layer_node, layer, node_list = [], [], []
+def visualization_how_cluster(link_cluster,owner,repo):
+    layer_node, layer, node_num_list, node_list, node_interval, time_interval = [], [], [], [], [], []
     for link in link_cluster:
+        nodes = []
         node_number = 0
         layer.append(len(link))
         for i in range(1,len(link)+1):
             node_number += len(link['layer_'+str(i)])
-        node_list.append(node_number)
+            for node in link['layer_'+str(i)]:
+                nodes.append(node['source']['number'])
+                for t in node['target']:
+                    nodes.append(t["number"])
+        node_num_list.append(node_number)
+        node_interval.append([sorted(nodes)[0],sorted(nodes)[-1]])
         layer_node.append({"layer":len(link),"node":node_number})
+
+    # 处理cluster最早的时间和最晚的时间之差
+    pr_list, pr_createAt, issue_list, issue_createAt = extract_pr_iss_list(owner,repo)
+    for link_s_e in node_interval:
+        start, end = link_s_e[0], link_s_e[1]
+        if start in pr_list:
+            start_time = pr_createAt[pr_list.index(start)]
+        else:
+            start_time = issue_createAt[issue_list.index(start)]
+        if end in pr_list:
+            end_time = pr_createAt[pr_list.index(end)]
+        else:
+            end_time = issue_createAt[issue_list.index(end)]
+        time_format = "%Y-%m-%dT%H:%M:%SZ"
+        interval = datetime.strptime(end_time, time_format).__sub__(datetime.strptime(start_time,time_format)).days
+        time_interval.append(interval)
+
     plt.hist(layer, bins=18, color='cornflowerblue')
     plt.title("layer number")
     plt.show()
 
-    plt.hist(node_list, bins=100, color='cornflowerblue')
+    plt.hist(node_num_list, bins=100, color='cornflowerblue')
     plt.title("node number")
     plt.show()
 
-    node_s = sorted(node_list)
-    node_cencored = node_s[node_s.index(1):node_s.index(60)]   # 截取数据
+    node_s = sorted(node_num_list)
+    node_cencored = node_s[node_s.index(2):node_s.index(60)]   # 截取数据
     plt.hist(node_cencored,bins=50,color='cornflowerblue')
     plt.title("node number")
+    plt.show()
+
+    plt.hist(time_interval, bins=100, color='cornflowerblue')
+    plt.title("time interval")
     plt.show()
