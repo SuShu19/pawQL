@@ -2,11 +2,9 @@ import re
 from datetime import datetime
 import init
 from utils import file_opt
-import numpy as np
-import matplotlib.pyplot as plt
 from utils import visualization as vis
 
-renew = 0
+renew = 1
 
 def parse_node2(url):
     item = url.split("/")
@@ -159,6 +157,7 @@ def extract_link_in_comment(node, node1, owner, name, pr_list, pr_createAt, issu
     location = 'comment'
     if len(node['comments']['nodes']) != 0:
         for comment in node['comments']['nodes']:
+            # 处理body中url的link
             comment_url = re.findall(re.compile(r'https://github.com/'+owner+'/'+name+'/+\w+/+[0-9]+'),comment['body'])
             if len(comment_url) != 0:
                 for url in comment_url:
@@ -199,6 +198,8 @@ def extract_link_in_crossReference(node, links):
     for item in node['timelineItems']['nodes']:
         location = 'cross reference'
         if item:
+            if item['isCrossRepository'] == 'false':        # 只考虑其他repo通过crossReference连接过来的情况
+                continue
             source_number = item['source']['number']
             source_url = item['source']['url']
             target_number = item['target']['number']
@@ -224,9 +225,12 @@ def extract_link_in_crossReference(node, links):
                     target_url = target_url.replace('pull', 'issues')
                 elif target_url.find('pull') == -1:
                     target_url = target_url.replace('issues', 'pull')
+
+            # 检测是否有重复的link
+            # todo 查重没查干净   40143--40136  已修正
             repeat = 0
             for i in range(len(links) - 1, 0, -1):
-                if source_number == links[i]['source'] and target_number == links[i]['target']:
+                if source_number == links[i]['source']['number'] and target_number == links[i]['target']['number']:
                     repeat = 1  # 该link与之前的link重复
             if repeat == 0:
                 links.append({'source':{'number': source_number, 'source_url': source_url},
