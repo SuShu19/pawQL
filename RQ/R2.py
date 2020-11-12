@@ -135,6 +135,3 @@ def work():
 
 if __name__ == '__main__':
     link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = work()
-    # vis.visualization_how_1_or_N(link_1_1, link_1_N)
-    # vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral)
-    # vis.visualization_how_cluster(link_cluster)
