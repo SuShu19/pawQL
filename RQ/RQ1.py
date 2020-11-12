@@ -3,6 +3,10 @@ from datetime import datetime
 import init
 from utils import file_opt
 from utils import visualization as vis
+from prepare import prepare_reponse
+from prepare import queries
+from tqdm import tqdm
+from prepare import preprocess
 
 renew = 1
 
@@ -30,7 +34,7 @@ def determine_link_type(node1_type, node2_type):
         link_type = "issue to issue"
     return link_type
 
-def parse_node2_in_url(url, location, node1,pr_list, pr_createAt, issue_list, issue_createAt,owner, name):
+def parse_node2_in_url(url, location, node1,link_time, pr_list, pr_createAt, issue_list, issue_createAt,owner, name):
     node2_url, node2_owner, node2_name, node2_type, node2_number = parse_node2(url)
     if node2_owner != owner and node2_name != name:
         print(node2_url+" is crossRepository.")
@@ -63,16 +67,21 @@ def parse_node2_in_url(url, location, node1,pr_list, pr_createAt, issue_list, is
                 print(node2_url+" does not exist in this repo.")
                 return None
 
-    time_interval = datetime.strptime(node1['time'], "%Y-%m-%dT%H:%M:%SZ") \
-        .__sub__(datetime.strptime(node2_time, "%Y-%m-%dT%H:%M:%SZ")).days
+    create_time_interval = datetime.strptime(node2_time, "%Y-%m-%dT%H:%M:%SZ") \
+        .__sub__(datetime.strptime(node1['time'], "%Y-%m-%dT%H:%M:%SZ")).days
+
+    link_time_interval = datetime.strptime(link_time, "%Y-%m-%dT%H:%M:%SZ") \
+        .__sub__(datetime.strptime(node1['time'], "%Y-%m-%dT%H:%M:%SZ")).days
+
     link_type = determine_link_type(node1["type"], node2_type)
     if node1['url'].split("/")[:5] == node2_url.split("/")[:5]:
         isCrossRepository = False
     else:
         isCrossRepository = True
-    return {'source':{'number': node1['number'], 'source_url': node1['url']},
-            'target':{'number': int(node2_number), 'target_url': node2_url,'time_interval': time_interval,
-                      'type': link_type, 'location': location, 'isCrossRepository': isCrossRepository}}
+    return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time']},
+            'target':{'number': int(node2_number), 'url': node2_url,'createdAt':node2_time,'create_time_interval': create_time_interval,
+                      "link_time_interval":link_time_interval,'type': link_type, 'location': location,
+                      'isCrossRepository': isCrossRepository}}
 
 def determine_number_type(pr_list, issue_list, number):
     if int(number) in pr_list:
@@ -82,7 +91,22 @@ def determine_number_type(pr_list, issue_list, number):
     else:
         return None
 
-def parse_node2_in_num(quote_num, location, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt,):
+def determin_CR_link_location(source_number,target_number,source_type,source_owner,source_name,target_owner,target_name,target_url):
+    print("request graphQL on ",target_number)
+    r = prepare_reponse.query_request(queries.search_one_node, source_owner, source_name, source_type, number=source_number)
+    location = None
+    # 在body里面找link
+    body_str = preprocess.clear_body(r['data']['repository'][source_type]['body'])
+    if body_str.find(target_owner+"/"+target_name+"/"+str(target_number)) >= 0 or body_str.find(target_url)>=0:
+        location = 'body'
+    # 在comment里面找link
+    for comment in r['data']['repository'][source_type]['comments']['nodes']:
+        comment_str = preprocess.clear_body(comment['body'])
+        if comment_str.find(target_owner+"/"+target_name+"/"+str(target_number)) >= 0 or comment_str.find(target_url)>=0:
+            location = 'comment'
+    return location
+
+def parse_node2_in_num(quote_num, location, node1, owner, name, link_time, pr_list, pr_createAt, issue_list, issue_createAt,):
     node2_number = quote_num.replace("#", '')
     node2_type = determine_number_type(pr_list, issue_list, node2_number)
     if node2_type == None:
@@ -94,16 +118,19 @@ def parse_node2_in_num(quote_num, location, node1, owner, name, pr_list, pr_crea
         type_str = "issues"
         node2_time = issue_createAt[issue_list.index(int(node2_number))]
     node2_url = "https://github.com/" + owner + "/" + name + "/" + type_str +"/"+ node2_number
-    time_interval = datetime.strptime(node2_time, "%Y-%m-%dT%H:%M:%SZ") \
+    create_time_interval = datetime.strptime(node2_time, "%Y-%m-%dT%H:%M:%SZ") \
+        .__sub__(datetime.strptime(node1['time'], "%Y-%m-%dT%H:%M:%SZ")).days
+    link_time_interval = datetime.strptime(link_time, "%Y-%m-%dT%H:%M:%SZ") \
         .__sub__(datetime.strptime(node1['time'], "%Y-%m-%dT%H:%M:%SZ")).days
     link_type = determine_link_type(node1["type"], node2_type)
     if node1['url'].split("/")[:5] == node2_url.split("/")[:5]:
         isCrossRepository = False
     else:
         isCrossRepository = True
-    return {'source':{'number': node1['number'], 'source_url': node1['url']},
-            'target':{'number': int(node2_number), 'target_url': node2_url, 'time_interval': time_interval,
-                      'type': link_type, 'location': location, 'isCrossRepository': isCrossRepository}}
+    return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time']},
+            'target':{'number': int(node2_number), 'url': node2_url,'createdAt':node2_time, 'create_time_interval':create_time_interval,
+                      'link_time_interval': link_time_interval,'type': link_type, 'location': location,
+                      'isCrossRepository': isCrossRepository}}
 
 def extract_pr_iss_list(response_p, response_i):
     pr_list, pr_createAt, issue_list, issue_createAt = [], [], [], []
@@ -130,25 +157,28 @@ def extract_link_in_title(node, node1, owner, name, pr_list, pr_createAt, issue_
     # 处理title中#12345 link
     location = 'title'
     title_quote = re.findall(re.compile(r'#[0-9]+'), node['title'])
+    link_time = node1['time']  # 在title里面发现的link都是在Node创建的时候就产生的，所以Link time=node create time
     if len(title_quote) != 0:
         for quote in title_quote:
-            link = parse_node2_in_num(quote, location, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt)
+            link = parse_node2_in_num(quote, location, node1, owner, name, link_time, pr_list, pr_createAt, issue_list, issue_createAt)
             links = detect_dup(links,link)
     return links
 
 def extract_link_in_body(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links):
     # 处理body中的url link
     location = 'body'
-    body_url = re.findall(re.compile(r'https://github.com/' + owner + '/' + name + '/+\w+/+[0-9]+'), node['body'])
+    clean_body = preprocess.clear_body(node['body'])
+    body_url = re.findall(re.compile(r'https://github.com/' + owner + '/' + name + '/+\w+/+[0-9]+'), clean_body)
+    link_time = node1['time']  # 在title里面发现的link都是在Node创建的时候就产生的，所以Link time=node create time
     if len(body_url) != 0:
         for url in body_url:
-            link = parse_node2_in_url(url, location, node1,pr_list, pr_createAt, issue_list, issue_createAt,owner, name)
+            link = parse_node2_in_url(url, location, node1,link_time, pr_list, pr_createAt, issue_list, issue_createAt,owner, name)
             links = detect_dup(links,link)
     # 处理body中的#12345的link
-    body_quote = re.findall(re.compile(r'#[0-9]+'), node['body'])
+    body_quote = re.findall(re.compile(r'#[0-9]+'), clean_body)
     if len(body_quote) != 0:
         for quote in body_quote:
-            link = parse_node2_in_num(quote, location, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt)
+            link = parse_node2_in_num(quote, location, node1, owner, name, link_time, pr_list, pr_createAt, issue_list, issue_createAt)
             links = detect_dup(links,link)
     return links
 
@@ -157,17 +187,19 @@ def extract_link_in_comment(node, node1, owner, name, pr_list, pr_createAt, issu
     location = 'comment'
     if len(node['comments']['nodes']) != 0:
         for comment in node['comments']['nodes']:
+            clean_comment = preprocess.clear_body(comment['body'])
             # 处理body中url的link
-            comment_url = re.findall(re.compile(r'https://github.com/'+owner+'/'+name+'/+\w+/+[0-9]+'),comment['body'])
+            comment_url = re.findall(re.compile(r'https://github.com/'+owner+'/'+name+'/+\w+/+[0-9]+'),clean_comment)
+            link_time = comment['createdAt']
             if len(comment_url) != 0:
                 for url in comment_url:
-                    link = parse_node2_in_url(url, location, node1,pr_list, pr_createAt, issue_list, issue_createAt,owner,name)
+                    link = parse_node2_in_url(url, location, node1,link_time,pr_list, pr_createAt, issue_list, issue_createAt,owner,name)
                     links = detect_dup(links,link)
             # 处理body中的#12345的link
-            comment_quote = re.findall(re.compile(r'#[0-9]+'), comment['body'])
+            comment_quote = re.findall(re.compile(r'#[0-9]+'), clean_comment)
             if len(comment_quote) != 0:
                 for quote in comment_quote:
-                    link = parse_node2_in_num(quote, location, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt)
+                    link = parse_node2_in_num(quote, location, node1, owner, name, link_time,pr_list, pr_createAt, issue_list, issue_createAt)
                     links = detect_dup(links,link)
     return links
 
@@ -193,18 +225,20 @@ def extract_link_in_review(node, node1, owner, name, pr_list, pr_createAt, issue
                         links = detect_dup(links,link)
     return links
 
-def extract_link_in_crossReference(node, links):
+def extract_link_in_crossReference(node, links,owner,name):
     # 处理crossReference
+    # todo 只取isCrossRepository = true 的link，要找出来这种link是在哪里link过来的。
     for item in node['timelineItems']['nodes']:
-        location = 'cross reference'
         if item:
-            if item['isCrossRepository'] == 'false':        # 只考虑其他repo通过crossReference连接过来的情况
+            if item['isCrossRepository'] == False:        # 只考虑其他repo通过crossReference连接过来的情况
                 continue
             source_number = item['source']['number']
             source_url = item['source']['url']
             target_number = item['target']['number']
             target_url = item['target']['url']
-            time_interval = datetime.strptime(item['referencedAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
+            create_time_interval = datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
+                datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).days
+            link_time_interval = datetime.strptime(item['referencedAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
                 datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).days
             # 判断link type
             if "id" in item['source'].keys():
@@ -216,8 +250,14 @@ def extract_link_in_crossReference(node, links):
             else:
                 target_type = "issue"
             link_type = determine_link_type(source_type, target_type)
-
-
+            source_owner = item['source']['repository']['owner']['login']
+            source_name = item['source']['repository']['name']
+            target_owner = item['target']['repository']['owner']['login']
+            target_name = item['target']['repository']['name']
+            location = determin_CR_link_location(source_number,target_number,source_type,source_owner,source_name,target_owner,target_name,target_url)
+            if location is None:        # source node中这条Link已经被删除，就不再考虑该Link
+                continue
+            print("find one: ",target_number)
             if source_type == target_type:
                 pass
             else:
@@ -227,16 +267,15 @@ def extract_link_in_crossReference(node, links):
                     target_url = target_url.replace('issues', 'pull')
 
             # 检测是否有重复的link
-            # todo 查重没查干净   40143--40136  已修正
             repeat = 0
             for i in range(len(links) - 1, 0, -1):
                 if source_number == links[i]['source']['number'] and target_number == links[i]['target']['number']:
                     repeat = 1  # 该link与之前的link重复
             if repeat == 0:
-                links.append({'source':{'number': source_number, 'source_url': source_url},
-                              'target':{'number': target_number, 'target_url': target_url, 'time_interval': time_interval,
+                links.append({'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt']},
+                              'target':{'number': target_number, 'url': target_url, 'createdAt':item['target']['createdAt'],
+                                        'create_time_interval': create_time_interval,'link_time_interval':link_time_interval,
                                         'type': link_type, 'location': location, 'isCrossRepository': item['isCrossRepository']}})
-
     return links
 
 def extract_link_type(response_p, response_i, renew, filepath=None):
@@ -249,14 +288,14 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
         name = response_p['data']['repository']['name']
         for response, type_ in zip(response_list, type_list):
             nodes = response['data']['repository'][type_]['nodes']
-            for node in nodes:
+            for node in tqdm(nodes):
                 # 取出当前node的信息
                 node1 = {'number': node["number"], 'url': node["url"], 'time': node["createdAt"], 'type': type_[:-1]}
                 links = extract_link_in_title(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_body(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_comment(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
-                links = extract_link_in_crossReference(node, links)
-        file_opt.save_json_to_file(filepath + "links_type.json", links)
+                links = extract_link_in_crossReference(node, links,owner,name)
+        file_opt.save_json_to_file(filepath + "links_type_title.json", links)
     elif renew == 0:
         links = file_opt.read_json_from_file(filepath + "links_type.json")
     return links

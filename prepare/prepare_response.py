@@ -2,6 +2,8 @@ import os
 import requests
 import random
 import time
+import sys
+sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
 import init
 from utils import file_opt
 from prepare import queries
@@ -14,7 +16,7 @@ def read_token():
 
 def query_request(query, owner, repo, type, last_end_cursor=None, number=None):
     tokens = read_token()
-    token = tokens[random.randint(0,8)].strip()
+    token = tokens[random.randint(0,4)].strip()
     headers = {"Authorization": "Bearer %s" % token}
     if last_end_cursor:
         query_ = query % (owner, repo, type,last_end_cursor)
@@ -34,6 +36,11 @@ def query_request(query, owner, repo, type, last_end_cursor=None, number=None):
 
     if response.status_code == 200:
         try:
+            response.json()['data']
+        except KeyError:
+            r1 = query_request(query, owner, repo, type, last_end_cursor, number)
+            return r1
+        try:
             return response.json()
         except:
             print("return error and retry")
@@ -47,6 +54,7 @@ def query_request(query, owner, repo, type, last_end_cursor=None, number=None):
         return r1
 
 
+
 def request_graphQL(owner, repo):
     """
     通过graphQL获取owner/repo仓库的pr和issue数据
@@ -55,8 +63,8 @@ def request_graphQL(owner, repo):
     :param type:  pullRequests or issues
     :return:  response of pr and issues
     """
-    # types = ["pullRequests","issues"]
-    types = ["issues","pullRequests"]
+    types = ["pullRequests","issues"]
+    # types = ["issues","pullRequests"]
     for type in types:
         count = 0
         if type == "pullRequests":
