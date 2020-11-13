@@ -16,6 +16,7 @@ first_pr_page = """{
         cursor
       }
       nodes{
+        author{login}
         number
         url
         createdAt
@@ -56,12 +57,20 @@ first_pr_page = """{
               resourcePath 
               source {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -71,12 +80,20 @@ first_pr_page = """{
               }
               target {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -115,6 +132,7 @@ other_pr_page = """{
         cursor
       }
       nodes{
+        author{login}
         number
         url
         createdAt
@@ -155,12 +173,20 @@ other_pr_page = """{
               resourcePath 
               source {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -170,12 +196,20 @@ other_pr_page = """{
               }
               target {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -214,6 +248,7 @@ first_iss_page = """{
         cursor
       }
       nodes{
+        author{login}
         number
         url
         createdAt
@@ -241,12 +276,20 @@ first_iss_page = """{
               resourcePath 
               source {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -256,12 +299,20 @@ first_iss_page = """{
               }
               target {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -300,6 +351,7 @@ other_iss_page = """{
         cursor
       }
       nodes{
+        author{login}
         number
         url
         createdAt
@@ -327,12 +379,20 @@ other_iss_page = """{
               resourcePath 
               source {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -342,12 +402,20 @@ other_iss_page = """{
               }
               target {
                 ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
                   createdAt
                 }
                 ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
                   number 
                   url
                   title
@@ -364,6 +432,34 @@ other_iss_page = """{
           }
           totalCount
         }
+      }
+    }
+  }
+}
+"""
+
+search_one_node = """
+{
+  repository(owner: "%s", name: "%s") {
+    owner{
+      login
+    }
+    name
+    %s(number:%s){
+      author{login}
+      number
+      url
+      createdAt
+      title
+      body
+      comments(first:100){
+        nodes{
+          author{login}
+          body
+          createdAt
+          url
+        }
+        totalCount
       }
     }
   }
