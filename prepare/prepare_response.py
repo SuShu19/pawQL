@@ -16,7 +16,7 @@ def read_token():
 
 def query_request(query, owner, repo, type, last_end_cursor=None, number=None):
     tokens = read_token()
-    token = tokens[random.randint(0,4)].strip()
+    token = tokens[random.randint(0,12)].strip()
     headers = {"Authorization": "Bearer %s" % token}
     if last_end_cursor:
         query_ = query % (owner, repo, type,last_end_cursor)
@@ -37,7 +37,8 @@ def query_request(query, owner, repo, type, last_end_cursor=None, number=None):
     if response.status_code == 200:
         try:
             response.json()['data']
-        except KeyError:
+        except Exception as e:
+            print("token error or chunkedEncodingError")
             r1 = query_request(query, owner, repo, type, last_end_cursor, number)
             return r1
         try:
