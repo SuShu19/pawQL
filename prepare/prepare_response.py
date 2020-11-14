@@ -19,18 +19,17 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     token = tokens[random.randint(0,12)].strip()
     headers = {"Authorization": "Bearer %s" % token}
     if last_typenode:
-        query_ = query % (owner, repo, type,",after:"+last_typenode)        # 获取100条以后的node,query=search_100_nodes
+        query_ = query % (owner, repo, type,',after:"'+last_typenode+'"')        # 获取100条以后的node,query=search_100_nodes
     elif last_comennt and number:
-        query_ = query % (owner, repo, type, number, ",after:"+last_comennt)        # 获取100条以后的comment,query=search_morethan_100_comments
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"')        # 获取100条以后的comment,query=search_morethan_100_comments
     elif last_timelinItems and number:
-        query_ = query % (owner, repo, type, number, ",after:"+last_timelinItems)        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"')        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
     elif number and last_comennt is False and last_timelinItems is False:
-        query_ = query % (owner, repo, type, number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
+        query_ = query % (owner, repo, type[:-1], number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
     else:
         query_ = query % (owner, repo, type,'')       # 获取第一个100条nodes
     try:
-        response = requests.post(
-            'https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
+        response = requests.post('https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
     except:
         print("request error and retry")
         time.sleep(1)
@@ -51,21 +50,21 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
         r1 = query_request(query, owner, repo, type, last_typenode,last_comennt,last_timelinItems,number)
         return r1
 
-def request_morethan_100_nodes(re,earliest_pr_cursor,query, owner, repo, type):
+def request_morethan_100_nodes(re,owner, repo, type):
     check_locations = ['comments','timelineItems']
     search_query = [queries.sear_morethan_100_comments,queries.sear_morethan_100_timelineItems]
     for node in re['data']['repository'][type]['nodes']:
         for check_loca,query in zip(check_locations,search_query):
             while node[check_loca]['pageInfo']['hasNextPage'] == True:
                 current_number = node['number']
-                last_cursor = re[check_loca]['edges'][-1]['cursor']
+                last_cursor = node[check_loca]['edges'][-1]['cursor']
                 if check_loca == "comments":
                     r_ = query_request(query, owner, repo, type, last_comennt=last_cursor,number=current_number)
                 elif check_loca == "timelineItems":
                     r_ = query_request(query, owner, repo, type, last_timelinItems=last_cursor, number=current_number)
-                node[check_loca]['nodes'] += r_['data']['repository'][type][check_loca]['nodes']
-                node[check_loca]['edges'] += r_['data']['repository'][type][check_loca]['edges']
-                node[check_loca]['pageInfo']['hasNextPage'] = r_['data']['repository'][type][check_loca]['pageInfo']['hasNextPage']
+                node[check_loca]['nodes'] += r_['data']['repository'][type[:-1]][check_loca]['nodes']
+                node[check_loca]['edges'] += r_['data']['repository'][type[:-1]][check_loca]['edges']
+                node[check_loca]['pageInfo']['hasNextPage'] = r_['data']['repository'][type[:-1]][check_loca]['pageInfo']['hasNextPage']
     return re
 
 def request_graphQL(owner, repo):

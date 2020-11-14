@@ -506,7 +506,7 @@ search_100_nodes = """{
       login
     }
     name
-    %s(first:100"%s"){
+    %s(first:80%s){
       totalCount
       pageInfo{
         hasNextPage
@@ -601,6 +601,9 @@ search_100_nodes = """{
           pageInfo{
             hasNextPage
           }
+          edges{
+            cursor
+          }
           totalCount
         }
       }
@@ -657,7 +660,7 @@ sear_morethan_100_comments = """{
       createdAt
       title
       body
-      comments(first:100,after:"%s"){
+      comments(first:100%s){
         pageInfo{
           hasNextPage
         }
@@ -690,7 +693,7 @@ sear_morethan_100_timelineItems = """{
         createdAt
         title
         body
-        timelineItems(first:100,after:"%s"){
+        timelineItems(first:100%s){
           pageInfo{
             hasNextPage
           }
