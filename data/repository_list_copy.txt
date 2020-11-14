@@ -1,12 +1,5 @@
-<<<<<<< HEAD
 rails/rails
 kubernetes/kubernetes
 pydata/pandas
 elastic/elasticsearch
-=======
-rails/rails
-kubernetes/kubernetes
-pydata/pandas
-elastic/elasticsearch
->>>>>>> d0158f5106dd009aafc61c8e0d1cf46a465c4432
 joomla/joomla-cms

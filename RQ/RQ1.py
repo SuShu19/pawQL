@@ -3,7 +3,7 @@ from datetime import datetime
 import init
 from utils import file_opt
 from utils import visualization as vis
-from prepare import prepare_reponse
+from prepare import prepare_response
 from prepare import queries
 from tqdm import tqdm
 from prepare import preprocess
@@ -93,7 +93,7 @@ def determine_number_type(pr_list, issue_list, number):
 
 def determin_CR_link_location(source_number,target_number,source_type,source_owner,source_name,target_owner,target_name,target_url):
     print("request graphQL on ",target_number)
-    r = prepare_reponse.query_request(queries.search_one_node, source_owner, source_name, source_type, number=source_number)
+    r = prepare_response.query_request(queries.search_one_node, source_owner, source_name, source_type, number=source_number)
     location = None
     # 在body里面找link
     body_str = preprocess.clear_body(r['data']['repository'][source_type]['body'])
@@ -306,6 +306,14 @@ def work_on_repos(renew):
         print("--------------------handle " + owner + "/" + repo + "---------------------------")
         response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
         response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
+        comment_number = []
+        for node in response_iss['data']['repository']['issues']['nodes']:
+            comment_number.append(node['timelineItems']['totalCount'])
+        print(sorted(comment_number))
+        comment_number = []
+        for node in response_pr['data']['repository']['pullRequests']['nodes']:
+            comment_number.append(node['timelineItems']['totalCount'])
+        print(sorted(comment_number))
         links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
     return links
 

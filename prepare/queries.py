@@ -1,4 +1,4 @@
-
+# pr page 比 issue page 多 reviews
 
 first_pr_page = """{
   repository(owner: "%s", name: "%s") {
@@ -22,7 +22,13 @@ first_pr_page = """{
         createdAt
         title
         body
-        comments(first:100){
+        comments(first:100%s){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
           nodes{
             author{login}
             body
@@ -138,7 +144,13 @@ other_pr_page = """{
         createdAt
         title
         body
-        comments(first:100){
+        comments(first:100%s){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
           nodes{
             author{login}
             body
@@ -254,7 +266,13 @@ first_iss_page = """{
         createdAt
         title
         body
-        comments(first:100){
+        comments(first:100%s){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
           nodes{
             author{login}
             body
@@ -357,7 +375,13 @@ other_iss_page = """{
         createdAt
         title
         body
-        comments(first:100){
+        comments(first:100%s){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
           nodes{
             author{login}
             body
@@ -438,6 +462,154 @@ other_iss_page = """{
 }
 """
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+search_100_nodes = """{
+  repository(owner: "%s", name: "%s") {
+    owner{
+      login
+    }
+    name
+    %s(first:100"%s"){
+      totalCount
+      pageInfo{
+        hasNextPage
+        hasPreviousPage
+      }
+      edges{
+        cursor
+      }
+      nodes{
+        author{login}
+        number
+        url
+        createdAt
+        title
+        body
+        comments(first:100){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
+          nodes{
+            author{login}
+            body
+            createdAt
+            url
+          }
+          totalCount
+        }
+        timelineItems(first:100){
+          nodes{
+            ... on CrossReferencedEvent{
+              actor{
+                login 
+              }
+              createdAt 
+              id 
+              isCrossRepository 
+              referencedAt 
+              resourcePath 
+              source {
+                ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
+                  number 
+                  url
+                  title
+                  createdAt
+                }
+                ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
+                  number 
+                  url
+                  title
+                  createdAt
+                  id 
+                }
+              }
+              target {
+                ... on Issue{
+                  repository{
+                    owner{login}
+                    name
+                  }
+                  number 
+                  url
+                  title
+                  createdAt
+                }
+                ... on PullRequest{
+                  repository{
+                    owner{login}
+                    name
+                  }
+                  number 
+                  url
+                  title
+                  createdAt
+                  id 
+                }
+              }
+              url 
+              willCloseTarget 
+            }
+          }
+          pageInfo{
+            hasNextPage
+          }
+          totalCount
+        }
+      }
+    }
+  }
+}
+"""
+
+
 search_one_node = """
 {
   repository(owner: "%s", name: "%s") {
@@ -453,6 +625,12 @@ search_one_node = """
       title
       body
       comments(first:100){
+        pageInfo{
+          hasNextPage
+        }
+        edges{
+          cursor
+        }
         nodes{
           author{login}
           body
@@ -460,6 +638,126 @@ search_one_node = """
           url
         }
         totalCount
+      }
+    }
+  }
+}
+"""
+
+sear_morethan_100_comments = """{
+  repository(owner: "%s", name: "%s") {
+    owner{
+      login
+    }
+    name
+    %s(number:%s){
+      author{login}
+      number
+      url
+      createdAt
+      title
+      body
+      comments(first:100,after:"%s"){
+        pageInfo{
+          hasNextPage
+        }
+        edges{
+          cursor
+        }
+        nodes{
+          author{login}
+          body
+          createdAt
+          url
+        }
+        totalCount
+      }
+    }
+  }
+}
+"""
+
+sear_morethan_100_timelineItems = """{
+  repository(owner: "%s", name: "%s") {
+    owner{
+        login
+      }
+    name
+    %s(number:%s){
+        author{login}
+        number
+        url
+        createdAt
+        title
+        body
+        timelineItems(first:100,after:"%s"){
+          pageInfo{
+            hasNextPage
+          }
+          edges{
+            cursor
+          }
+          totalCount
+          nodes{
+          ... on CrossReferencedEvent{
+            actor{
+              login 
+            }
+            createdAt 
+            id 
+            isCrossRepository 
+            referencedAt 
+            resourcePath 
+            source {
+              ... on Issue{
+                repository{
+                  owner{login}
+                  name
+                }
+                number 
+                url
+                title
+                createdAt
+              }
+              ... on PullRequest{
+                repository{
+                  owner{login}
+                  name
+                }
+                number 
+                url
+                title
+                createdAt
+                id 
+              }
+            }
+            target {
+              ... on Issue{
+                repository{
+                  owner{login}
+                  name
+                }
+                number 
+                url
+                title
+                createdAt
+              }
+              ... on PullRequest{
+                repository{
+                  owner{login}
+                  name
+                }
+                number 
+                url
+                title
+                createdAt
+                id 
+              }
+            }
+            url 
+            willCloseTarget 
+          }
+        }
       }
     }
   }

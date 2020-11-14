@@ -187,6 +187,8 @@ def visualization_RQ5(links):
                 if link['target']['times'][i]['link_author'] not in author_each_link:
                     author_each_link.append(link['target']['times'][i]['link_author'])
         author.append(len(author_each_link))
+        if len(link['target']['times']) >= 10:
+            print(link)
 
     print(sorted(times))
     plt.hist(times,bins=20,color='cornflowerblue')
