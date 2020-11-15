@@ -300,25 +300,19 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
         links = file_opt.read_json_from_file(filepath + "links_type.json")
     return links
 
-def work_on_repos(renew):
-    for o_r in init.repos_to_get_info:
-        owner, repo = o_r[0], o_r[1]
-        print("--------------------handle " + owner + "/" + repo + "---------------------------")
-        response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
-        response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
-        comment_number = []
-        for node in response_iss['data']['repository']['issues']['nodes']:
-            comment_number.append(node['timelineItems']['totalCount'])
-        print(sorted(comment_number))
-        comment_number = []
-        for node in response_pr['data']['repository']['pullRequests']['nodes']:
-            comment_number.append(node['timelineItems']['totalCount'])
-        print(sorted(comment_number))
-        links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
-    return links
-
-if __name__ == '__main__':
-    links = work_on_repos(renew)
+def work_on_repos(fullname_repo):
+    owner, repo = fullname_repo[0], fullname_repo[1]
+    print("--------------------handle " + owner + "/" + repo + "---------------------------")
+    response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
+    response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
+    links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
     vis.visualization_type(links)
     vis.visualization_where(links)
     vis.visualization_when(links)
+
+if __name__ == '__main__':
+    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    repolist = init.repos_to_get_info
+    with PoolExecutor(max_workers=4) as executor:
+        for _ in executor.map(work_on_repos, repolist):
+            pass

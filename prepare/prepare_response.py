@@ -24,8 +24,8 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
         query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"')        # 获取100条以后的comment,query=search_morethan_100_comments
     elif last_timelinItems and number:
         query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"')        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
-    elif number and last_comennt is False and last_timelinItems is False:
-        query_ = query % (owner, repo, type[:-1], number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
+    elif number and last_comennt is None and last_timelinItems is None:
+        query_ = query % (owner, repo, type, number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
     else:
         query_ = query % (owner, repo, type,'')       # 获取第一个100条nodes
     try:
