@@ -67,14 +67,12 @@ def request_morethan_100_nodes(re,owner, repo, type):
                 node[check_loca]['pageInfo']['hasNextPage'] = r_['data']['repository'][type[:-1]][check_loca]['pageInfo']['hasNextPage']
     return re
 
-def request_graphQL(owner, repo):
+def request_graphQL(fullname_repo):
     """
     通过graphQL获取owner/repo仓库的pr和issue数据
-    :param owner: repository owner
-    :param repo:  repository name
-    :param type:  pullRequests or issues
-    :return:  response of pr and issues
     """
+    owner = fullname_repo[0]
+    repo = fullname_repo[1]
     types = ["pullRequests","issues"]
     # types = ["issues","pullRequests"]
     for type in types:
@@ -94,7 +92,7 @@ def request_graphQL(owner, repo):
             continue
         while True:
             count += 1
-            print(count,datetime.now(),r['data']['repository'][type]['totalCount'],len(r['data']['repository'][type]['nodes']))
+            print(owner+"/"+repo,count,datetime.now(),r['data']['repository'][type]['totalCount'],len(r['data']['repository'][type]['nodes']))
             if count % 1 == 0:
                 file_opt.save_json_to_file(output_response_file, r)
             else:
@@ -110,6 +108,8 @@ def request_graphQL(owner, repo):
                 break
 
 if __name__ == '__main__':
-    for o_r in init.repos_to_get_info:
-        owner, repo = o_r[0], o_r[1]
-        request_graphQL(owner, repo)
+    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    repolist = init.repos_to_get_info
+    with PoolExecutor(max_workers=4) as executor:
+        for _ in executor.map(request_graphQL, repolist):
+            pass
