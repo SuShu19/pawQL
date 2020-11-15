@@ -1,5 +1,2 @@
-rails/rails
-kubernetes/kubernetes
-pydata/pandas
 elastic/elasticsearch
 joomla/joomla-cms

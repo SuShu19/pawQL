@@ -257,7 +257,6 @@ def extract_link_in_crossReference(node, links,owner,name):
             location = determin_CR_link_location(source_number,target_number,source_type,source_owner,source_name,target_owner,target_name,target_url)
             if location is None:        # source node中这条Link已经被删除，就不再考虑该Link
                 continue
-            print("find one: ",target_number)
             if source_type == target_type:
                 pass
             else:
