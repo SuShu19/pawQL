@@ -329,11 +329,12 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
 
 def work_on_repos(renew):
     for o_r in init.repos_to_get_info:
-        owner, repo = o_r[0], o_r[1]
-        print("--------------------handle " + owner + "/" + repo + "---------------------------")
-        response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
-        response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
-        links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
+        owner, name = o_r[0], o_r[1]
+        print("--------------------handle " + owner + "/" + name + "---------------------------")
+        response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_pullRequests.json")
+        response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_issues.json")
+        links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + name + "/")
+        vis.visualization_RQ5(links, repo=owner+"/"+name)
     return links
 
 if __name__ == '__main__':
@@ -341,4 +342,4 @@ if __name__ == '__main__':
     # vis.visualization_type(links)
     # vis.visualization_where(links)
     # vis.visualization_when(links)
-    vis.visualization_RQ5(links)
+    # vis.visualization_RQ5(links)

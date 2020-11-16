@@ -294,10 +294,26 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
                 links = extract_link_in_body(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_comment(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_crossReference(node, links,owner,name)
-        file_opt.save_json_to_file(filepath + "links_type_title.json", links)
+        file_opt.save_json_to_file(filepath + "links_type.json", links)
     elif renew == 0:
         links = file_opt.read_json_from_file(filepath + "links_type.json")
     return links
+
+def visualization_multi_repos():
+    # 多个repo可视化
+    repolist = init.repos_to_get_info
+    link_list = []
+    for r_o in repolist:
+        owner = r_o[0]
+        name = r_o[1]
+        links = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
+        link_list.append({"repo":owner+"/"+name, "links":links})
+
+    vis.visualization_multi_type(link_list)
+    vis.visualization_multi_where(link_list)
+    vis.visualization_multi_when(link_list)
+    return None
+
 
 def work_on_repos(fullname_repo):
     owner, repo = fullname_repo[0], fullname_repo[1]
@@ -305,13 +321,16 @@ def work_on_repos(fullname_repo):
     response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
     response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
     links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
+    # 单个repo可视化
     vis.visualization_type(links)
     vis.visualization_where(links)
     vis.visualization_when(links)
 
 if __name__ == '__main__':
-    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
-    repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
-        for _ in executor.map(work_on_repos, repolist):
-            pass
+    # from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    # repolist = init.repos_to_get_info
+    # with PoolExecutor(max_workers=4) as executor:
+    #     for _ in executor.map(work_on_repos, repolist):
+    #         pass
+
+    visualization_multi_repos()

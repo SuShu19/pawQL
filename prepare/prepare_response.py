@@ -32,7 +32,7 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
         response = requests.post('https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
     except:
         print("request error and retry")
-        time.sleep(1)
+        time.sleep(3)
         r1 = query_request(query, owner, repo, type, last_typenode,last_comennt,last_timelinItems,number)
         return r1
     if response.status_code == 200:
@@ -41,12 +41,12 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
             return response.json()
         except Exception as e:
             print("token error or chunkedEncodingError")
-            time.sleep(1)
+            time.sleep(3)
             r1 = query_request(query, owner, repo, type, last_typenode,last_comennt,last_timelinItems,number)
             return r1
     else:
         print( str(response.status_code) + " retry")
-        time.sleep(1)
+        time.sleep(3)
         r1 = query_request(query, owner, repo, type, last_typenode,last_comennt,last_timelinItems,number)
         return r1
 
@@ -90,6 +90,7 @@ def request_graphQL(fullname_repo):
             r = query_request(queries.search_100_nodes, owner, repo, type)
         if not r['data']['repository'][type]['pageInfo']['hasNextPage']:
             continue
+        print("-----------------start fetch " + fullname_repo[0] + "/" + fullname_repo[1] + "---------------")
         while True:
             count += 1
             print(owner+"/"+repo,count,datetime.now(),r['data']['repository'][type]['totalCount'],len(r['data']['repository'][type]['nodes']))
@@ -105,11 +106,12 @@ def request_graphQL(fullname_repo):
             r['data']['repository'][type]['nodes'] += r2['data']['repository'][type]['nodes']
             if not r['data']['repository'][type]['pageInfo']['hasNextPage']:
                 file_opt.save_json_to_file(output_response_file, r)
+                print("-----------------finish fetch " + fullname_repo[0]+"/"+ fullname_repo[1] + "---------------")
                 break
 
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass

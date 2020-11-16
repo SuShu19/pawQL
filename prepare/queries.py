@@ -4,7 +4,7 @@ search_100_nodes = """{
       login
     }
     name
-    %s(first:80%s){
+    %s(first:50%s){
       totalCount
       pageInfo{
         hasNextPage
@@ -258,6 +258,34 @@ sear_morethan_100_timelineItems = """{
             url 
             willCloseTarget 
           }
+        }
+      }
+    }
+  }
+}
+"""
+
+search_candidate_repos = """
+{ 
+  search(first:100,query:"stars:10000..%s",type:REPOSITORY){
+    nodes{
+      ... on Repository{
+        owner{login}
+        name
+        description
+        forkCount
+        stargazerCount
+        languages(first:20){
+          totalCount
+          nodes{
+            name
+          }
+        }
+        issues{
+          totalCount
+        }
+        pullRequests{
+          totalCount
         }
       }
     }

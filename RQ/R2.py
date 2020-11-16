@@ -1,5 +1,6 @@
 from utils import file_opt
 import init
+from tqdm import tqdm
 from utils import visualization as vis
 
 renew = 0
@@ -38,7 +39,7 @@ def parse_link_cluster(link_1_1,link_1_N):
     cluster_list = []
     search_linkset = linkset.copy()
     iter_linkset = linkset.copy()
-    for link in iter_linkset:
+    for link in tqdm(iter_linkset):
         if len(link) == 3:
             continue
         cluster = {}
@@ -73,7 +74,7 @@ def find_sub_links(cluster, layer_num, number_list, iter_linkset, search_linkset
 def parse_1_and_N(linkset):
     source_index_list, target_index_list = [], []
     source = []
-    for i in range(0,len(linkset)):
+    for i in tqdm(range(0,len(linkset))):
         target = []
         try:
             index_s = source.index(linkset[i]['source']['number'])
@@ -110,7 +111,7 @@ def detect_dup(links,link):
 def parse_bilateral(linkset):
     link_self_bilateral,link_bilateral = [],[]
     count = 0
-    for link in linkset:
+    for link in tqdm(linkset):
         count += 1
         if link['source']['number'] == link['target']['number']:
             link_self_bilateral = detect_dup(link_self_bilateral,link)
@@ -122,16 +123,29 @@ def parse_bilateral(linkset):
 
 def work():
     for o_r in init.repos_to_get_info:
-        owner, repo = o_r[0], o_r[1]
-        print("--------------------handle " + owner + "/" + repo + "---------------------------")
-        link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/links_type.json")
+        owner, name = o_r[0], o_r[1]
+        print("--------------------handle " + owner + "/" + name + "---------------------------")
+        link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
         link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = \
-            extract_link_mode(link_type,renew,init.local_data_filepath+owner+"/"+repo+"/")
+            extract_link_mode(link_type,renew,init.local_data_filepath+owner+"/"+name+"/")
 
-        vis.visualization_how_1_or_N(link_1_1, link_1_N)
-        vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral)
-        vis.visualization_how_cluster(link_cluster,owner,repo)
+        # 查看单个repo的分布
+        vis.visualization_how_1_or_N(link_1_1, link_1_N, repo=owner+'/'+name)
+        vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral, repo=owner+'/'+name)
+        vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
     return link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster
 
+def visulize_link_self_bila():
+    link_list = []
+    for o_r in init.repos_to_get_info:
+        owner, name = o_r[0], o_r[1]
+        link_self = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/link_self_bi.json")
+        link_bila = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/link_bi.json")
+        link_list.append({'repo':owner+"/"+name, 'link_self': link_self,'link_bilateral': link_bila})
+
+    vis.visualization_multi_self_bila(link_list)
+    a = 1
+
 if __name__ == '__main__':
-    link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = work()
+    # link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = work()
+    visulize_link_self_bila()       # 查看多个repo链自己和相互链接的统计愤怒吧
