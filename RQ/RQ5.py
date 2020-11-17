@@ -8,7 +8,7 @@ from prepare import queries
 from tqdm import tqdm
 from prepare import preprocess
 
-renew = 0
+renew = 1
 
 def parse_node2(url):
     item = url.split("/")
@@ -327,19 +327,21 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
         links = file_opt.read_json_from_file(filepath + "links_type_RQ5.json")
     return links
 
-def work_on_repos(renew):
-    for o_r in init.repos_to_get_info:
-        owner, name = o_r[0], o_r[1]
-        print("--------------------handle " + owner + "/" + name + "---------------------------")
-        response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_pullRequests.json")
-        response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_issues.json")
-        links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + name + "/")
-        vis.visualization_RQ5(links, repo=owner+"/"+name)
-    return links
+def work_on_repos(fullname_repo):
+    owner, name = fullname_repo[0], fullname_repo[1]
+    print("--------------------handle " + owner + "/" + name + "---------------------------")
+    response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_pullRequests.json")
+    response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_issues.json")
+    extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + name + "/")
+    # vis.visualization_RQ5(links, repo=owner+"/"+name)
 
-if __name__ == '__main__':
-    links = work_on_repos(renew)
     # vis.visualization_type(links)
     # vis.visualization_where(links)
     # vis.visualization_when(links)
-    # vis.visualization_RQ5(links)
+
+if __name__ == '__main__':
+    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    repolist = init.repos_to_get_info
+    with PoolExecutor(max_workers=2) as executor:
+        for _ in executor.map(work_on_repos, repolist):
+            pass

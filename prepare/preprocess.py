@@ -3,8 +3,7 @@ import re
 def replace_pattern(patter_list,body):
     if patter_list:
         for i in range(0, len(patter_list)):
-            if i % 2 == 0:
-                body = body.replace(patter_list[i], '')
+            body = body.replace(patter_list[i], '')
     return body
 
 def clear_body(body):

@@ -198,10 +198,10 @@ def visualization_RQ5(links,repo=None):
         if len(link['target']['times']) >= 10:
             print(link)
 
-    # print(sorted(times))
-    # plt.hist(times,bins=20,color='cornflowerblue')
-    # plt.title("%s link times" % repo)
-    # plt.show()
+    print(sorted(times))
+    plt.hist(times,bins=20,color='cornflowerblue')
+    plt.title("%s link times" % repo)
+    plt.show()
 
     print(sorted(author))
     plt.hist(author,bins=max(author),color='cornflowerblue')

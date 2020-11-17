@@ -322,15 +322,15 @@ def work_on_repos(fullname_repo):
     response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
     links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
     # 单个repo可视化
-    vis.visualization_type(links)
-    vis.visualization_where(links)
-    vis.visualization_when(links)
+    # vis.visualization_type(links)
+    # vis.visualization_where(links)
+    # vis.visualization_when(links)
 
 if __name__ == '__main__':
-    # from concurrent.futures import ThreadPoolExecutor as PoolExecutor
-    # repolist = init.repos_to_get_info
-    # with PoolExecutor(max_workers=4) as executor:
-    #     for _ in executor.map(work_on_repos, repolist):
-    #         pass
+    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    repolist = init.repos_to_get_info
+    with PoolExecutor(max_workers=1) as executor:
+        for _ in executor.map(work_on_repos, repolist):
+            pass
 
-    visualization_multi_repos()
+    # visualization_multi_repos()
