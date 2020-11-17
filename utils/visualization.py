@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from utils import file_opt
-import init
+from prepare import init
 from datetime import datetime
 from tqdm import tqdm
 
