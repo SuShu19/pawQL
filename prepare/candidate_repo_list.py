@@ -3,7 +3,7 @@ import random
 import time
 import sys
 sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
-import init
+from prepare import init
 from utils import file_opt
 from prepare import queries
 import matplotlib.pyplot as plt
@@ -64,15 +64,18 @@ def create_initial_info():
     repo_info = file_opt.read_json_from_file(repos_info_file)
     repo_info_dict = []
     for item in repo_info['data']['search']['nodes']:
+        languageKind = []
+        for lang in item['languages']['nodes']:
+            languageKind.append( lang['name'] )
         repo_info_dict.append({"owner":item['owner']['login'],"name":item['name'],"description":item['description'],
-                               "forks":item['forkCount'],"stars":item['stargazerCount'],"languages":item['languages']['totalCount'],
-                               "issues":item['issues']['totalCount'],"pullRequests":item['pullRequests']['totalCount']})
+                               "forks":item['forkCount'],"stars":item['stargazerCount'],"languagesCount":item['languages']['totalCount'],
+                               "languageKind":languageKind,"issues":item['issues']['totalCount'],"pullRequests":item['pullRequests']['totalCount']})
     return repo_info_dict
 
 def remove_no_language(info_list):
     new_list = []
     for item in info_list:
-        if item['languages'] != 0:
+        if item['languagesCount'] != 0:
             new_list.append(item)
     return new_list
 
@@ -100,20 +103,32 @@ def select_iss_pr_number(info_list):
 
     return new_list
 
+def involve_common_language(info_list):
+    common_language = ["C","Python","Java","C++","C#","Visual Basic","JavaScript","PHP","R","SQL"]
+    new_list = []
+    for item in info_list:
+        for lang in common_language:
+            if lang in item['languageKind']:
+                new_list.append(item)
+                break
+    return new_list
+
+def create_repo_list(repo_info):
+    f = open("../data/repository_list_601.txt",'w')
+    for item in repo_info:
+        f.write(item['owner']+"/"+item['name']+"\n")
+    f.close()
 
 def select_repos():
     initial_info_list = create_initial_info()
     clear_language_list = remove_no_language(initial_info_list)
-    iss_pr_number_list = select_iss_pr_number(clear_language_list)
+    common_language_list = involve_common_language(clear_language_list)
+    iss_pr_number_list = select_iss_pr_number(common_language_list)
     # 保存文件
-    out_file = init.local_data_filepath+"/after_select_respos.json"
-    file_opt.save_json_to_file(out_file,iss_pr_number_list)
+    file_opt.save_json_to_file(init.local_data_filepath+"/after_select_respos.json",iss_pr_number_list)
+    # 创建仓库列表
+    create_repo_list(iss_pr_number_list)
 
 if __name__ == '__main__':
-    search_repos()
-    select_repos()
-    # from concurrent.futures import ThreadPoolExecutor as PoolExecutor
-    # repolist = init.repos_to_get_info
-    # with PoolExecutor(max_workers=1) as executor:
-    #     for _ in executor.map(request_graphQL, repolist):
-    #         pass
+    # search_repos()        # 获取仓库的信息，一次获取之后就存储了文件，不需要每次都跑
+    select_repos()          # 按照条件筛选符合的仓库，并写下详细信息，以及生成repository_list.txt

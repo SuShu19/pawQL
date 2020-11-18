@@ -1,6 +1,6 @@
 import platform
 
-repo_list_file = "../data/repository_list.txt"
+repo_list_file = "../data/repository_list_601.txt"
 sysstr = platform.system()
 if platform.system() == "Windows":
     local_data_filepath = "D:/analyse_link/"
