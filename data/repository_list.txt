@@ -1,2 +1,1 @@
-rails/rails
-elastic/elasticsearch
+kubernetes/kubernetes
