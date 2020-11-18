@@ -1,6 +1,8 @@
+import sys
+sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
 import re
 from datetime import datetime
-import init
+from prepare import init
 from utils import file_opt
 from utils import visualization as vis
 from prepare import prepare_response

@@ -4,7 +4,7 @@ import random
 import time
 import sys
 sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
-import init
+from prepare import init
 from utils import file_opt
 from prepare import queries
 from datetime import datetime
