@@ -4,7 +4,7 @@ search_100_nodes = """{
       login
     }
     name
-    %s(first:50%s){
+    %s(first:100%s){
       totalCount
       pageInfo{
         hasNextPage
