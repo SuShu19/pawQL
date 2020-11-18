@@ -195,7 +195,7 @@ def visualization_RQ5(links,repo=None):
                 if link['target']['times'][i]['link_author'] not in author_each_link:
                     author_each_link.append(link['target']['times'][i]['link_author'])
         author.append(len(author_each_link))
-        if len(link['target']['times']) >= 10:
+        if len(link['target']['times']) == 271:
             print(link)
 
     print(sorted(times))

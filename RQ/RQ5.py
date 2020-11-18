@@ -332,7 +332,7 @@ def work_on_repos(fullname_repo):
     print("--------------------handle " + owner + "/" + name + "---------------------------")
     response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_pullRequests.json")
     response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/response_issues.json")
-    extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + name + "/")
+    links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + name + "/")
     # vis.visualization_RQ5(links, repo=owner+"/"+name)
 
     # vis.visualization_type(links)
@@ -342,6 +342,6 @@ def work_on_repos(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=2) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(work_on_repos, repolist):
             pass

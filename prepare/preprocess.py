@@ -1,22 +1,13 @@
 import re
-
-def replace_pattern(patter_list,body):
-    if patter_list:
-        for i in range(0, len(patter_list)):
-            body = body.replace(patter_list[i], '')
-    return body
-
+# todo 预处理的结果错了，要重新再跑一遍，哭...
 def clear_body(body):
     # 删除引用
-    quote = re.findall(re.compile(r'>.*\n'), body)
-    body = replace_pattern(quote,body)
+    body = re.compile(r'>.*\n').sub("",body)
 
-    # 先删除段落代码段
-    code_segment = re.findall(re.compile(r'```[\s\S]*```'), body)
-    body = replace_pattern(code_segment,body)
+    # 删除段落代码段
+    body = re.compile(r'```[\s\S]*```').sub("",body)
 
-    # 后删除行内代码
-    code_segment_in_line = re.findall(re.compile(r'`[\s\S]*`'), body)
-    body = replace_pattern(code_segment_in_line,body)
+    # 删除行内代码
+    body = re.compile(r'`[\s\S]*`').sub("",body)
 
     return body
