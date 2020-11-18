@@ -1,5 +1,7 @@
+import sys
+sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
 from utils import file_opt
-import init
+from prepare import init
 from tqdm import tqdm
 from utils import visualization as vis
 
