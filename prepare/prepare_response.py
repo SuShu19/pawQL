@@ -16,7 +16,7 @@ def read_token():
 
 def query_request(query, owner, repo, type, last_typenode=None, last_comennt=None, last_timelinItems=None,number=None,):
     tokens = read_token()
-    token = tokens[random.randint(0,len(tokens))].strip()
+    token = tokens[random.randint(0,len(tokens)-1)].strip()
     headers = {"Authorization": "Bearer %s" % token}
     if last_typenode:
         query_ = query % (owner, repo, type,',after:"'+last_typenode+'"')        # 获取100条以后的node,query=search_100_nodes
