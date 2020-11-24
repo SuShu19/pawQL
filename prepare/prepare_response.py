@@ -112,6 +112,6 @@ def request_graphQL(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=12) as executor:
+    with PoolExecutor(max_workers=4) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass
