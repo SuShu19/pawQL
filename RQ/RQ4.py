@@ -4,8 +4,9 @@ from utils import file_opt
 from prepare import init
 from tqdm import tqdm
 from utils import visualization as vis
+from datetime import datetime
 
-renew = 0
+renew = 1
 
 def extract_link_mode(linkset,renew,save_file_path):
     if renew == 1:
@@ -33,6 +34,9 @@ def extract_number_list(linkset):
         number_list.append(link['source']['number'])
     return number_list
 
+def get_time(time):
+    return datetime.strptime(time,"%Y-%m-%dT%H:%M:%SZ").timestamp()
+
 def parse_link_cluster(link_1_1,link_1_N):
     source_number_11_list = extract_number_list(link_1_1)
     source_number_1N_list = extract_number_list(link_1_N)
@@ -50,6 +54,23 @@ def parse_link_cluster(link_1_1,link_1_N):
         link['is_linked'] = 1
         cluster, layer_num, number_list, iter_linkset = find_sub_links(cluster, layer_num, number_list, iter_linkset, search_linkset)
         if len(cluster) > 1:            # 只选取包含两次以上link的cluster
+            # 添加3个字段，cluster的层数，点数和最晚点的时间-最早点的时间
+            node_count = 1              # node number初始为1，因为源节点始终有一个
+            time_list = []
+            for key in cluster.keys():
+                node_count += len(cluster[key])
+                for link in cluster[key]:
+                    time_list.append(link['source']['createdAt'])
+                    for tar in link['target']:
+                        time_list.append(tar['createdAt'])
+
+            cluster["layers_count"] = len(cluster)
+            cluster["nodes_count"] = node_count
+            time_interval_s = sorted(time_list, key=lambda data: get_time(data))
+            time_format = "%Y-%m-%dT%H:%M:%SZ"
+            time_interval = datetime.strptime(time_interval_s[-1],time_format).__sub__(datetime.strptime(time_interval_s[0], time_format)).days
+            cluster["cluster_time_interval"] = time_interval
+
             cluster_list.append(cluster)
     return cluster_list
 
@@ -123,19 +144,6 @@ def parse_bilateral(linkset):
                     link_bilateral = detect_dup(link_bilateral,subiter)
     return link_self_bilateral, link_bilateral
 
-def work():
-    for o_r in init.repos_to_get_info:
-        owner, name = o_r[0], o_r[1]
-        print("--------------------handle " + owner + "/" + name + "---------------------------")
-        link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
-        link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = \
-            extract_link_mode(link_type,renew,init.local_data_filepath+owner+"/"+name+"/")
-
-        # 查看单个repo的分布
-        vis.visualization_how_1_or_N(link_1_1, link_1_N, repo=owner+'/'+name)
-        vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral, repo=owner+'/'+name)
-        vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
-    return link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster
 
 def visulize_link_self_bila():
     link_list = []
@@ -145,9 +153,24 @@ def visulize_link_self_bila():
         link_bila = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/link_bi.json")
         link_list.append({'repo':owner+"/"+name, 'link_self': link_self,'link_bilateral': link_bila})
 
-    vis.visualization_multi_self_bila(link_list)
-    a = 1
+    # vis.visualization_multi_self_bila(link_list)
 
+def work(fullrepo):
+
+    owner, name = fullrepo.strip().split("/")[0], fullrepo.strip().split("/")[1]
+    print("-------------------" + owner + "/" + name + "---------------------------")
+    link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
+    link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = \
+        extract_link_mode(link_type,renew,init.local_data_filepath+owner+"/"+name+"/")
+
+    # 查看单个repo的分布
+    # vis.visualization_how_1_or_N(link_1_1, link_1_N, repo=owner+'/'+name)
+    # vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral, repo=owner+'/'+name)
+    # vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
+    # visulize_link_self_bila()       # 查看多个repo链自己和相互链接的统计
 if __name__ == '__main__':
-    # link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = work()
-    visulize_link_self_bila()       # 查看多个repo链自己和相互链接的统计愤怒吧
+    from concurrent.futures import ThreadPoolExecutor as PoolExecutor
+    repolist = init.repos_to_get_info
+    with PoolExecutor(max_workers=4) as executor:
+        for _ in executor.map(work, repolist):
+            pass
