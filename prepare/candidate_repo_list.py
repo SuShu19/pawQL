@@ -114,9 +114,12 @@ def involve_common_language(info_list):
     return new_list
 
 def create_repo_list(repo_info):
-    f = open("../data/repository_list_601.txt",'w')
+    repo_list = []
     for item in repo_info:
-        f.write(item['owner']+"/"+item['name']+"\n")
+        repo_list.append(item['owner']+"/"+item['name']+"\n")
+    f = open("../data/repository_list_601.txt",'w')
+    for item in sorted(repo_list):
+        f.write(item)
     f.close()
 
 def select_repos():
@@ -130,5 +133,5 @@ def select_repos():
     create_repo_list(iss_pr_number_list)
 
 if __name__ == '__main__':
-    search_repos()        # 获取仓库的信息，一次获取之后就存储了文件，不需要每次都跑
+    # search_repos()        # 获取仓库的信息，一次获取之后就存储了文件，不需要每次都跑
     select_repos()          # 按照条件筛选符合的仓库，并写下详细信息，以及生成repository_list.txt
