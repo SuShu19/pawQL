@@ -49,6 +49,7 @@ PanJiaChen/vue-element-admin
 PatrickJS/angular-starter
 Polymer/polymer
 PowerShell/PowerShell
+PyTorchLightning/pytorch-lightning
 RaRe-Technologies/gensim
 RasaHQ/rasa
 ReactTraining/react-router
@@ -310,6 +311,7 @@ jashkenas/backbone
 jashkenas/coffeescript
 jashkenas/underscore
 jasmine/jasmine
+javascript-tutorial/en.javascript.info
 jekyll/jekyll
 jgthms/bulma
 jhipster/generator-jhipster
@@ -506,6 +508,7 @@ serverless/serverless
 servo/servo
 sideway/joi
 signalapp/Signal-Android
+simdjson/simdjson
 sindresorhus/refined-github
 slatedocs/slate
 slimphp/Slim
@@ -552,6 +555,7 @@ tj/commander.js
 tldr-pages/tldr
 tootsuite/mastodon
 topjohnwu/Magisk
+topjohnwu/Magisk
 tornadoweb/tornado
 traefik/traefik
 trailofbits/algo
@@ -597,5 +601,6 @@ yewstack/yew
 yiisoft/yii2
 youzan/vant
 youzan/vant-weapp
+ytdl-org/youtube-dl
 yuzu-emu/yuzu
 zulip/zulip
