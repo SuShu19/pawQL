@@ -36,11 +36,11 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     if last_typenode:
         query_ = query % (owner, repo, type,',after:"'+last_typenode+'"',file_segment)        # 获取100条以后的node,query=search_100_nodes
     elif last_comennt and number:
-        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"',file_segment)        # 获取100条以后的comment,query=search_morethan_100_comments
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"')        # 获取100条以后的comment,query=search_morethan_100_comments
     elif last_timelinItems and number:
-        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"',file_segment)        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"')        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
     elif number and last_comennt is None and last_timelinItems is None:
-        query_ = query % (owner, repo, type, number,file_segment)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
+        query_ = query % (owner, repo, type, number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
     else:
         query_ = query % (owner, repo, type,'',file_segment)       # 获取第一个100条nodes
     try:
@@ -121,6 +121,6 @@ def request_graphQL(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=1) as executor:
+    with PoolExecutor(max_workers=4) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass
