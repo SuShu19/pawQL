@@ -10,7 +10,6 @@ def main():
         for clust in cluster:
             if clust['cluster_time_interval'] < 100 and clust['nodes_count'] > 18 :
                 print(clust["nodes_count"],clust["cluster_time_interval"],clust['layer_1'][0]['source']['number'])
-        a=1
 
 if __name__ == '__main__':
     main()

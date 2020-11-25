@@ -104,6 +104,7 @@ search_100_nodes = """{
           }
           totalCount
         }
+        %s
       }
     }
   }

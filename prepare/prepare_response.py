@@ -9,6 +9,8 @@ from utils import file_opt
 from prepare import queries
 from datetime import datetime
 
+
+
 def read_token():
     token_file = open("../data/token_list.txt", 'r')
     tokens = token_file.readlines()
@@ -18,16 +20,29 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     tokens = read_token()
     token = tokens[random.randint(0,len(tokens)-1)].strip()
     headers = {"Authorization": "Bearer %s" % token}
+    if type == "issues":
+        file_segment = ""
+    elif type == "pullRequests":
+        file_segment = """changedFiles
+                files(first:100){
+                  totalCount
+                  nodes{
+                    additions
+                    deletions
+                    path
+                    viewerViewedState
+                  }
+                } """
     if last_typenode:
-        query_ = query % (owner, repo, type,',after:"'+last_typenode+'"')        # 获取100条以后的node,query=search_100_nodes
+        query_ = query % (owner, repo, type,',after:"'+last_typenode+'"',file_segment)        # 获取100条以后的node,query=search_100_nodes
     elif last_comennt and number:
-        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"')        # 获取100条以后的comment,query=search_morethan_100_comments
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_comennt+'"',file_segment)        # 获取100条以后的comment,query=search_morethan_100_comments
     elif last_timelinItems and number:
-        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"')        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
+        query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"',file_segment)        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
     elif number and last_comennt is None and last_timelinItems is None:
-        query_ = query % (owner, repo, type, number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
+        query_ = query % (owner, repo, type, number,file_segment)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
     else:
-        query_ = query % (owner, repo, type,'')       # 获取第一个100条nodes
+        query_ = query % (owner, repo, type,'',file_segment)       # 获取第一个100条nodes
     try:
         response = requests.post('https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
     except:
@@ -73,16 +88,10 @@ def request_graphQL(fullname_repo):
     """
     owner = fullname_repo[0]
     repo = fullname_repo[1]
-    types = ["pullRequests","issues"]
-    # types = ["issues","pullRequests"]
+    # types = ["pullRequests","issues"]
+    types = ["issues","pullRequests"]
     for type in types:
         count = 0
-        # if type == "pullRequests":
-        #     first_page = queries.first_pr_page
-        #     other_page = queries.other_pr_page
-        # elif type == "issues":
-        #     first_page = queries.first_iss_page
-        #     other_page = queries.other_iss_page
         output_response_file = init.local_data_filepath+owner+"/"+repo+"/response_"+type+".json"
         if os.path.isfile(output_response_file):
             r = file_opt.read_json_from_file(output_response_file)
@@ -112,6 +121,6 @@ def request_graphQL(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass

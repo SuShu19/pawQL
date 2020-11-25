@@ -157,7 +157,7 @@ def visulize_link_self_bila():
 
 def work(fullrepo):
 
-    owner, name = fullrepo.strip().split("/")[0], fullrepo.strip().split("/")[1]
+    owner, name = fullrepo[0], fullrepo[1]
     print("-------------------" + owner + "/" + name + "---------------------------")
     link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
     link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = \
@@ -166,7 +166,7 @@ def work(fullrepo):
     # 查看单个repo的分布
     # vis.visualization_how_1_or_N(link_1_1, link_1_N, repo=owner+'/'+name)
     # vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral, repo=owner+'/'+name)
-    # vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
+    vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
     # visulize_link_self_bila()       # 查看多个repo链自己和相互链接的统计
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor

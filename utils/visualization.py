@@ -140,26 +140,11 @@ def get_time(time):
     return datetime.strptime(time,"%Y-%m-%dT%H:%M:%SZ").timestamp()
 
 def visualization_how_cluster(link_cluster, repo=None):
-    layer_node, layer, node_num_list, node_list, node_interval, time_interval = [], [], [], [], [],[]
+    node_num_list, layer, time_interval = [], [], []
     for link in tqdm(link_cluster):
-        nodes = []
-        node_number = 0
-        layer.append(len(link))
-        for i in range(1,len(link)+1):
-            time_list = []
-            node_number += len(link['layer_'+str(i)])
-            for node in link['layer_'+str(i)]:
-                nodes.append(node['source']['number'])
-                time_list.append(node['source']['createdAt'])
-                for t in node['target']:
-                    nodes.append(t["number"])
-                    time_list.append(t['createdAt'])
-        node_num_list.append(node_number)
-        time_interval_s = sorted(time_list,key=lambda data:get_time(data))
-        time_format = "%Y-%m-%dT%H:%M:%SZ"
-        time_interval.append(datetime.strptime(time_interval_s[-1], time_format).__sub__(datetime.strptime(time_interval_s[0],time_format)).days)
-        node_interval.append([sorted(nodes)[0],sorted(nodes)[-1]])
-        layer_node.append({"layer":len(link),"node":node_number})
+        layer.append(link["layers_count"])
+        node_num_list.append(link["nodes_count"])
+        time_interval.append(link["cluster_time_interval"])
 
     plt.hist(layer, bins=18, color='cornflowerblue')
     plt.title("%s layer number" % repo)
