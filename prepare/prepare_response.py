@@ -20,9 +20,9 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     tokens = read_token()
     token = tokens[random.randint(0,len(tokens)-1)].strip()
     headers = {"Authorization": "Bearer %s" % token}
-    if type == "issues":
+    if type == "issues" or type == "issue":
         file_segment = ""
-    elif type == "pullRequests":
+    elif type == "pullRequests" or type == "pullRequest":
         file_segment = """changedFiles
                 files(first:100){
                   totalCount
@@ -40,7 +40,7 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     elif last_timelinItems and number:
         query_ = query % (owner, repo, type[:-1], number, ',after:"'+last_timelinItems+'"')        # 获取100条以后的timelineItems,query=search_morethan_100_timelineItems
     elif number and last_comennt is None and last_timelinItems is None:
-        query_ = query % (owner, repo, type, number)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
+        query_ = query % (owner, repo, type, number, file_segment)                        # 查询每一条crossReference,与查询100条以后的comment和timelineItems区别, query=search_one_node
     else:
         query_ = query % (owner, repo, type,'',file_segment)       # 获取第一个100条nodes
     try:

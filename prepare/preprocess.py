@@ -1,5 +1,4 @@
 import re
-# todo 预处理的结果错了，要重新再跑一遍，哭...
 def clear_body(body):
     # 删除引用
     body = re.compile(r'>.*\n').sub("",body)
