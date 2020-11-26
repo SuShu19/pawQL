@@ -329,10 +329,10 @@ def extract_link_in_crossReference(nodes, node, links,owner,name):
 def extract_link_type(response_p, response_i, renew, filepath=None):
     # todo 把filepathlist加进link_type中去，数据还不完整，程序已经写完了，但是还没有测试正确性，还在等完整的数据
     if renew == 1:
-        # type_list = ["pullRequests", "issues"]
-        type_list = ["issues", "pullRequests"]
-        # response_list = [response_p,response_i]
-        response_list = [response_i,response_p]
+        type_list = ["pullRequests", "issues"]
+        # type_list = ["issues", "pullRequests"]
+        response_list = [response_p,response_i]
+        # response_list = [response_i,response_p]
         links = []
         pr_list, pr_createAt, issue_list, issue_createAt = extract_pr_iss_list(response_p, response_i)
         owner = response_p['data']['repository']['owner']['login']
@@ -344,8 +344,11 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
                 if "changedFiles" in node.keys():
                     file_count = node["changedFiles"]
                     file_list = []
-                    for file in node["files"]["nodes"]:
-                        file_list.append(file["path"])
+                    if node["files"] is not None:
+                        for file in node["files"]["nodes"]:
+                          file_list.append(file["path"])
+                    else:
+                        pass
                 else:
                     file_count = 0
                     file_list = []
