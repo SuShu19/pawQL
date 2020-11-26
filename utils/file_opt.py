@@ -18,6 +18,6 @@ def read_json_from_file(file_path):
     return content
 
 def save_line_to_file(file_path,line):
-    f = open(file_path, 'w')
+    f = open(file_path, 'a')
     f.write(line+"\n")
     f.close()
