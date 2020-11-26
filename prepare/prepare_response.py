@@ -117,6 +117,8 @@ def request_graphQL(fullname_repo):
                 file_opt.save_json_to_file(output_response_file, r)
                 print("-----------------finish fetch " + fullname_repo[0]+"/"+ fullname_repo[1] + "---------------")
                 break
+    file_opt.save_line_to_file(init.repos_list_finish_graphQL, fullname_repo[0] + "/" + fullname_repo[1])
+
 
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor

@@ -97,7 +97,7 @@ def parse_node2_in_url(nodes, url, location, node1,link_time, pr_list, pr_create
     return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time'],'files':node1["file_list"],'file_count':node1["file_count"]},
             'target':{'number': int(node2_number), 'url': node2_url,'createdAt':node2_time,'create_time_interval': create_time_interval,
                       "link_time_interval":link_time_interval,'type': link_type, 'location': location,
-                      'isCrossRepository': isCrossRepository,'files':node2_files,'file_count':node2_file_path}}
+                      'isCrossRepository': isCrossRepository,'files':node2_file_path,'file_count':node2_files}}
 
 def determine_number_type(pr_list, issue_list, number):
     if int(number) in pr_list:
@@ -169,7 +169,7 @@ def parse_node2_in_num(nodes,quote_num, location, node1, owner, name, link_time,
     return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time'],'files':node1["file_list"],'file_count':node1["file_count"]},
             'target':{'number': int(node2_number), 'url': node2_url,'createdAt':node2_time, 'create_time_interval':create_time_interval,
                       'link_time_interval': link_time_interval,'type': link_type, 'location': location,
-                      'isCrossRepository': isCrossRepository,'files':node2_files,'file_count':node2_file_path}}
+                      'isCrossRepository': isCrossRepository,'files':node2_file_path,'file_count':node2_files}}
 
 def extract_pr_iss_list(response_p, response_i):
     pr_list, pr_createAt, issue_list, issue_createAt = [], [], [], []
@@ -319,18 +319,20 @@ def extract_link_in_crossReference(nodes, node, links,owner,name):
                     repeat = 1  # 该link与之前的link重复
             if repeat == 0:
                 links.append({'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt'],
-                                        'files':source_files,'file_count':source_file_path},
+                                        'files':source_file_path,'file_count':source_files},
                               'target':{'number': target_number, 'url': target_url, 'createdAt':item['target']['createdAt'],
                                         'create_time_interval': create_time_interval,'link_time_interval':link_time_interval,
                                         'type': link_type, 'location': location, 'isCrossRepository': item['isCrossRepository'],
-                                        'files':tar_file_count,'file_count':tar_file_path_list}})
+                                        'files':tar_file_path_list,'file_count':tar_file_count}})
     return links
 
 def extract_link_type(response_p, response_i, renew, filepath=None):
     # todo 把filepathlist加进link_type中去，数据还不完整，程序已经写完了，但是还没有测试正确性，还在等完整的数据
     if renew == 1:
-        type_list = ["pullRequests", "issues"]
-        response_list = [response_p,response_i]
+        # type_list = ["pullRequests", "issues"]
+        type_list = ["issues", "pullRequests"]
+        # response_list = [response_p,response_i]
+        response_list = [response_i,response_p]
         links = []
         pr_list, pr_createAt, issue_list, issue_createAt = extract_pr_iss_list(response_p, response_i)
         owner = response_p['data']['repository']['owner']['login']
@@ -383,6 +385,7 @@ def work_on_repos(fullname_repo):
     # vis.visualization_type(links)
     # vis.visualization_where(links)
     # vis.visualization_when(links)
+    print("--------------------finish " + owner + "/" + repo + "---------------------------")
 
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
