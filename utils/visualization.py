@@ -4,6 +4,9 @@ from utils import file_opt
 from prepare import init
 from datetime import datetime
 from tqdm import tqdm
+import seaborn as sns
+import pandas as pd
+import math
 
 def extract_pr_iss_list(owner, repo):
     response_pr = file_opt.read_json_from_file(
@@ -261,3 +264,196 @@ def visualization_multi_self_bila(link_list):
     plt.title('link to slef or each other')  # 图形标题
 
     plt.show()
+
+
+def read_repos_data(file_name):
+    repo_list = init.repo_list
+    RQ_list = []
+    for repo in repo_list:
+        data = file_opt.read_json_from_file(init.local_data_filepath+repo.strip()+"/"+file_name)
+        RQ_list.append(data)
+    return RQ_list
+
+def plot_RQ1(dataset):
+    # 层叠柱状图
+    pr_pr_list, pr_iss_list, iss_pr_list, iss_iss_list = [],[],[],[]
+    for repo_link in dataset:
+        pr_pr, pr_iss, iss_pr, iss_iss = 0,0,0,0
+        for link in repo_link:
+            if link['target']['type'] == 'pullRequest to pullRequest':
+                pr_pr += 1
+            elif link['target']['type'] == 'pullRequest to issue':
+                pr_iss += 1
+            elif link['target']['type'] == 'issue to pullRequest':
+                iss_pr += 1
+            elif link['target']['type'] == 'issue to issue':
+                iss_iss += 1
+        pr_pr_list.append(pr_pr)
+        pr_iss_list.append(pr_iss)
+        iss_pr_list.append(iss_pr)
+        iss_iss_list.append(iss_iss)
+
+    pr_pr_list = np.array(pr_pr_list)
+    pr_iss_list = np.array(pr_iss_list)
+    iss_pr_list = np.array(iss_pr_list)
+    iss_iss_list = np.array(iss_iss_list)
+
+    repo_list = init.repo_list
+    plt.bar(repo_list,height=pr_pr_list,bottom=0,color="black",label="pullRequest to pullRequest")
+    plt.bar(repo_list,height=pr_iss_list,bottom=pr_pr_list,color="dimgrey",label="pullRequest to issue")
+    plt.bar(repo_list,height=iss_pr_list,bottom=pr_pr_list+pr_iss_list,color="darkgray",label="issue to pullRequest")
+    plt.bar(repo_list,height=iss_iss_list,bottom=pr_pr_list+pr_iss_list+iss_pr_list,color="gainsboro",label="issue to issue")
+    plt.xticks(rotation=10)
+    plt.title("Link Types")
+    plt.legend()
+    plt.show()
+
+def plot_RQ2(dataset):
+    # 层叠柱状图
+    title_list, body_list, comment_list = [],[],[]
+    for repo_link in dataset:
+        title, body, comment = 0, 0, 0
+        for link in repo_link:
+            if link['target']['location'] == 'title':
+                title += 1
+            elif link['target']['location'] == 'body':
+                body += 1
+            elif link['target']['location'] == 'comment':
+                comment += 1
+        title_list.append(title)
+        body_list.append(body)
+        comment_list.append(comment)
+
+    title_list = np.array(title_list)
+    body_list = np.array(body_list)
+    comment_list = np.array(comment_list)
+
+    repo_list = init.repo_list
+    plt.bar(repo_list,height=comment_list,bottom=0,color="black",label="comment")
+    plt.bar(repo_list,height=body_list,bottom=comment_list,color="grey",label="body")
+    plt.bar(repo_list,height=title_list,bottom=comment_list+body_list,color="lightgrey",label="title")
+    plt.xticks(rotation=10)
+    plt.title("Link Location")
+    plt.legend()
+    plt.show()
+
+def plot_RQ3(dataset):
+    # 层叠柱状图
+    create_time_list, link_time_list = [],[]
+    for repo_link in dataset:
+        create_time, link_time = [], []
+        for link in repo_link:
+            ct = link["target"]["create_time_interval"]
+            lt = link["target"]["link_time_interval"]
+            if ct > 0:
+                create_time.append(math.log(ct))
+            elif ct < 0:
+                create_time.append(-math.log(-ct))
+            elif ct == 0:
+                create_time.append(0)
+            if lt > 0:
+                link_time.append(math.log(lt))
+            elif lt < 0:
+                pass
+            elif lt == 0:
+                link_time.append(0)
+        create_time_list.append(create_time)
+        link_time_list.append(link_time)
+
+    repo_list = init.repo_list
+    create_dic = {}
+    link_dic = {}
+    for i in range(0,len(repo_list)):
+        create_dic[repo_list[i].strip()] = create_time_list[i]
+        link_dic[repo_list[i].strip()] = link_time_list[i]
+
+    create_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in create_dic.items()]))
+    link_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in link_dic.items()]))
+
+    sns.violinplot(data=create_dic)
+    plt.xticks(rotation=10)
+    plt.title("Create Time Interval")
+    plt.legend()
+    plt.show()
+
+    sns.violinplot(data=link_dic)
+    plt.xticks(rotation=10)
+    plt.title("Link Time Interval")
+    plt.legend()
+    plt.show()
+
+
+def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
+    list_1_1, list_1_n = [], []
+    for links in RQ4_1_1:
+        list_1_1.append(len(links))
+    for links in RQ4_1_n:
+        list_1_n.append(len(links))
+    plt.bar(repo_list,height=list_1_1,bottom=0,color="black",label="1 to 1")
+    plt.bar(repo_list,height=list_1_n,bottom=list_1_1,color="grey",label="1 to N")
+    plt.title("1 to 1 link and 1 to N link")
+    plt.xticks(rotation=10)
+    plt.legend()
+    plt.show()
+
+    layer_list, nodes_list, duration_list = {}, {}, {}
+    for i in range(0,len(repo_list)):
+        cluster_layer, cluster_node, duration = [], [], []
+        for cluster in RQ4_cluster[i]:
+            cluster_layer.append(cluster["layers_count"])
+            cluster_node.append(math.log(cluster["nodes_count"]))
+            time = cluster["cluster_time_interval"]
+            if time > 0:
+                duration.append(math.log(time))
+            elif time < 0:
+                duration.append(-math.log(-time))
+            elif time == 0:
+                duration.append(0)
+        layer_list[repo_list[i]] = cluster_layer
+        nodes_list[repo_list[i]] = cluster_node
+        duration_list [repo_list[i]] = duration
+
+    layer_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in layer_list.items()]))
+    nodes_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in nodes_list.items()]))
+    duration_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in duration_list.items()]))
+
+    sns.violinplot(data=layer_list)
+    plt.xticks(rotation=10)
+    plt.title("Cluster Layers")
+    plt.legend()
+    plt.show()
+
+    sns.violinplot(data=nodes_list)
+    plt.xticks(rotation=10)
+    plt.ylabel("log")
+    plt.title("Cluster Nodes")
+    plt.legend()
+    plt.show()
+
+    sns.violinplot(data=duration_list)
+    plt.xticks(rotation=10)
+    plt.ylabel("log")
+    plt.title("Cluster Duration")
+    plt.legend()
+    plt.show()
+
+    a = 1
+
+
+
+
+if __name__ == '__main__':
+    # 对论文中RQ1，2，3，4的结果进行汇总
+    repo_list = init.repo_list
+    RQ1 = read_repos_data("links_type.json")
+    RQ2 = RQ1
+    RQ3 = RQ1
+    RQ4_1_1 = read_repos_data("link_1_1.json")
+    RQ4_1_n = read_repos_data("link_1_N.json")
+    RQ4_cluster = read_repos_data("link_cluster.json")
+
+    # plot_RQ1(RQ1)
+    # plot_RQ2(RQ2)
+    # plot_RQ3(RQ3)
+    plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
+

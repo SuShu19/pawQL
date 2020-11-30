@@ -90,8 +90,11 @@ def parse_node2_in_url(nodes, url, location, node1,link_time, pr_list, pr_create
                 node2_files = node2["changedFiles"]
             node2_file_path = []
             if "files" in node2.keys():
-                for path in node2["files"]["nodes"]:
-                    node2_file_path.append(path["path"])
+                if node2["files"] is not None:
+                    for path in node2["files"]["nodes"]:
+                        node2_file_path.append(path["path"])
+                    else:
+                        pass
             break
 
     return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time'],'files':node1["file_list"],'file_count':node1["file_count"]},
@@ -163,8 +166,11 @@ def parse_node2_in_num(nodes,quote_num, location, node1, owner, name, link_time,
                 node2_files = node2["changedFiles"]
             node2_file_path = []
             if "files" in node2.keys():
-                for path in node2["files"]["nodes"]:
-                    node2_file_path.append(path["path"])
+                if node2["files"] is not None:
+                    for path in node2["files"]["nodes"]:
+                        node2_file_path.append(path["path"])
+                else:
+                    pass
             break
     return {'source':{'number': node1['number'], 'url': node1['url'], 'createdAt':node1['time'],'files':node1["file_list"],'file_count':node1["file_count"]},
             'target':{'number': int(node2_number), 'url': node2_url,'createdAt':node2_time, 'create_time_interval':create_time_interval,
@@ -282,8 +288,11 @@ def extract_link_in_crossReference(nodes, node, links,owner,name):
             if "changedFiles" in node.keys():
                 source_files = node["changedFiles"]
                 source_file_path = []
-                for path in node["files"]['nodes']:
-                    source_file_path.append(path["path"])
+                if node["files"] is not None:
+                    for path in node["files"]['nodes']:
+                        source_file_path.append(path["path"])
+                else:
+                    pass
             else:
                 source_files = 0
                 source_file_path = []
@@ -385,9 +394,9 @@ def work_on_repos(fullname_repo):
     response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
     links = extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")
     # 单个repo可视化
-    # vis.visualization_type(links)
-    # vis.visualization_where(links)
-    # vis.visualization_when(links)
+    vis.visualization_type(links)
+    vis.visualization_where(links)
+    vis.visualization_when(links)
     print("--------------------finish " + owner + "/" + repo + "---------------------------")
 
 if __name__ == '__main__':
