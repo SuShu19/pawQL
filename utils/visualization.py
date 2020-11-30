@@ -372,12 +372,14 @@ def plot_RQ3(dataset):
 
     sns.violinplot(data=create_dic)
     plt.xticks(rotation=10)
+    plt.ylabel("log")
     plt.title("Create Time Interval")
     plt.legend()
     plt.show()
 
     sns.violinplot(data=link_dic)
     plt.xticks(rotation=10)
+    plt.ylabel("log")
     plt.title("Link Time Interval")
     plt.legend()
     plt.show()
@@ -452,8 +454,8 @@ if __name__ == '__main__':
     RQ4_1_n = read_repos_data("link_1_N.json")
     RQ4_cluster = read_repos_data("link_cluster.json")
 
-    # plot_RQ1(RQ1)
-    # plot_RQ2(RQ2)
-    # plot_RQ3(RQ3)
+    plot_RQ1(RQ1)
+    plot_RQ2(RQ2)
+    plot_RQ3(RQ3)
     plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
 
