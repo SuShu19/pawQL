@@ -76,7 +76,7 @@ def request_morethan_100_nodes(re,owner, repo, type):
                     last_cursor = node[check_loca]['edges'][-1]['cursor']
                 except TypeError:
                     for i in range(-1,-len(node[check_loca]['edges']),-1):
-                        if node[check_loca]['edges'][i]['cursor'] is not None:
+                        if node[check_loca]['edges'][i] is not None:
                             last_cursor = node[check_loca]['edges'][-2]['cursor']
                 if check_loca == "comments":
                     r_ = query_request(query, owner, repo, type, last_comennt=last_cursor,number=current_number)
