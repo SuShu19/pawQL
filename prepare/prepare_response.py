@@ -72,7 +72,12 @@ def request_morethan_100_nodes(re,owner, repo, type):
         for check_loca,query in zip(check_locations,search_query):
             while node[check_loca]['pageInfo']['hasNextPage'] == True:
                 current_number = node['number']
-                last_cursor = node[check_loca]['edges'][-1]['cursor']
+                try:                # 有的cursor是None,会报错
+                    last_cursor = node[check_loca]['edges'][-1]['cursor']
+                except TypeError:
+                    for i in range(-1,-len(node[check_loca]['edges']),-1):
+                        if node[check_loca]['edges'][i]['cursor'] is not None:
+                            last_cursor = node[check_loca]['edges'][-2]['cursor']
                 if check_loca == "comments":
                     r_ = query_request(query, owner, repo, type, last_comennt=last_cursor,number=current_number)
                 elif check_loca == "timelineItems":

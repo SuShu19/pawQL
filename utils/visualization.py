@@ -439,11 +439,6 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     plt.legend()
     plt.show()
 
-    a = 1
-
-
-
-
 if __name__ == '__main__':
     # 对论文中RQ1，2，3，4的结果进行汇总
     repo_list = init.repo_list
