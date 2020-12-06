@@ -1,1 +1,1 @@
-DefinitelyTyped/DefinitelyTyped
+kubernetes/kubernetes

@@ -8,6 +8,9 @@ import seaborn as sns
 import pandas as pd
 import math
 
+repo_list = ['Rails', 'Pandas', 'Elasticsearch', 'Joomla-cms']
+# repo_list = ['Rails','Kubernetes','Pandas','Elasticsearch','Joomla-cms']
+
 def extract_pr_iss_list(owner, repo):
     response_pr = file_opt.read_json_from_file(
         init.local_data_filepath + owner + "/" + repo + "/response_pullRequests.json")
@@ -288,52 +291,54 @@ def plot_RQ1(dataset):
                 iss_pr += 1
             elif link['target']['type'] == 'issue to issue':
                 iss_iss += 1
-        pr_pr_list.append(pr_pr)
-        pr_iss_list.append(pr_iss)
-        iss_pr_list.append(iss_pr)
-        iss_iss_list.append(iss_iss)
+        pr_pr_list.append(pr_pr/len(repo_link))
+        pr_iss_list.append(pr_iss/len(repo_link))
+        iss_pr_list.append(iss_pr/len(repo_link))
+        iss_iss_list.append(iss_iss/len(repo_link))
 
     pr_pr_list = np.array(pr_pr_list)
     pr_iss_list = np.array(pr_iss_list)
     iss_pr_list = np.array(iss_pr_list)
     iss_iss_list = np.array(iss_iss_list)
 
-    repo_list = init.repo_list
-    plt.bar(repo_list,height=pr_pr_list,bottom=0,color="black",label="pullRequest to pullRequest")
-    plt.bar(repo_list,height=pr_iss_list,bottom=pr_pr_list,color="dimgrey",label="pullRequest to issue")
-    plt.bar(repo_list,height=iss_pr_list,bottom=pr_pr_list+pr_iss_list,color="darkgray",label="issue to pullRequest")
-    plt.bar(repo_list,height=iss_iss_list,bottom=pr_pr_list+pr_iss_list+iss_pr_list,color="gainsboro",label="issue to issue")
-    plt.xticks(rotation=10)
-    plt.title("Link Types")
+    ax = plt.gca()
+    plt.bar(repo_list,height=pr_pr_list,bottom=iss_iss_list+iss_pr_list+pr_iss_list,color="gainsboro",label="P-P")
+    plt.bar(repo_list,height=pr_iss_list,bottom=iss_iss_list+iss_pr_list,color="darkgray",label="P-I")
+    plt.bar(repo_list,height=iss_pr_list,bottom=iss_iss_list,color="dimgrey",label="I-P")
+    plt.bar(repo_list,height=iss_iss_list,bottom=0,color="black",label="I-I")
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    plt.ylim(0,1)
     plt.legend()
     plt.show()
 
 def plot_RQ2(dataset):
     # 层叠柱状图
-    title_list, body_list, comment_list = [],[],[]
+    title_body_list, body_list, comment_list = [],[],[]
     for repo_link in dataset:
-        title, body, comment = 0, 0, 0
+        title_body, body, comment = 0, 0, 0
         for link in repo_link:
-            if link['target']['location'] == 'title':
-                title += 1
-            elif link['target']['location'] == 'body':
-                body += 1
+            if link['target']['location'] == 'title'or link['target']['location'] == 'body':
+                title_body += 1
+            # elif link['target']['location'] == 'body':
+            #     body += 1
             elif link['target']['location'] == 'comment':
                 comment += 1
-        title_list.append(title)
-        body_list.append(body)
-        comment_list.append(comment)
+        title_body_list.append(title_body/len(repo_link))
+        # body_list.append(body/len(repo_link))
+        comment_list.append(comment/len(repo_link))
 
-    title_list = np.array(title_list)
+    title_body_list = np.array(title_body_list)
     body_list = np.array(body_list)
     comment_list = np.array(comment_list)
 
-    repo_list = init.repo_list
-    plt.bar(repo_list,height=comment_list,bottom=0,color="black",label="comment")
-    plt.bar(repo_list,height=body_list,bottom=comment_list,color="grey",label="body")
-    plt.bar(repo_list,height=title_list,bottom=comment_list+body_list,color="lightgrey",label="title")
-    plt.xticks(rotation=10)
-    plt.title("Link Location")
+    ax = plt.gca()
+    plt.bar(repo_list,height=comment_list,bottom=0,color="grey",label="Comment")
+    # plt.bar(repo_list,height=body_list,bottom=comment_list,color="grey",label="Body")
+    plt.bar(repo_list,height=title_body_list,bottom=comment_list,color="lightgrey",label="Title & Body")
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    plt.ylim(0, 1)
     plt.legend()
     plt.show()
 
@@ -449,8 +454,8 @@ if __name__ == '__main__':
     RQ4_1_n = read_repos_data("link_1_N.json")
     RQ4_cluster = read_repos_data("link_cluster.json")
 
-    plot_RQ1(RQ1)
+    # plot_RQ1(RQ1)
     plot_RQ2(RQ2)
-    plot_RQ3(RQ3)
-    plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
+    # plot_RQ3(RQ3)
+    # plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
 

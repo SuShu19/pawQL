@@ -93,8 +93,8 @@ def request_graphQL(fullname_repo):
     """
     owner = fullname_repo[0]
     repo = fullname_repo[1]
-    # types = ["pullRequests","issues"]
-    types = ["issues","pullRequests"]
+    types = ["pullRequests","issues"]
+    # types = ["issues","pullRequests"]
     for type in types:
         count = 0
         output_response_file = init.local_data_filepath+owner+"/"+repo+"/response_"+type+".json"
@@ -113,6 +113,7 @@ def request_graphQL(fullname_repo):
             else:
                 pass
             earliest_pr_cursor = r['data']['repository'][type]['edges'][-1]['cursor']
+            # earliest_pr_cursor = "Y3Vyc29yOnYyOpHOHaMMaA=="           # 用来处理无法通过graphQL获取的pr或者issue，需要填入当前pr的cursor，可能是timelineItem的原因
             r2 = query_request(queries.search_100_nodes, owner, repo, type, last_typenode=earliest_pr_cursor)
             r2 = request_morethan_100_nodes(r2, owner, repo, type)
             r['data']['repository'][type]['pageInfo'] = r2['data']['repository'][type]['pageInfo']

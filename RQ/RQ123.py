@@ -9,6 +9,7 @@ from prepare import prepare_response
 from prepare import queries
 from tqdm import tqdm
 from prepare import preprocess
+import os
 
 renew = 1
 
@@ -336,19 +337,29 @@ def extract_link_in_crossReference(nodes, node, links,owner,name):
     return links
 
 def extract_link_type(response_p, response_i, renew, filepath=None):
-    # todo 把filepathlist加进link_type中去，数据还不完整，程序已经写完了，但是还没有测试正确性，还在等完整的数据
     if renew == 1:
         type_list = ["pullRequests", "issues"]
         # type_list = ["issues", "pullRequests"]
         response_list = [response_p,response_i]
         # response_list = [response_i,response_p]
-        links = []
+        if os.path.isfile(filepath + "links_type.json"):
+            links = file_opt.read_json_from_file(filepath + "links_type.json")
+        else:
+            links = []
         pr_list, pr_createAt, issue_list, issue_createAt = extract_pr_iss_list(response_p, response_i)
         owner = response_p['data']['repository']['owner']['login']
         name = response_p['data']['repository']['name']
         for response, type_ in zip(response_list, type_list):
             nodes = response['data']['repository'][type_]['nodes']
-            for node in tqdm(nodes):
+            for node in nodes:          # 用来找到新的起点
+                if links == []:
+                    continue_nodes = nodes
+                    break
+                else:
+                    if node['number'] == links[-1]['source']['number']:
+                        continue_nodes = nodes[nodes.index(node)+1:]
+                        break
+            for node in tqdm(continue_nodes):
                 # 取出当前node的信息
                 if "changedFiles" in node.keys():
                     file_count = node["changedFiles"]
@@ -366,7 +377,8 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
                 links = extract_link_in_body(nodes, node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_comment(nodes, node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links)
                 links = extract_link_in_crossReference(nodes, node, links,owner,name)
-        file_opt.save_json_to_file(filepath + "links_type.json", links)
+                if len(links) % 100 == 0:
+                   file_opt.save_json_to_file(filepath + "links_type.json", links)
     elif renew == 0:
         links = file_opt.read_json_from_file(filepath + "links_type.json")
     return links
@@ -402,7 +414,7 @@ def work_on_repos(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
+    with PoolExecutor(max_workers=5) as executor:
         for _ in executor.map(work_on_repos, repolist):
             pass
 
