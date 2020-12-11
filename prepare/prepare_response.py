@@ -8,7 +8,8 @@ from prepare import init
 from utils import file_opt
 from prepare import queries
 from datetime import datetime
-
+from requests.packages import urllib3
+urllib3.disable_warnings()
 
 
 def read_token():
@@ -44,7 +45,7 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     else:
         query_ = query % (owner, repo, type,'',file_segment)       # 获取第一个100条nodes
     try:
-        response = requests.post('https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
+        response = requests.post('http://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True, verify=False)
     except:
         print("request error and retry")
         time.sleep(3)
@@ -93,8 +94,8 @@ def request_graphQL(fullname_repo):
     """
     owner = fullname_repo[0]
     repo = fullname_repo[1]
-    types = ["pullRequests","issues"]
-    # types = ["issues","pullRequests"]
+    # types = ["pullRequests","issues"]
+    types = ["issues","pullRequests"]
     for type in types:
         count = 0
         output_response_file = init.local_data_filepath+owner+"/"+repo+"/response_"+type+".json"
@@ -129,6 +130,6 @@ def request_graphQL(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass

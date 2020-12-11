@@ -4,7 +4,7 @@ search_100_nodes = """{
       login
     }
     name
-    %s(first:30%s){
+    %s(first:5%s){
       totalCount
       pageInfo{
         hasNextPage
@@ -36,7 +36,37 @@ search_100_nodes = """{
           totalCount
         }
         timelineItems(first:100){
-          nodes{
+          nodes{... on ReferencedEvent{
+              actor{login}
+              commitRepository{
+                owner{login}
+                name
+              }
+              commit{
+                message
+                associatedPullRequests(first:10){
+                  totalCount
+                  nodes{
+                    url
+                    number
+                    body
+                  }
+                }
+              }
+              createdAt
+              isCrossRepository
+              isDirectReference
+              subject{
+                ... on Issue{
+                  createdAt
+                  url
+                }
+                ... on PullRequest{
+                  createdAt
+                  url
+                }
+              }
+            }
             ... on CrossReferencedEvent{
               actor{
                 login 

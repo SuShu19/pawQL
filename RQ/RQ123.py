@@ -426,7 +426,7 @@ def work_on_repos(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=5) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(work_on_repos, repolist):
             pass
 

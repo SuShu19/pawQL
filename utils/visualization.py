@@ -1,4 +1,5 @@
 import numpy as np
+from matplotlib import pyplot as plt
 import matplotlib.pyplot as plt
 from utils import file_opt
 from prepare import init
