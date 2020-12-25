@@ -6,7 +6,7 @@ from tqdm import tqdm
 from utils import visualization as vis
 from datetime import datetime
 
-renew = 0
+renew = 1
 
 def extract_link_mode(linkset,renew,save_file_path):
     if renew == 1:

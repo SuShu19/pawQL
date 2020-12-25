@@ -1,5 +1,5 @@
 import numpy as np
-from matplotlib import pyplot as plt
+from matplotlib.ticker import FuncFormatter
 import matplotlib.pyplot as plt
 from utils import file_opt
 from prepare import init
@@ -9,8 +9,7 @@ import seaborn as sns
 import pandas as pd
 import math
 
-repo_list = ['Rails', 'Pandas', 'Elasticsearch', 'Joomla-cms']
-# repo_list = ['Rails','Kubernetes','Pandas','Elasticsearch','Joomla-cms']
+repo_list = ["elastic/elasticsearch","joomla/joomla-cms","kubernetes/kubernetes","pydata/pandas","rails/rails"]
 
 def extract_pr_iss_list(owner, repo):
     response_pr = file_opt.read_json_from_file(
@@ -278,10 +277,26 @@ def read_repos_data(file_name):
         RQ_list.append(data)
     return RQ_list
 
+def to_percent(temp, position):
+    return '%1.0f'%(100*temp) + '%'
+
+def auto_label(current_bar,former_bar=None):
+    for i in range(0,len(current_bar)):
+        height = current_bar[i].get_height()
+        if former_bar is not None:
+            base_height = 0
+            for bars in former_bar:
+                base_height += bars[i].get_height()
+            plt.text(current_bar[i].get_x()+current_bar[i].get_width()/2.-0.2, 0.5*height+base_height, '%s%%' % round(float(100*height),2),color = "w",size=8)
+        else:
+            plt.text(current_bar[i].get_x()+current_bar[i].get_width()/2.-0.2, 0.5*height, '%s%%' % round(float(100*height),2),color = "w",size=8)
+
 def plot_RQ1(dataset):
     # 层叠柱状图
     pr_pr_list, pr_iss_list, iss_pr_list, iss_iss_list = [],[],[],[]
+    inner_list, inter_list = [], []
     for repo_link in dataset:
+        inner_count, inter_count = 0, 0
         pr_pr, pr_iss, iss_pr, iss_iss = 0,0,0,0
         for link in repo_link:
             if link['target']['type'] == 'pullRequest to pullRequest':
@@ -292,25 +307,48 @@ def plot_RQ1(dataset):
                 iss_pr += 1
             elif link['target']['type'] == 'issue to issue':
                 iss_iss += 1
+            if link['target']['isCrossRepository'] == True:
+                inter_count += 1
+            else:
+                inner_count += 1
+
         pr_pr_list.append(pr_pr/len(repo_link))
         pr_iss_list.append(pr_iss/len(repo_link))
         iss_pr_list.append(iss_pr/len(repo_link))
         iss_iss_list.append(iss_iss/len(repo_link))
+
+        inner_list.append(inner_count/(inner_count+inter_count))
+        inter_list.append(inter_count/(inner_count+inter_count))
 
     pr_pr_list = np.array(pr_pr_list)
     pr_iss_list = np.array(pr_iss_list)
     iss_pr_list = np.array(iss_pr_list)
     iss_iss_list = np.array(iss_iss_list)
 
-    ax = plt.gca()
-    plt.bar(repo_list,height=pr_pr_list,bottom=iss_iss_list+iss_pr_list+pr_iss_list,color="gainsboro",label="P-P")
-    plt.bar(repo_list,height=pr_iss_list,bottom=iss_iss_list+iss_pr_list,color="darkgray",label="P-I")
-    plt.bar(repo_list,height=iss_pr_list,bottom=iss_iss_list,color="dimgrey",label="I-P")
-    plt.bar(repo_list,height=iss_iss_list,bottom=0,color="black",label="I-I")
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
+    # 绘制4个Type的图
+    a = plt.bar(repo_list,height=pr_pr_list,bottom=iss_iss_list+iss_pr_list+pr_iss_list,color="gainsboro",label="P - P")
+    b = plt.bar(repo_list,height=pr_iss_list,bottom=iss_iss_list+iss_pr_list,color="darkgray",label="P - I")
+    c = plt.bar(repo_list,height=iss_pr_list,bottom=iss_iss_list,color="dimgrey",label="I - P")
+    d = plt.bar(repo_list,height=iss_iss_list,bottom=0,color="black",label="I - I")
+    auto_label(d)
+    auto_label(c,former_bar=[d])
+    auto_label(b,former_bar=[d,c])
+    auto_label(a,former_bar=[d,b,c])
+    plt.ylabel("Percentage of Links")
     plt.ylim(0,1)
-    plt.legend()
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(to_percent))
+    plt.legend(loc="upper right", ncol=4, bbox_to_anchor=(1, 1.1))
+    plt.show()
+
+    # 绘制是否跨仓库的图
+    a = plt.bar(repo_list, height=inner_list, bottom=0, color="grey", label="internal link")
+    auto_label(a)
+    b = plt.bar(repo_list, height=inter_list, bottom=inner_list, color="lightgrey", label="external link")
+    auto_label(b, former_bar=[a])
+    plt.ylim(0, 1)
+    plt.ylabel("Percentage of cross repository link")
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(to_percent))
+    plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
     plt.show()
 
 def plot_RQ2(dataset):
@@ -333,15 +371,15 @@ def plot_RQ2(dataset):
     body_list = np.array(body_list)
     comment_list = np.array(comment_list)
 
-    ax = plt.gca()
     plt.bar(repo_list,height=comment_list,bottom=0,color="grey",label="Comment")
     # plt.bar(repo_list,height=body_list,bottom=comment_list,color="grey",label="Body")
     plt.bar(repo_list,height=title_body_list,bottom=comment_list,color="lightgrey",label="Title & Body")
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
     plt.ylim(0, 1)
-    plt.legend()
+    plt.ylabel("Percentage of Locations")
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(to_percent))
+    plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
     plt.show()
+
 
 def plot_RQ3(dataset):
     # 层叠柱状图
@@ -351,43 +389,84 @@ def plot_RQ3(dataset):
         for link in repo_link:
             ct = link["target"]["create_time_interval"]
             lt = link["target"]["link_time_interval"]
-            if ct > 0:
-                create_time.append(math.log(ct))
-            elif ct < 0:
-                create_time.append(-math.log(-ct))
-            elif ct == 0:
-                create_time.append(0)
-            if lt > 0:
-                link_time.append(math.log(lt))
-            elif lt < 0:
+            create_time.append(ct)
+            if lt >= 0:             # 把link time interval中为负的错误情况去除
+                link_time.append(lt)
+            else:
                 pass
-            elif lt == 0:
-                link_time.append(0)
+            # 取对数，好像是错的，看看有没有pd的函数可以实现，但是前提要去掉0和负数
+            # if ct > 0:
+            #     create_time.append(math.log(ct))
+            # elif ct < 0:
+            #     create_time.append(-math.log(-ct))
+            # elif ct == 0:
+            #     create_time.append(0)
+            # if lt > 0:
+            #     link_time.append(math.log(lt))
+            # elif lt < 0:
+            #     pass
+            # elif lt == 0:
+            #     link_time.append(0)
         create_time_list.append(create_time)
         link_time_list.append(link_time)
 
-    repo_list = init.repo_list
     create_dic = {}
     link_dic = {}
     for i in range(0,len(repo_list)):
         create_dic[repo_list[i].strip()] = create_time_list[i]
         link_dic[repo_list[i].strip()] = link_time_list[i]
 
-    create_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in create_dic.items()]))
-    link_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in link_dic.items()]))
+    # 查看大部分
+    p_percent = 0.95
+    n_percent = 0.25
+    print("---- create time interval 集中在"+str(n_percent),str(p_percent)+"的值 ----")
+    print(sorted(create_dic['Rails'])[math.ceil(len(create_dic['Rails']) * n_percent)],
+          sorted(create_dic['Rails'])[math.ceil(len(create_dic['Rails']) * p_percent)])
+    print(sorted(create_dic['Kubernetes'])[math.ceil(len(create_dic['Kubernetes']) * n_percent)],
+          sorted(create_dic['Kubernetes'])[math.ceil(len(create_dic['Kubernetes']) * p_percent)])
+    print(sorted(create_dic['Pandas'])[math.ceil(len(create_dic['Pandas']) * n_percent)],
+          sorted(create_dic['Pandas'])[math.ceil(len(create_dic['Pandas']) * p_percent)])
+    print(sorted(create_dic['Elasticsearch'])[math.ceil(len(create_dic['Elasticsearch']) * n_percent)],
+          sorted(create_dic['Elasticsearch'])[math.ceil(len(create_dic['Elasticsearch']) * p_percent)])
+    print(sorted(create_dic['Joomla-cms'])[math.ceil(len(create_dic['Joomla-cms']) * n_percent)],
+          sorted(create_dic['Joomla-cms'])[math.ceil(len(create_dic['Joomla-cms']) * p_percent)])
 
-    sns.violinplot(data=create_dic)
-    plt.xticks(rotation=10)
-    plt.ylabel("log")
-    plt.title("Create Time Interval")
-    plt.legend()
+    percent = 0.95
+    print("---- link time interval 集中在0,"+str(percent)+"的值 ----")
+    print(sorted(link_dic['Rails'])[math.ceil(len(create_dic['Rails']) * percent)])
+    print(sorted(link_dic['Kubernetes'])[math.ceil(len(create_dic['Kubernetes']) * percent)])
+    print(sorted(link_dic['Pandas'])[math.ceil(len(create_dic['Pandas']) * percent)])
+    print(sorted(link_dic['Elasticsearch'])[math.ceil(len(create_dic['Elasticsearch']) * percent)])
+    print(sorted(link_dic['Joomla-cms'])[math.ceil(len(create_dic['Joomla-cms']) * percent)])
+
+
+
+    create_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in create_dic.items()]))
+    print("---- create time interval 均值 ----")
+    print(create_dic.mean())
+    print("---- create time interval 中位数 ----")
+    print(create_dic.median())
+    print("---- create time interval 最大值 ----")
+    print(create_dic.max())
+    print("---- create time interval 最小值 ----")
+    print(create_dic.min())
+
+    link_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in link_dic.items()]))
+    print("---- Link time interval 均值 ----")
+    print(link_dic.mean())
+    print("---- Link time interval 中位数 ----")
+    print(link_dic.median())
+    print("---- Link time interval 最大值 ----")
+    print(link_dic.max())
+    print("---- Link time interval 最小值 ----")
+    print(link_dic.min())
+
+    sns.violinplot(data=create_dic,color="Lightgrey", linewidth=1)
+    plt.ylabel("Create time interval in day")
     plt.show()
 
-    sns.violinplot(data=link_dic)
-    plt.xticks(rotation=10)
-    plt.ylabel("log")
-    plt.title("Link Time Interval")
-    plt.legend()
+    sns.violinplot(data=link_dic,color="Lightgrey", linewidth=1)
+    plt.ylabel("Link time interval in day")
     plt.show()
 
 
@@ -396,12 +475,24 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     for links in RQ4_1_1:
         list_1_1.append(len(links))
     for links in RQ4_1_n:
-        list_1_n.append(len(links))
-    plt.bar(repo_list,height=list_1_1,bottom=0,color="black",label="1 to 1")
-    plt.bar(repo_list,height=list_1_n,bottom=list_1_1,color="grey",label="1 to N")
-    plt.title("1 to 1 link and 1 to N link")
-    plt.xticks(rotation=10)
-    plt.legend()
+        count = 0
+        for link in links:
+            count += len(link['target'])
+        list_1_n.append(count)
+    # 转换成百分比
+
+    for i in range(0,len(list_1_1)):
+        sum = list_1_1[i] + list_1_n[i]
+        list_1_1[i] = list_1_1[i] / sum
+        list_1_n[i] = list_1_n[i] / sum
+
+    plt.bar(repo_list,height=list_1_1,bottom=0,color="grey",label="1 to 1")
+    plt.bar(repo_list,height=list_1_n,bottom=list_1_1,color="lightgrey",label="1 to N")
+    plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
+    plt.ylabel("Percentage of link patterns")
+    plt.ylim(0,1)
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(to_percent))
+    plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
     plt.show()
 
     layer_list, nodes_list, duration_list = {}, {}, {}
@@ -409,45 +500,50 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
         cluster_layer, cluster_node, duration = [], [], []
         for cluster in RQ4_cluster[i]:
             cluster_layer.append(cluster["layers_count"])
-            cluster_node.append(math.log(cluster["nodes_count"]))
-            time = cluster["cluster_time_interval"]
-            if time > 0:
-                duration.append(math.log(time))
-            elif time < 0:
-                duration.append(-math.log(-time))
-            elif time == 0:
-                duration.append(0)
+            cluster_node.append(cluster["nodes_count"])
+            duration.append(cluster["cluster_time_interval"])
         layer_list[repo_list[i]] = cluster_layer
         nodes_list[repo_list[i]] = cluster_node
-        duration_list [repo_list[i]] = duration
+        duration_list [repo_list[i]] = sorted(duration)
 
     layer_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in layer_list.items()]))
     nodes_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in nodes_list.items()]))
     duration_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in duration_list.items()]))
 
-    sns.violinplot(data=layer_list)
-    plt.xticks(rotation=10)
-    plt.title("Cluster Layers")
-    plt.legend()
+    # 显示数字特征
+    print("---- layer node 均值 ----")
+    print(nodes_list.mean())
+    print("---- layer node 中位数 ----")
+    print(nodes_list.median())
+    print("---- layer node 最大值 ----")
+    print(nodes_list.max())
+
+    print("---- duration 均值 ----")
+    print(duration_list.mean())
+    print("---- duration 中位数 ----")
+    print(duration_list.median())
+    print("---- duration 最大值 ----")
+    print(duration_list.max())
+
+    # 对cluster的三个变量取对数
+    # layer_list = layer_list.apply(np.log)
+    nodes_list = nodes_list.apply(np.log)
+    # duration_list = duration_list.apply(np.log)
+
+    sns.violinplot(data=layer_list,color="Lightgrey", linewidth=1)
+    plt.ylabel("Cluster layers")
     plt.show()
 
-    sns.violinplot(data=nodes_list)
-    plt.xticks(rotation=10)
-    plt.ylabel("log")
-    plt.title("Cluster Nodes")
-    plt.legend()
+    sns.violinplot(data=nodes_list,color="Lightgrey", linewidth=1)
+    plt.ylabel("Cluster nodes (log)")
     plt.show()
 
-    sns.violinplot(data=duration_list)
-    plt.xticks(rotation=10)
-    plt.ylabel("log")
-    plt.title("Cluster Duration")
-    plt.legend()
+    sns.violinplot(data=duration_list,color="Lightgrey", linewidth=1, cut=0)
+    plt.ylabel("Cluster duration in days")
     plt.show()
 
 if __name__ == '__main__':
     # 对论文中RQ1，2，3，4的结果进行汇总
-    repo_list = init.repo_list
     RQ1 = read_repos_data("links_type.json")
     RQ2 = RQ1
     RQ3 = RQ1
@@ -455,8 +551,8 @@ if __name__ == '__main__':
     RQ4_1_n = read_repos_data("link_1_N.json")
     RQ4_cluster = read_repos_data("link_cluster.json")
 
-    # plot_RQ1(RQ1)
-    plot_RQ2(RQ2)
+    plot_RQ1(RQ1)
+    # plot_RQ2(RQ2)
     # plot_RQ3(RQ3)
     # plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
 

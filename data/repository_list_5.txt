@@ -1,1 +1,4 @@
+elastic/elasticsearch
+joomla/joomla-cms
+pydata/pandas
 rails/rails

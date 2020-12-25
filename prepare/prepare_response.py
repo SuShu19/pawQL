@@ -8,6 +8,7 @@ from prepare import init
 from utils import file_opt
 from prepare import queries
 from datetime import datetime
+# from requests.packages.urllib3.contrib import pyopenssl
 from requests.packages import urllib3
 urllib3.disable_warnings()
 
@@ -17,7 +18,7 @@ def read_token():
     tokens = token_file.readlines()
     return tokens
 
-def query_request(query, owner, repo, type, last_typenode=None, last_comennt=None, last_timelinItems=None,number=None,):
+def query_request(query, owner, repo, type=None, last_typenode=None, last_comennt=None, last_timelinItems=None,number=None,):
     tokens = read_token()
     token = tokens[random.randint(0,len(tokens)-1)].strip()
     headers = {"Authorization": "Bearer %s" % token}
@@ -45,13 +46,19 @@ def query_request(query, owner, repo, type, last_typenode=None, last_comennt=Non
     else:
         query_ = query % (owner, repo, type,'',file_segment)       # 获取第一个100条nodes
     try:
-        response = requests.post('http://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True, verify=False)
+        response = requests.post('https://api.github.com/graphql', json={'query': query_}, headers=headers, stream=True)
     except:
         print("request error and retry")
         time.sleep(3)
         r1 = query_request(query, owner, repo, type, last_typenode,last_comennt,last_timelinItems,number)
         return r1
     if response.status_code == 200:
+        if "errors" in response.json() and "Could not resolve to" in response.json()['errors'] and type == 'pullRequest':
+            type = 'issue'
+            r1 = query_request(query, owner, repo, type, last_typenode, last_comennt, last_timelinItems, number)
+            return r1
+        if "errors" in response.json() and type == 'issue':
+            pass
         try:
             response.json()['data']
             return response.json()
@@ -94,8 +101,8 @@ def request_graphQL(fullname_repo):
     """
     owner = fullname_repo[0]
     repo = fullname_repo[1]
-    # types = ["pullRequests","issues"]
-    types = ["issues","pullRequests"]
+    types = ["pullRequests","issues"]
+    # types = ["issues","pullRequests"]
     for type in types:
         count = 0
         output_response_file = init.local_data_filepath+owner+"/"+repo+"/response_"+type+".json"
@@ -118,6 +125,7 @@ def request_graphQL(fullname_repo):
             r2 = query_request(queries.search_100_nodes, owner, repo, type, last_typenode=earliest_pr_cursor)
             r2 = request_morethan_100_nodes(r2, owner, repo, type)
             r['data']['repository'][type]['pageInfo'] = r2['data']['repository'][type]['pageInfo']
+            r['data']['repository'][type]['totalCount'] = r2['data']['repository'][type]['totalCount']
             r['data']['repository'][type]['edges']+= r2['data']['repository'][type]['edges']
             r['data']['repository'][type]['nodes'] += r2['data']['repository'][type]['nodes']
             if not r['data']['repository'][type]['pageInfo']['hasNextPage']:
@@ -130,6 +138,6 @@ def request_graphQL(fullname_repo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=1) as executor:
+    with PoolExecutor(max_workers=2) as executor:
         for _ in executor.map(request_graphQL, repolist):
             pass
