@@ -1,0 +1,1458 @@
+[
+    {
+        "source": {
+            "number": 29154,
+            "url": "https://github.com/elastic/elasticsearch/pull/29154",
+            "createdAt": "2018-03-20T05:50:05Z",
+            "files": [
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/scripted/ScriptedMetricAggregationBuilder.java",
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/scripted/ScriptedMetricAggregatorFactory.java",
+                "server/src/test/java/org/elasticsearch/search/aggregations/metrics/ScriptedMetricIT.java",
+                "server/src/test/java/org/elasticsearch/search/aggregations/metrics/scripted/ScriptedMetricAggregatorTests.java"
+            ]
+        },
+        "target": {
+            "number": "28819",
+            "url": "https://github.com/elastic/elasticsearch/issues/28819",
+            "createdAt": "2018-02-25T21:36:01Z",
+            "create_time_interval": 56756,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 3408,
+            "url": "https://github.com/elastic/elasticsearch/pull/3408",
+            "createdAt": "2013-07-30T09:33:48Z",
+            "files": [
+                "src/main/java/org/elasticsearch/common/lucene/search/function/BoostScoreFunction.java",
+                "src/main/java/org/elasticsearch/common/lucene/search/function/FiltersFunctionScoreQuery.java",
+                "src/main/java/org/elasticsearch/common/lucene/search/function/FunctionScoreQuery.java",
+                "src/main/java/org/elasticsearch/common/lucene/search/function/ScoreFunction.java",
+                "src/main/java/org/elasticsearch/common/lucene/search/function/ScriptScoreFunction.java",
+                "src/main/java/org/elasticsearch/index/fielddata/GeoPointValues.java",
+                "src/main/java/org/elasticsearch/index/fielddata/plain/GeoPointDoubleArrayAtomicFieldData.java",
+                "src/main/java/org/elasticsearch/index/query/CustomBoostFactorQueryBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/CustomBoostFactorQueryParser.java",
+                "src/main/java/org/elasticsearch/index/query/CustomFiltersScoreQueryBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/CustomFiltersScoreQueryParser.java",
+                "src/main/java/org/elasticsearch/index/query/CustomScoreQueryBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/CustomScoreQueryParser.java",
+                "src/main/java/org/elasticsearch/index/query/QueryBuilders.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/DecayFunction.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/DecayFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/DecayFunctionParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/FunctionScoreModule.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/FunctionScoreQueryBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/FunctionScoreQueryParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/ScoreFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/ScoreFunctionParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/ScoreFunctionParserMapper.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/exp/ExponentialDecayFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/exp/ExponentialDecayFunctionParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/factor/FactorBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/factor/FactorParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/gauss/GaussDecayFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/gauss/GaussDecayFunctionParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/lin/LinearDecayFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/lin/LinearDecayFunctionParser.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/script/ScriptScoreFunctionBuilder.java",
+                "src/main/java/org/elasticsearch/index/query/functionscore/script/ScriptScoreFunctionParser.java",
+                "src/main/java/org/elasticsearch/indices/query/IndicesQueriesModule.java",
+                "src/main/java/org/elasticsearch/search/SearchModule.java",
+                "src/test/java/org/elasticsearch/test/integration/search/basic/TransportTwoNodesSearchTests.java",
+                "src/test/java/org/elasticsearch/test/integration/search/child/SimpleChildQuerySearchTests.java",
+                "src/test/java/org/elasticsearch/test/integration/search/customscore/CustomScoreSearchTests.java",
+                "src/test/java/org/elasticsearch/test/integration/search/functionscore/CustomDistanceScoreBuilder.java",
+                "src/test/java/org/elasticsearch/test/integration/search/functionscore/CustomDistanceScoreParser.java",
+                "src/test/java/org/elasticsearch/test/integration/search/functionscore/CustomDistanceScorePlugin.java",
+                "src/test/java/org/elasticsearch/test/integration/search/functionscore/DecayFunctionScoreTest.java",
+                "src/test/java/org/elasticsearch/test/integration/search/functionscore/FunctionScorePluginTest.java",
+                "src/test/java/org/elasticsearch/test/integration/search/rescore/QueryRescorerTests.java",
+                "src/test/java/org/elasticsearch/test/integration/search/sort/SimpleSortTests.java",
+                "src/test/java/org/elasticsearch/test/unit/index/aliases/IndexAliasesServiceTests.java",
+                "src/test/java/org/elasticsearch/test/unit/index/query/SimpleIndexQueryParserTests.java",
+                "src/test/java/org/elasticsearch/test/unit/index/query/faulty-function-score-query.json",
+                "src/test/java/org/elasticsearch/test/unit/index/query/function-filter-score-query.json",
+                "src/test/java/org/elasticsearch/test/unit/index/query/guice/IndexQueryParserModuleTests.java",
+                "src/test/java/org/elasticsearch/test/unit/index/query/plugin/IndexQueryParserPlugin2Tests.java",
+                "src/test/java/org/elasticsearch/test/unit/index/query/plugin/IndexQueryParserPluginTests.java"
+            ]
+        },
+        "target": {
+            "number": 3423,
+            "url": "https://github.com/elastic/elasticsearch/issues/3423",
+            "createdAt": "2013-08-01T12:54:17Z",
+            "create_time_interval": 12029,
+            "link_time_interval": 12968,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": 26368,
+            "url": "https://github.com/elastic/elasticsearch/pull/26368",
+            "createdAt": "2017-08-24T18:56:12Z",
+            "files": [
+                "client/client-benchmark-noop-api-plugin/src/main/java/org/elasticsearch/plugin/noop/action/search/NoopSearchRequestBuilder.java",
+                "core/src/main/java/org/elasticsearch/action/explain/TransportExplainAction.java",
+                "core/src/main/java/org/elasticsearch/action/search/SearchRequestBuilder.java",
+                "core/src/main/java/org/elasticsearch/common/xcontent/ConstructingObjectParser.java",
+                "core/src/main/java/org/elasticsearch/plugins/SearchPlugin.java",
+                "core/src/main/java/org/elasticsearch/search/DefaultSearchContext.java",
+                "core/src/main/java/org/elasticsearch/search/SearchModule.java",
+                "core/src/main/java/org/elasticsearch/search/SearchService.java",
+                "core/src/main/java/org/elasticsearch/search/aggregations/metrics/tophits/TopHitsAggregator.java",
+                "core/src/main/java/org/elasticsearch/search/builder/SearchSourceBuilder.java",
+                "core/src/main/java/org/elasticsearch/search/dfs/DfsPhase.java",
+                "core/src/main/java/org/elasticsearch/search/fetch/subphase/ExplainFetchSubPhase.java",
+                "core/src/main/java/org/elasticsearch/search/internal/FilteredSearchContext.java",
+                "core/src/main/java/org/elasticsearch/search/internal/SearchContext.java",
+                "core/src/main/java/org/elasticsearch/search/internal/SubSearchContext.java",
+                "core/src/main/java/org/elasticsearch/search/query/TopDocsCollectorContext.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/QueryRescorer.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/QueryRescorerBuilder.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/RescoreContext.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/RescorePhase.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/Rescorer.java",
+                "core/src/main/java/org/elasticsearch/search/rescore/RescorerBuilder.java",
+                "core/src/test/java/org/elasticsearch/search/AbstractSearchTestCase.java",
+                "core/src/test/java/org/elasticsearch/search/SearchModuleTests.java",
+                "core/src/test/java/org/elasticsearch/search/aggregations/metrics/TopHitsIT.java",
+                "core/src/test/java/org/elasticsearch/search/functionscore/QueryRescorerIT.java",
+                "core/src/test/java/org/elasticsearch/search/rescore/QueryRescorerBuilderTests.java",
+                "plugins/examples/rescore/build.gradle",
+                "plugins/examples/rescore/src/main/java/org/elasticsearch/example/rescore/ExampleRescoreBuilder.java",
+                "plugins/examples/rescore/src/main/java/org/elasticsearch/example/rescore/ExampleRescorePlugin.java",
+                "plugins/examples/rescore/src/test/java/org/elasticsearch/example/rescore/ExampleRescoreBuilderTests.java",
+                "plugins/examples/rescore/src/test/java/org/elasticsearch/example/rescore/ExampleRescoreClientYamlTestSuiteIT.java",
+                "plugins/examples/rescore/src/test/resources/rest-api-spec/test/example-rescore/10_basic.yml",
+                "plugins/examples/rescore/src/test/resources/rest-api-spec/test/example-rescore/20_score.yml",
+                "test/framework/src/main/java/org/elasticsearch/search/RandomSearchRequestGenerator.java",
+                "test/framework/src/main/java/org/elasticsearch/test/TestSearchContext.java"
+            ]
+        },
+        "target": {
+            "number": 26208,
+            "url": "https://github.com/elastic/elasticsearch/issues/26208",
+            "createdAt": "2017-08-14T20:46:53Z",
+            "create_time_interval": 6641,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": "43523",
+            "url": "https://github.com/elastic/elasticsearch/issues/43523",
+            "createdAt": "2019-06-24T04:27:02Z",
+            "files": [
+                "server/src/main/java/org/elasticsearch/index/engine/InternalEngine.java",
+                "server/src/test/java/org/elasticsearch/index/engine/InternalEngineTests.java"
+            ]
+        },
+        "target": {
+            "number": "40435",
+            "url": "https://github.com/elastic/elasticsearch/issues/40435",
+            "createdAt": "2019-03-26T04:06:22Z",
+            "create_time_interval": -91,
+            "link_time_interval": 68392,
+            "type": "issue to issue",
+            "location": "commit",
+            "files": [],
+            "reason": "fix defect"
+        },
+        "link_time_interval": 46522,
+        "create_time_interval": -91
+    },
+    {
+        "source": {
+            "number": "55602",
+            "url": "https://github.com/elastic/elasticsearch/issues/55602",
+            "createdAt": "2020-04-22T15:31:01Z",
+            "files": [
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/GeoCentroidAggregatorSupplier.java",
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/InternalGeoCentroid.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/license/XPackLicenseState.java",
+                "x-pack/plugin/spatial/build.gradle",
+                "x-pack/plugin/spatial/src/main/java/org/elasticsearch/xpack/spatial/SpatialPlugin.java",
+                "x-pack/plugin/spatial/src/main/java/org/elasticsearch/xpack/spatial/aggregations/metrics/GeoShapeCentroidAggregator.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/LocalStateSpatialPlugin.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/SpatialPluginTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/aggregations/metrics/GeoShapeCentroidAggregatorTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/CartesianFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/GeoShapeWithDocValuesFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/ShapeFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/query/ShapeQueryBuilderTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/ShapeQueryOverShapeTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/ShapeQueryTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/aggregations/metrics/GeoShapeBoundsAggregatorTests.java",
+                "x-pack/plugin/spatial/src/test/resources/rest-api-spec/test/20_geo_centroid.yml"
+            ]
+        },
+        "target": {
+            "number": "55819",
+            "url": "https://github.com/elastic/elasticsearch/pull/55819",
+            "createdAt": "2020-04-27T17:57:25Z",
+            "create_time_interval": 5,
+            "link_time_interval": 4725,
+            "type": "issue to pullRequest",
+            "location": "commit",
+            "files": [
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/GeoCentroidAggregatorSupplier.java",
+                "server/src/main/java/org/elasticsearch/search/aggregations/metrics/InternalGeoCentroid.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/license/XPackLicenseState.java",
+                "x-pack/plugin/spatial/build.gradle",
+                "x-pack/plugin/spatial/src/main/java/org/elasticsearch/xpack/spatial/SpatialPlugin.java",
+                "x-pack/plugin/spatial/src/main/java/org/elasticsearch/xpack/spatial/aggregations/metrics/GeoShapeCentroidAggregator.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/LocalStateSpatialPlugin.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/SpatialPluginTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/aggregations/metrics/GeoShapeCentroidAggregatorTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/CartesianFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/GeoShapeWithDocValuesFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/mapper/ShapeFieldMapperTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/index/query/ShapeQueryBuilderTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/ShapeQueryOverShapeTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/ShapeQueryTests.java",
+                "x-pack/plugin/spatial/src/test/java/org/elasticsearch/xpack/spatial/search/aggregations/metrics/GeoShapeBoundsAggregatorTests.java",
+                "x-pack/plugin/spatial/src/test/resources/rest-api-spec/test/20_geo_centroid.yml"
+            ],
+            "reason": ""
+        }
+    },
+    {
+        "source": {
+            "number": 6839,
+            "url": "https://github.com/elastic/elasticsearch/issues/6839",
+            "createdAt": "2014-07-11T21:20:51Z",
+            "files": []
+        },
+        "target": {
+            "number": 2114,
+            "url": "https://github.com/elastic/elasticsearch/issues/2114",
+            "createdAt": "2012-07-24T17:28:53Z",
+            "create_time_interval": 72482,
+            "link_time_interval": 5172,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "dup issue and close later one"
+        }
+    },
+    {
+        "source": {
+            "number": 58240,
+            "url": "https://github.com/elastic/elasticsearch/pull/58240",
+            "createdAt": "2020-06-17T11:04:41Z",
+            "files": [
+                "x-pack/plugin/ml/qa/native-multi-node-tests/src/test/java/org/elasticsearch/xpack/ml/integration/DeleteJobIT.java",
+                "x-pack/plugin/ml/qa/native-multi-node-tests/src/test/java/org/elasticsearch/xpack/ml/integration/MlNativeAutodetectIntegTestCase.java",
+                "x-pack/plugin/ml/qa/native-multi-node-tests/src/test/java/org/elasticsearch/xpack/ml/integration/RevertModelSnapshotIT.java",
+                "x-pack/plugin/ml/qa/native-multi-node-tests/src/test/java/org/elasticsearch/xpack/ml/integration/SetUpgradeModeIT.java",
+                "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/action/TransportDeleteJobAction.java",
+                "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/action/TransportRevertModelSnapshotAction.java",
+                "x-pack/plugin/ml/src/main/java/org/elasticsearch/xpack/ml/job/persistence/JobDataDeleter.java",
+                "x-pack/plugin/ml/src/test/java/org/elasticsearch/xpack/ml/job/persistence/JobDataDeleterTests.java"
+            ]
+        },
+        "target": {
+            "number": "57982",
+            "url": "https://github.com/elastic/elasticsearch/issues/57982",
+            "createdAt": "2020-06-11T11:50:33Z",
+            "create_time_interval": 2752,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": 20094,
+            "url": "https://github.com/elastic/elasticsearch/pull/20094",
+            "createdAt": "2016-08-21T03:34:36Z",
+            "files": [
+                "distribution/src/main/resources/config/elasticsearch.yml"
+            ]
+        },
+        "target": {
+            "number": "20090",
+            "url": "https://github.com/elastic/elasticsearch/issues/20090",
+            "createdAt": "2016-08-20T08:11:28Z",
+            "create_time_interval": 16612,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": "62509",
+            "url": "https://github.com/elastic/elasticsearch/issues/62509",
+            "createdAt": "2020-09-16T22:33:40Z",
+            "files": [
+                "server/src/main/java/org/elasticsearch/common/lucene/index/ElasticsearchDirectoryReader.java",
+                "server/src/main/java/org/elasticsearch/common/lucene/index/ElasticsearchLeafReader.java",
+                "server/src/main/java/org/elasticsearch/common/lucene/index/SequentialStoredFieldsLeafReader.java",
+                "server/src/main/java/org/elasticsearch/search/fetch/FetchPhase.java",
+                "server/src/main/java/org/elasticsearch/search/internal/ExitableDirectoryReader.java",
+                "server/src/test/java/org/elasticsearch/index/engine/InternalEngineTests.java",
+                "server/src/test/java/org/elasticsearch/search/fetch/FetchPhaseTests.java",
+                "server/src/test/java/org/elasticsearch/search/internal/ContextIndexSearcherTests.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/snapshots/SeqIdGeneratingFilterReader.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/security/authz/accesscontrol/DocumentSubsetReader.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/xpack/core/security/authz/accesscontrol/FieldSubsetReader.java",
+                "x-pack/plugin/core/src/test/java/org/elasticsearch/xpack/core/security/authz/accesscontrol/DocumentSubsetReaderTests.java",
+                "x-pack/plugin/core/src/test/java/org/elasticsearch/xpack/core/security/authz/accesscontrol/FieldSubsetReaderTests.java"
+            ]
+        },
+        "target": {
+            "number": "62024",
+            "url": "https://github.com/elastic/elasticsearch/issues/62024",
+            "createdAt": "2020-09-06T21:10:42Z",
+            "create_time_interval": -11,
+            "link_time_interval": 65587,
+            "type": "issue to issue",
+            "location": "commit",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": 66386,
+            "url": "https://github.com/elastic/elasticsearch/pull/66386",
+            "createdAt": "2020-12-15T17:29:10Z",
+            "files": [
+                "docs/reference/setup/logging-config.asciidoc"
+            ]
+        },
+        "target": {
+            "number": 65169,
+            "url": "https://github.com/elastic/elasticsearch/pull/65169",
+            "createdAt": "2020-11-17T23:50:43Z",
+            "create_time_interval": 22893,
+            "link_time_interval": 0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "docs/reference/setup/logging-config.asciidoc"
+            ],
+            "reason": "solve defect imported in another pr"
+        }
+    },
+    {
+        "source": {
+            "number": 27391,
+            "url": "https://github.com/joomla/joomla-cms/pull/27391",
+            "createdAt": "2019-12-31T10:44:48Z",
+            "files": [
+                "administrator/components/com_finder/View/Index/HtmlView.php",
+                "administrator/components/com_finder/tmpl/index/default.php",
+                "administrator/components/com_redirect/Controller/DisplayController.php",
+                "administrator/components/com_redirect/Model/LinksModel.php",
+                "administrator/components/com_redirect/View/Links/HtmlView.php",
+                "administrator/components/com_redirect/tmpl/links/default.php",
+                "administrator/language/en-GB/com_finder.ini",
+                "administrator/language/en-GB/com_redirect.ini",
+                "build/media_source/legacy/js/bootstrap-init.es5.js"
+            ]
+        },
+        "target": {
+            "number": "27380",
+            "url": "https://github.com/joomla/joomla-cms/pull/27380",
+            "createdAt": "2019-12-30T09:24:54Z",
+            "create_time_interval": 81606,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "administrator/components/com_redirect/Controller/DisplayController.php",
+                "administrator/language/en-GB/com_redirect.ini"
+            ],
+            "reason": "related discussion on similar contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 30019,
+            "url": "https://github.com/joomla/joomla-cms/issues/30019",
+            "createdAt": "2020-07-06T08:02:01Z",
+            "files": []
+        },
+        "target": {
+            "number": 29360,
+            "url": "https://github.com/joomla/joomla-cms/issues/29360",
+            "createdAt": "2020-06-01T13:36:04Z",
+            "create_time_interval": 20043,
+            "link_time_interval": 37869,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "dup issue and close later one"
+        }
+    },
+    {
+        "source": {
+            "number": 25247,
+            "url": "https://github.com/joomla/joomla-cms/pull/25247",
+            "createdAt": "2019-06-17T07:00:02Z",
+            "files": [
+                "administrator/components/com_redirect/tmpl/links/default_addform.php",
+                "administrator/language/en-GB/en-GB.com_redirect.ini"
+            ]
+        },
+        "target": {
+            "number": 24861,
+            "url": "https://github.com/joomla/joomla-cms/issues/24861",
+            "createdAt": "2019-05-12T11:32:16Z",
+            "create_time_interval": 16334,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 6665,
+            "url": "https://github.com/joomla/joomla-cms/pull/6665",
+            "createdAt": "2015-04-05T09:31:13Z",
+            "files": [
+                "modules/mod_whosonline/helper.php"
+            ]
+        },
+        "target": {
+            "number": 6632,
+            "url": "https://github.com/joomla/joomla-cms/pull/6632",
+            "createdAt": "2015-04-01T17:34:55Z",
+            "create_time_interval": 29022,
+            "link_time_interval": 0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "plugins/user/joomla/joomla.php"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 22923,
+            "url": "https://github.com/joomla/joomla-cms/pull/22923",
+            "createdAt": "2018-11-02T19:58:23Z",
+            "files": [
+                "plugins/system/fields/fields.php"
+            ]
+        },
+        "target": {
+            "number": 19884,
+            "url": "https://github.com/joomla/joomla-cms/pull/19884",
+            "createdAt": "2018-03-10T17:58:28Z",
+            "create_time_interval": 79205,
+            "link_time_interval": 45312,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "administrator/components/com_fields/models/field.php",
+                "components/com_users/controllers/profile.php",
+                "libraries/src/MVC/Controller/FormController.php",
+                "plugins/system/fields/fields.php"
+            ],
+            "reason": "conflict contribution but merged both"
+        }
+    },
+    {
+        "source": {
+            "number": 26928,
+            "url": "https://github.com/joomla/joomla-cms/issues/26928",
+            "createdAt": "2019-11-02T10:07:17Z",
+            "files": []
+        },
+        "target": {
+            "number": 26987,
+            "url": "https://github.com/joomla/joomla-cms/pull/26987",
+            "createdAt": "2019-11-05T00:13:29Z",
+            "create_time_interval": 50772,
+            "link_time_interval": 1517,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "administrator/templates/atum/scss/vendor/bootstrap/_custom-forms.scss"
+            ],
+            "reason": "issue is solved by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 17372,
+            "url": "https://github.com/joomla/joomla-cms/pull/17372",
+            "createdAt": "2017-07-31T17:58:32Z",
+            "files": [
+                "administrator/components/com_associations/helpers/associations.php",
+                "administrator/components/com_categories/helpers/categories.php",
+                "administrator/components/com_categories/models/category.php",
+                "administrator/components/com_categories/models/fields/modal/category.php",
+                "administrator/components/com_categories/views/categories/view.html.php",
+                "administrator/components/com_categories/views/category/view.html.php",
+                "administrator/components/com_config/helper/config.php",
+                "administrator/components/com_config/model/component.php",
+                "administrator/components/com_config/model/field/configcomponents.php",
+                "administrator/components/com_contact/helpers/contact.php",
+                "administrator/components/com_contact/models/fields/modal/contact.php",
+                "administrator/components/com_content/helpers/content.php",
+                "administrator/components/com_content/models/fields/modal/article.php",
+                "administrator/components/com_contenthistory/helpers/contenthistory.php",
+                "administrator/components/com_contenthistory/views/preview/view.html.php",
+                "administrator/components/com_fields/helpers/fields.php",
+                "administrator/components/com_fields/models/field.php",
+                "administrator/components/com_fields/models/group.php",
+                "administrator/components/com_fields/views/field/view.html.php",
+                "administrator/components/com_fields/views/fields/view.html.php",
+                "administrator/components/com_fields/views/group/view.html.php",
+                "administrator/components/com_fields/views/groups/view.html.php",
+                "administrator/components/com_finder/helpers/language.php",
+                "administrator/components/com_finder/models/statistics.php",
+                "administrator/components/com_installer/models/extension.php",
+                "administrator/components/com_joomlaupdate/views/default/view.html.php",
+                "administrator/components/com_joomlaupdate/views/upload/view.html.php",
+                "administrator/components/com_languages/controllers/installed.php",
+                "administrator/components/com_menus/models/fields/componentscategory.php",
+                "administrator/components/com_menus/models/fields/modal/menu.php",
+                "administrator/components/com_menus/models/item.php",
+                "administrator/components/com_menus/models/items.php",
+                "administrator/components/com_menus/models/menutypes.php",
+                "administrator/components/com_menus/views/item/tmpl/edit_container.php",
+                "administrator/components/com_menus/views/items/view.html.php",
+                "administrator/components/com_messages/models/message.php",
+                "administrator/components/com_modules/helpers/modules.php",
+                "administrator/components/com_modules/models/module.php",
+                "administrator/components/com_modules/models/modules.php",
+                "administrator/components/com_modules/models/positions.php",
+                "administrator/components/com_modules/models/select.php",
+                "administrator/components/com_newsfeeds/models/fields/modal/newsfeed.php",
+                "administrator/components/com_plugins/models/plugin.php",
+                "administrator/components/com_plugins/models/plugins.php",
+                "administrator/components/com_postinstall/models/messages.php",
+                "administrator/components/com_tags/helpers/tags.php",
+                "administrator/components/com_tags/views/tag/view.html.php",
+                "administrator/components/com_templates/models/style.php",
+                "administrator/components/com_templates/models/template.php",
+                "administrator/components/com_users/helpers/debug.php",
+                "administrator/components/com_users/helpers/users.php",
+                "administrator/components/com_users/models/user.php",
+                "administrator/includes/toolbar.php",
+                "administrator/modules/mod_menu/menu.php",
+                "administrator/templates/hathor/component.php",
+                "administrator/templates/hathor/postinstall/hathormessage.php",
+                "build/helpTOC.php",
+                "cli/deletefiles.php",
+                "cli/finder_indexer.php",
+                "components/com_ajax/ajax.php",
+                "components/com_config/model/modules.php",
+                "components/com_config/model/templates.php",
+                "components/com_config/view/cms/html.php",
+                "components/com_config/view/modules/html.php",
+                "components/com_contact/contact.php",
+                "components/com_contenthistory/contenthistory.php",
+                "components/com_fields/controller.php",
+                "components/com_media/media.php",
+                "components/com_menus/menus.php",
+                "components/com_modules/modules.php",
+                "components/com_users/helpers/html/users.php",
+                "components/com_users/views/profile/tmpl/edit.php",
+                "installation/model/database.php",
+                "installation/model/languages.php",
+                "libraries/fof/form/field/components.php",
+                "libraries/fof/platform/interface.php",
+                "libraries/joomla/form/fields/aliastag.php",
+                "libraries/joomla/form/fields/components.php",
+                "libraries/joomla/form/fields/plugins.php",
+                "libraries/legacy/form/field/componentlayout.php",
+                "libraries/legacy/form/field/modulelayout.php",
+                "libraries/src/Application/CMSApplication.php",
+                "libraries/src/Application/SiteApplication.php",
+                "libraries/src/Component/ComponentHelper.php",
+                "libraries/src/Document/ErrorDocument.php",
+                "libraries/src/Document/HtmlDocument.php",
+                "libraries/src/Form/Field/ContenttypeField.php",
+                "libraries/src/Form/Field/TemplatestyleField.php",
+                "libraries/src/Form/Field/UseractiveField.php",
+                "libraries/src/Helper/ModuleHelper.php",
+                "libraries/src/Installer/Adapter/LanguageAdapter.php",
+                "libraries/src/Installer/InstallerAdapter.php",
+                "libraries/src/Language/Language.php",
+                "libraries/src/MVC/View/HtmlView.php",
+                "libraries/src/Plugin/CMSPlugin.php",
+                "modules/mod_finder/tmpl/default.php",
+                "plugins/content/joomla/joomla.php",
+                "plugins/search/tags/tags.php",
+                "plugins/system/languagefilter/languagefilter.php",
+                "plugins/system/updatenotification/updatenotification.php"
+            ]
+        },
+        "target": {
+            "number": 17272,
+            "url": "https://github.com/joomla/joomla-cms/issues/17272",
+            "createdAt": "2017-07-26T13:23:31Z",
+            "create_time_interval": 69899,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "intend to fix defect but failed while arouse others to contribute for the defect"
+        }
+    },
+    {
+        "source": {
+            "number": 6449,
+            "url": "https://github.com/joomla/joomla-cms/pull/6449",
+            "createdAt": "2015-03-15T19:02:37Z",
+            "files": [
+                "administrator/modules/mod_login/helper.php"
+            ]
+        },
+        "target": {
+            "number": "6445",
+            "url": "https://github.com/joomla/joomla-cms/issues/6445",
+            "createdAt": "2015-03-15T16:27:34Z",
+            "create_time_interval": 77097,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 29644,
+            "url": "https://github.com/joomla/joomla-cms/issues/29644",
+            "createdAt": "2020-06-16T18:44:38Z",
+            "files": []
+        },
+        "target": {
+            "number": 15833,
+            "url": "https://github.com/joomla/joomla-cms/issues/15833",
+            "createdAt": "2017-05-05T11:22:03Z",
+            "create_time_interval": 59845,
+            "link_time_interval": 4620,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "dup issue and close later one"
+        }
+    },
+    {
+        "source": {
+            "number": 10997,
+            "url": "https://github.com/joomla/joomla-cms/issues/10997",
+            "createdAt": "2016-07-03T11:24:17Z",
+            "files": []
+        },
+        "target": {
+            "number": 9689,
+            "url": "https://github.com/joomla/joomla-cms/pull/9689",
+            "createdAt": "2016-03-31T18:06:15Z",
+            "create_time_interval": 24118,
+            "link_time_interval": 14348,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "administrator/components/com_menus/helpers/menus.php"
+            ],
+            "reason": "related contribution but not completely solved issue"
+        }
+    },
+    {
+        "source": {
+            "number": 94521,
+            "url": "https://github.com/kubernetes/kubernetes/pull/94521",
+            "createdAt": "2020-09-04T12:45:38Z",
+            "files": [
+                "cmd/kube-scheduler/app/options/options.go"
+            ]
+        },
+        "target": {
+            "number": "94509",
+            "url": "https://github.com/kubernetes/kubernetes/pull/94509",
+            "createdAt": "2020-09-04T06:04:18Z",
+            "create_time_interval": 62320,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "cmd/cloud-controller-manager/app/controllermanager.go",
+                "cmd/kube-controller-manager/app/controllermanager.go"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 88315,
+            "url": "https://github.com/kubernetes/kubernetes/pull/88315",
+            "createdAt": "2020-02-19T09:54:20Z",
+            "files": [
+                "test/e2e/framework/pod/create.go",
+                "test/e2e/framework/pod/node_selection.go",
+                "test/e2e/framework/volume/fixtures.go",
+                "test/e2e/storage/csi_mock_volume.go",
+                "test/e2e/storage/persistent_volumes-local.go",
+                "test/e2e/storage/testsuites/ephemeral.go",
+                "test/e2e/storage/testsuites/provisioning.go",
+                "test/e2e/storage/testsuites/subpath.go",
+                "test/e2e/storage/testsuites/volume_io.go",
+                "test/e2e/storage/testsuites/volumemode.go",
+                "test/e2e/storage/testsuites/volumes.go",
+                "test/e2e/storage/utils/deployment.go",
+                "test/e2e/storage/utils/host_exec.go"
+            ]
+        },
+        "target": {
+            "number": "87855",
+            "url": "https://github.com/kubernetes/kubernetes/issues/87855",
+            "createdAt": "2020-02-05T18:46:09Z",
+            "create_time_interval": 31909,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 11480,
+            "url": "https://github.com/kubernetes/kubernetes/pull/11480",
+            "createdAt": "2015-07-17T22:51:03Z",
+            "files": [
+                "api/swagger-spec/v1.json",
+                "api/swagger-spec/v1beta3.json",
+                "docs/README.md",
+                "examples/README.md",
+                "pkg/api/v1/types.go",
+                "pkg/api/v1beta3/types.go",
+                "pkg/version/base.go"
+            ]
+        },
+        "target": {
+            "number": 11397,
+            "url": "https://github.com/kubernetes/kubernetes/pull/11397",
+            "createdAt": "2015-07-16T21:23:26Z",
+            "create_time_interval": 81143,
+            "link_time_interval": 88,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "docs/man/man1/kubectl-expose.1",
+                "docs/user-guide/kubectl/kubectl_expose.md",
+                "hack/test-cmd.sh",
+                "pkg/kubectl/cmd/cmd_test.go",
+                "pkg/kubectl/cmd/expose.go",
+                "pkg/kubectl/cmd/util/factory.go",
+                "pkg/kubectl/service.go",
+                "pkg/kubectl/service_test.go"
+            ],
+            "reason": "summary features and release"
+        }
+    },
+    {
+        "source": {
+            "number": 60417,
+            "url": "https://github.com/kubernetes/kubernetes/pull/60417",
+            "createdAt": "2018-02-26T10:32:09Z",
+            "files": [
+                "cluster/addons/fluentd-gcp/event-exporter.yaml"
+            ]
+        },
+        "target": {
+            "number": 60126,
+            "url": "https://github.com/kubernetes/kubernetes/pull/60126",
+            "createdAt": "2018-02-21T09:01:35Z",
+            "create_time_interval": 80966,
+            "link_time_interval": 0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "cluster/addons/fluentd-gcp/event-exporter.yaml"
+            ],
+            "reason": "cherry pick but merged both"
+        }
+    },
+    {
+        "source": {
+            "number": 43483,
+            "url": "https://github.com/kubernetes/kubernetes/pull/43483",
+            "createdAt": "2017-03-21T23:12:00Z",
+            "files": [
+                "cluster/common.sh",
+                "cluster/gce/configure-vm.sh",
+                "cluster/gce/gci/configure-helper.sh",
+                "cluster/saltbase/salt/kube-apiserver/kube-apiserver.manifest",
+                "cluster/saltbase/salt/kubelet/init.sls"
+            ]
+        },
+        "target": {
+            "number": "41667",
+            "url": "https://github.com/kubernetes/kubernetes/pull/41667",
+            "createdAt": "2017-02-17T23:19:21Z",
+            "create_time_interval": 441,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "title",
+            "files": [
+                "cluster/gce/configure-vm.sh",
+                "cluster/gce/gci/configure-helper.sh",
+                "cluster/saltbase/salt/kubelet/default",
+                "cluster/saltbase/salt/kubelet/init.sls"
+            ],
+            "reason": "revert cherry pick"
+        }
+    },
+    {
+        "source": {
+            "number": "95398",
+            "url": "https://github.com/kubernetes/kubernetes/issues/95398",
+            "createdAt": "2020-10-08T11:52:25Z",
+            "files": [
+                "staging/src/k8s.io/legacy-cloud-providers/azure/azure_vmss.go",
+                "staging/src/k8s.io/legacy-cloud-providers/azure/retry/azure_error.go"
+            ]
+        },
+        "target": {
+            "number": "95289",
+            "url": "https://github.com/kubernetes/kubernetes/pull/95289",
+            "createdAt": "2020-10-04T09:20:19Z",
+            "create_time_interval": -5,
+            "link_time_interval": 16231,
+            "type": "issue to pullRequest",
+            "location": "commit",
+            "files": [
+                "staging/src/k8s.io/legacy-cloud-providers/azure/azure_instances_test.go",
+                "staging/src/k8s.io/legacy-cloud-providers/azure/azure_vmss.go",
+                "staging/src/k8s.io/legacy-cloud-providers/azure/retry/azure_error.go"
+            ],
+            "reason": "cherry pick but merged both"
+        }
+    },
+    {
+        "source": {
+            "number": 35409,
+            "url": "https://github.com/kubernetes/kubernetes/issues/35409",
+            "createdAt": "2016-10-24T09:12:31Z",
+            "files": []
+        },
+        "target": {
+            "number": 33347,
+            "url": "https://github.com/kubernetes/kubernetes/pull/33347",
+            "createdAt": "2016-09-23T03:06:08Z",
+            "create_time_interval": 64417,
+            "link_time_interval": 7736,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "cluster/aws/templates/configure-vm-aws.sh",
+                "cluster/gce/configure-vm.sh",
+                "cluster/gce/gci/configure-helper.sh",
+                "cluster/gce/trusty/configure-helper.sh",
+                "cluster/saltbase/salt/kubelet/default",
+                "pkg/kubelet/kubelet.go",
+                "pkg/kubelet/kubelet_node_status.go",
+                "pkg/kubelet/runonce_test.go",
+                "pkg/kubelet/runtime.go"
+            ],
+            "reason": "report pr unfit the issue"
+        }
+    },
+    {
+        "source": {
+            "number": 88740,
+            "url": "https://github.com/kubernetes/kubernetes/issues/88740",
+            "createdAt": "2020-03-02T19:18:36Z",
+            "files": []
+        },
+        "target": {
+            "number": "68514",
+            "url": "https://github.com/kubernetes/kubernetes/issues/68514",
+            "createdAt": "2018-09-11T17:31:52Z",
+            "create_time_interval": 79996,
+            "link_time_interval": 1,
+            "type": "issue to issue",
+            "location": "body",
+            "files": [],
+            "reason": "related but not blocking"
+        }
+    },
+    {
+        "source": {
+            "number": "31653",
+            "url": "https://github.com/kubernetes/kubernetes/issues/31653",
+            "createdAt": "2016-08-29T23:15:39Z",
+            "files": [
+                "test/e2e_node/jenkins/coreos-init.json",
+                "test/e2e_node/jenkins/coreos-init.yaml",
+                "test/e2e_node/jenkins/image-config.yaml"
+            ]
+        },
+        "target": {
+            "number": "30023",
+            "url": "https://github.com/kubernetes/kubernetes/pull/30023",
+            "createdAt": "2016-08-03T20:42:14Z",
+            "create_time_interval": -27,
+            "link_time_interval": 28463,
+            "type": "issue to pullRequest",
+            "location": "commit",
+            "files": [
+                "test/e2e_node/jenkins/coreos-init.yaml",
+                "test/e2e_node/jenkins/image-config.yaml"
+            ],
+            "reason": "early discussion in related pr"
+        }
+    },
+    {
+        "source": {
+            "number": 15988,
+            "url": "https://github.com/kubernetes/kubernetes/pull/15988",
+            "createdAt": "2015-10-20T23:01:52Z",
+            "files": [
+                "cmd/integration/integration.go",
+                "pkg/client/unversioned/discovery_client.go",
+                "pkg/client/unversioned/helper.go",
+                "pkg/client/unversioned/helper_blackbox_test.go"
+            ]
+        },
+        "target": {
+            "number": "15808",
+            "url": "https://github.com/kubernetes/kubernetes/pull/15808",
+            "createdAt": "2015-10-17T00:27:58Z",
+            "create_time_interval": 5166,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "pkg/client/unversioned/client.go",
+                "pkg/kubectl/cmd/explain.go",
+                "pkg/kubectl/explain.go"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 12547,
+            "url": "https://github.com/pandas-dev/pandas/pull/12547",
+            "createdAt": "2016-03-06T22:20:43Z",
+            "files": [
+                "ci/requirements-2.7_SLOW.run",
+                "ci/requirements-3.4_SLOW.run",
+                "pandas/tests/test_graphics.py",
+                "pandas/tools/plotting.py"
+            ]
+        },
+        "target": {
+            "number": "12354",
+            "url": "https://github.com/pandas-dev/pandas/issues/12354",
+            "createdAt": "2016-02-16T18:20:00Z",
+            "create_time_interval": 71957,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect but failed"
+        }
+    },
+    {
+        "source": {
+            "number": 22730,
+            "url": "https://github.com/pandas-dev/pandas/pull/22730",
+            "createdAt": "2018-09-17T00:29:23Z",
+            "files": [
+                "pandas/tests/frame/test_analytics.py",
+                "pandas/tests/frame/test_api.py",
+                "pandas/tests/frame/test_apply.py",
+                "pandas/tests/frame/test_arithmetic.py"
+            ]
+        },
+        "target": {
+            "number": "22736",
+            "url": "https://github.com/pandas-dev/pandas/pull/22736",
+            "createdAt": "2018-09-17T20:41:00Z",
+            "create_time_interval": 72697,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "pandas/tests/frame/conftest.py",
+                "pandas/tests/frame/test_arithmetic.py"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 26279,
+            "url": "https://github.com/pandas-dev/pandas/pull/26279",
+            "createdAt": "2019-05-03T18:58:07Z",
+            "files": [
+                "pandas/compat/__init__.py",
+                "pandas/core/dtypes/inference.py",
+                "pandas/tests/test_compat.py"
+            ]
+        },
+        "target": {
+            "number": 25725,
+            "url": "https://github.com/pandas-dev/pandas/issues/25725",
+            "createdAt": "2019-03-14T12:28:10Z",
+            "create_time_interval": 63003,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": 2315,
+            "url": "https://github.com/pandas-dev/pandas/issues/2315",
+            "createdAt": "2012-11-21T16:38:28Z",
+            "files": []
+        },
+        "target": {
+            "number": 3009,
+            "url": "https://github.com/pandas-dev/pandas/issues/3009",
+            "createdAt": "2013-03-11T02:00:02Z",
+            "create_time_interval": 33694,
+            "link_time_interval": 54990,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "related issues"
+        }
+    },
+    {
+        "source": {
+            "number": 7770,
+            "url": "https://github.com/pandas-dev/pandas/pull/7770",
+            "createdAt": "2014-07-16T23:51:25Z",
+            "files": [
+                "doc/source/reshaping.rst",
+                "doc/source/v0.15.0.txt",
+                "pandas/core/frame.py",
+                "pandas/core/index.py",
+                "pandas/core/reshape.py",
+                "pandas/tests/test_frame.py",
+                "pandas/tests/test_multilevel.py"
+            ]
+        },
+        "target": {
+            "number": 7660,
+            "url": "https://github.com/pandas-dev/pandas/issues/7660",
+            "createdAt": "2014-07-03T19:39:08Z",
+            "create_time_interval": 71263,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 33601,
+            "url": "https://github.com/pandas-dev/pandas/issues/33601",
+            "createdAt": "2020-04-17T00:56:04Z",
+            "files": []
+        },
+        "target": {
+            "number": 23993,
+            "url": "https://github.com/pandas-dev/pandas/issues/23993",
+            "createdAt": "2018-11-29T14:07:01Z",
+            "create_time_interval": 47457,
+            "link_time_interval": 53630,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "report prior discussion"
+        }
+    },
+    {
+        "source": {
+            "number": 3731,
+            "url": "https://github.com/pandas-dev/pandas/pull/3731",
+            "createdAt": "2013-05-31T20:10:10Z",
+            "files": [
+                "RELEASE.rst",
+                "doc/source/v0.11.1.txt",
+                "pandas/core/nanops.py",
+                "pandas/core/series.py",
+                "pandas/tests/test_frame.py",
+                "pandas/tests/test_series.py"
+            ]
+        },
+        "target": {
+            "number": 3726,
+            "url": "https://github.com/pandas-dev/pandas/issues/3726",
+            "createdAt": "2013-05-31T01:18:48Z",
+            "create_time_interval": 18518,
+            "link_time_interval": 159,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "complete feature develop and close issue"
+        }
+    },
+    {
+        "source": {
+            "number": 18274,
+            "url": "https://github.com/pandas-dev/pandas/pull/18274",
+            "createdAt": "2017-11-14T02:17:39Z",
+            "files": [
+                "doc/source/whatsnew/v0.21.1.txt",
+                "pandas/_libs/algos_rank_helper.pxi.in"
+            ]
+        },
+        "target": {
+            "number": 18271,
+            "url": "https://github.com/pandas-dev/pandas/issues/18271",
+            "createdAt": "2017-11-13T21:56:17Z",
+            "create_time_interval": 70718,
+            "link_time_interval": 0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect but failed"
+        }
+    },
+    {
+        "source": {
+            "number": 2636,
+            "url": "https://github.com/pandas-dev/pandas/pull/2636",
+            "createdAt": "2013-01-04T08:09:45Z",
+            "files": [
+                "pandas/core/frame.py"
+            ]
+        },
+        "target": {
+            "number": 7615,
+            "url": "https://github.com/pandas-dev/pandas/issues/7615",
+            "createdAt": "2014-06-30T12:49:46Z",
+            "create_time_interval": 16801,
+            "link_time_interval": 79774,
+            "type": "pullRequest to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "report further issue and close pr"
+        }
+    },
+    {
+        "source": {
+            "number": 32142,
+            "url": "https://github.com/pandas-dev/pandas/pull/32142",
+            "createdAt": "2020-02-21T07:10:00Z",
+            "files": [
+                "doc/source/whatsnew/v1.1.0.rst",
+                "pandas/errors/__init__.py",
+                "pandas/tests/test_errors.py"
+            ]
+        },
+        "target": {
+            "number": "27553",
+            "url": "https://github.com/pandas-dev/pandas/issues/27553",
+            "createdAt": "2019-07-24T03:22:57Z",
+            "create_time_interval": 72777,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 3868,
+            "url": "https://github.com/rails/rails/pull/3868",
+            "createdAt": "2011-12-05T19:56:52Z",
+            "files": [
+                "activerecord/lib/active_record/associations.rb",
+                "activerecord/lib/active_record/associations/association_proxy.rb",
+                "activerecord/lib/active_record/relation.rb",
+                "activerecord/test/cases/associations/has_many_through_associations_test.rb"
+            ]
+        },
+        "target": {
+            "number": 2698,
+            "url": "https://github.com/rails/rails/pull/2698",
+            "createdAt": "2011-08-25T23:29:33Z",
+            "create_time_interval": 12761,
+            "link_time_interval": 0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "activerecord/lib/active_record/associations.rb",
+                "activerecord/test/cases/associations/has_many_through_associations_test.rb"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 21042,
+            "url": "https://github.com/rails/rails/issues/21042",
+            "createdAt": "2015-07-27T18:06:02Z",
+            "files": []
+        },
+        "target": {
+            "number": "19447",
+            "url": "https://github.com/rails/rails/pull/19447",
+            "createdAt": "2015-03-21T22:24:42Z",
+            "create_time_interval": 15520,
+            "link_time_interval": 1,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/connection_adapters/postgresql/oid/array.rb",
+                "activerecord/test/cases/schema_dumper_test.rb",
+                "activerecord/test/schema/postgresql_specific_schema.rb"
+            ],
+            "reason": "report defect again after a pr for not completely solved"
+        }
+    },
+    {
+        "source": {
+            "number": "30970",
+            "url": "https://github.com/rails/rails/issues/30970",
+            "createdAt": "2017-10-24T13:56:46Z",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/connection_adapters/sqlite3/schema_statements.rb",
+                "activerecord/test/cases/schema_dumper_test.rb"
+            ]
+        },
+        "target": {
+            "number": "30902",
+            "url": "https://github.com/rails/rails/issues/30902",
+            "createdAt": "2017-10-16T16:00:32Z",
+            "create_time_interval": -8,
+            "link_time_interval": 6567,
+            "type": "issue to issue",
+            "location": "commit",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 27836,
+            "url": "https://github.com/rails/rails/pull/27836",
+            "createdAt": "2017-01-28T20:57:24Z",
+            "files": [
+                "activerecord/lib/active_record/associations/association_scope.rb",
+                "activerecord/test/cases/associations/has_many_through_associations_test.rb",
+                "activerecord/test/models/family.rb",
+                "activerecord/test/models/family_tree.rb",
+                "activerecord/test/models/user.rb",
+                "activerecord/test/schema/schema.rb"
+            ]
+        },
+        "target": {
+            "number": "27666",
+            "url": "https://github.com/rails/rails/issues/27666",
+            "createdAt": "2017-01-13T04:22:48Z",
+            "create_time_interval": 26724,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 39491,
+            "url": "https://github.com/rails/rails/pull/39491",
+            "createdAt": "2020-05-31T08:20:00Z",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/core.rb",
+                "activerecord/test/cases/strict_loading_test.rb",
+                "guides/source/configuring.md"
+            ]
+        },
+        "target": {
+            "number": "38541",
+            "url": "https://github.com/rails/rails/pull/38541",
+            "createdAt": "2020-02-21T18:14:00Z",
+            "create_time_interval": 35640,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/associations.rb",
+                "activerecord/lib/active_record/associations/association.rb",
+                "activerecord/lib/active_record/associations/builder/association.rb",
+                "activerecord/lib/active_record/associations/collection_association.rb",
+                "activerecord/lib/active_record/reflection.rb",
+                "activerecord/test/cases/strict_loading_test.rb",
+                "activerecord/test/models/developer.rb"
+            ],
+            "reason": "related"
+        }
+    },
+    {
+        "source": {
+            "number": 23393,
+            "url": "https://github.com/rails/rails/pull/23393",
+            "createdAt": "2016-02-01T05:36:10Z",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/connection_adapters/abstract/schema_statements.rb",
+                "activerecord/lib/active_record/connection_adapters/abstract_adapter.rb",
+                "activerecord/lib/active_record/connection_adapters/postgresql/schema_statements.rb",
+                "activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb",
+                "activerecord/test/cases/adapters/postgresql/active_schema_test.rb",
+                "activerecord/test/cases/adapters/postgresql/postgresql_adapter_test.rb",
+                "activerecord/test/cases/adapters/postgresql/schema_test.rb",
+                "activerecord/test/cases/schema_dumper_test.rb",
+                "activerecord/test/schema/schema.rb"
+            ]
+        },
+        "target": {
+            "number": 19090,
+            "url": "https://github.com/rails/rails/pull/19090",
+            "createdAt": "2015-02-26T12:25:26Z",
+            "create_time_interval": 24556,
+            "link_time_interval": 83032,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/connection_adapters/abstract/schema_definitions.rb",
+                "activerecord/lib/active_record/connection_adapters/abstract/schema_statements.rb",
+                "activerecord/lib/active_record/connection_adapters/postgresql/schema_statements.rb",
+                "activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb",
+                "activerecord/lib/active_record/schema_dumper.rb",
+                "activerecord/test/cases/adapters/postgresql/active_schema_test.rb",
+                "activerecord/test/cases/adapters/postgresql/postgresql_adapter_test.rb",
+                "activerecord/test/cases/adapters/postgresql/schema_test.rb"
+            ],
+            "reason": "report newer pr fitting new version"
+        }
+    },
+    {
+        "source": {
+            "number": 34598,
+            "url": "https://github.com/rails/rails/pull/34598",
+            "createdAt": "2018-12-03T01:23:53Z",
+            "files": [
+                "actioncable/CHANGELOG.md"
+            ]
+        },
+        "target": {
+            "number": 34590,
+            "url": "https://github.com/rails/rails/pull/34590",
+            "createdAt": "2018-12-01T22:52:23Z",
+            "create_time_interval": 77310,
+            "link_time_interval": 0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "actioncable/CHANGELOG.md",
+                "actioncable/app/assets/javascripts/action_cable.js",
+                "actioncable/app/javascript/action_cable/connection.js",
+                "actioncable/test/javascript/src/test.js",
+                "actioncable/test/javascript/src/unit/connection_test.js"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 38279,
+            "url": "https://github.com/rails/rails/issues/38279",
+            "createdAt": "2020-01-22T04:23:23Z",
+            "files": []
+        },
+        "target": {
+            "number": 38302,
+            "url": "https://github.com/rails/rails/issues/38302",
+            "createdAt": "2020-01-24T14:41:30Z",
+            "create_time_interval": 37087,
+            "link_time_interval": 277,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "report newer issue"
+        }
+    },
+    {
+        "source": {
+            "number": 15462,
+            "url": "https://github.com/rails/rails/pull/15462",
+            "createdAt": "2014-06-01T17:43:57Z",
+            "files": [
+                "activerecord/lib/active_record/serializers/xml_serializer.rb",
+                "activerecord/test/cases/xml_serialization_test.rb"
+            ]
+        },
+        "target": {
+            "number": 15463,
+            "url": "https://github.com/rails/rails/pull/15463",
+            "createdAt": "2014-06-01T18:02:42Z",
+            "create_time_interval": 1125,
+            "link_time_interval": 72061,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "activerecord/lib/active_record/serializers/xml_serializer.rb",
+                "activerecord/test/cases/xml_serialization_test.rb"
+            ],
+            "reason": "collaborate contribute"
+        }
+    },
+    {
+        "source": {
+            "number": 25886,
+            "url": "https://github.com/rails/rails/pull/25886",
+            "createdAt": "2016-07-19T01:39:56Z",
+            "files": [
+                "activerecord/lib/active_record/connection_adapters/abstract_adapter.rb",
+                "activerecord/lib/active_record/connection_adapters/mysql/database_statements.rb",
+                "activerecord/lib/active_record/connection_adapters/postgresql_adapter.rb",
+                "activerecord/lib/active_record/connection_adapters/sqlite3_adapter.rb",
+                "activerecord/lib/active_record/log_subscriber.rb",
+                "activerecord/test/cases/bind_parameter_test.rb"
+            ]
+        },
+        "target": {
+            "number": "5",
+            "url": "https://github.com/rails/rails/pull/5",
+            "createdAt": "2010-09-02T09:14:12Z",
+            "create_time_interval": 27256,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "actionpack/lib/action_view/helpers/prototype_helper.rb"
+            ],
+            "reason": "invalid"
+        }
+    }
+]

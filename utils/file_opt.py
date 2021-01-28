@@ -12,7 +12,7 @@ def save_json_to_file(file_path,json_data):
     f.close()
 
 def read_json_from_file(file_path):
-    f = open(file_path, 'r')
+    f = open(file_path, 'r',encoding="utf8")
     content = json.loads(f.readline())
     f.close()
     return content

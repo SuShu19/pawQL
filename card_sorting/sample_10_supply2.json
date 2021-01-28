@@ -1,0 +1,260 @@
+[
+    {
+        "source": {
+            "number": 19054,
+            "url": "https://github.com/kubernetes/kubernetes/issues/19054",
+            "createdAt": "2015-12-23T10:59:50Z",
+            "files": []
+        },
+        "target": {
+            "number": "26120",
+            "url": "https://github.com/kubernetes/kubernetes/issues/26120",
+            "createdAt": "2016-05-23T22:55:11Z",
+            "create_time_interval": 13175721.0,
+            "link_time_interval": 19938423.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "umbrella issues"
+        }
+    },
+    {
+        "source": {
+            "number": 43896,
+            "url": "https://github.com/kubernetes/kubernetes/pull/43896",
+            "createdAt": "2017-03-31T08:14:37Z",
+            "files": [
+                "pkg/kubectl/cmd/get.go",
+                "pkg/kubectl/cmd/get_test.go"
+            ]
+        },
+        "target": {
+            "number": "37435",
+            "url": "https://github.com/kubernetes/kubernetes/issues/37435",
+            "createdAt": "2016-11-24T08:43:45Z",
+            "create_time_interval": -10971052.0,
+            "link_time_interval": 261971.0,
+            "type": "pullRequest to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "test for issue"
+        }
+    },
+    {
+        "source": {
+            "number": 46577,
+            "url": "https://github.com/elastic/elasticsearch/issues/46577",
+            "createdAt": "2019-09-11T00:53:33Z",
+            "files": []
+        },
+        "target": {
+            "number": "46619",
+            "url": "https://github.com/elastic/elasticsearch/pull/46619",
+            "createdAt": "2019-09-11T17:39:32Z",
+            "create_time_interval": 60359.0,
+            "link_time_interval": 1,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "docs/java-rest/high-level/security/authenticate.asciidoc",
+                "docs/java-rest/high-level/security/change-password.asciidoc",
+                "docs/java-rest/high-level/security/clear-realm-cache.asciidoc",
+                "docs/java-rest/high-level/security/clear-roles-cache.asciidoc",
+                "docs/java-rest/high-level/security/create-api-key.asciidoc",
+                "docs/java-rest/high-level/security/create-token.asciidoc",
+                "docs/java-rest/high-level/security/delegate-pki-authentication.asciidoc",
+                "docs/java-rest/high-level/security/delete-privileges.asciidoc",
+                "docs/java-rest/high-level/security/delete-role-mapping.asciidoc",
+                "docs/java-rest/high-level/security/delete-role.asciidoc",
+                "docs/java-rest/high-level/security/delete-user.asciidoc",
+                "docs/java-rest/high-level/security/disable-user.asciidoc",
+                "docs/java-rest/high-level/security/enable-user.asciidoc",
+                "docs/java-rest/high-level/security/get-api-key.asciidoc",
+                "docs/java-rest/high-level/security/get-builtin-privileges.asciidoc",
+                "docs/java-rest/high-level/security/get-certificates.asciidoc",
+                "docs/java-rest/high-level/security/get-privileges.asciidoc",
+                "docs/java-rest/high-level/security/get-role-mappings.asciidoc",
+                "docs/java-rest/high-level/security/get-roles.asciidoc",
+                "docs/java-rest/high-level/security/get-user-privileges.asciidoc",
+                "docs/java-rest/high-level/security/get-users.asciidoc",
+                "docs/java-rest/high-level/security/has-privileges.asciidoc",
+                "docs/java-rest/high-level/security/invalidate-api-key.asciidoc",
+                "docs/java-rest/high-level/security/invalidate-token.asciidoc",
+                "docs/java-rest/high-level/security/put-privileges.asciidoc",
+                "docs/java-rest/high-level/security/put-role-mapping.asciidoc",
+                "docs/java-rest/high-level/security/put-role.asciidoc",
+                "docs/java-rest/high-level/security/put-user.asciidoc",
+                "docs/java-rest/high-level/supported-apis.asciidoc"
+            ],
+            "reason": "task assignment"
+        }
+    },
+    {
+        "source": {
+            "number": 21514,
+            "url": "https://github.com/elastic/elasticsearch/issues/21514",
+            "createdAt": "2016-11-12T13:54:00Z",
+            "files": []
+        },
+        "target": {
+            "number": 21546,
+            "url": "https://github.com/elastic/elasticsearch/pull/21546",
+            "createdAt": "2016-11-14T16:59:54Z",
+            "create_time_interval": 183954.0,
+            "link_time_interval": 13309.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "buildSrc/src/main/groovy/org/elasticsearch/gradle/test/ClusterConfiguration.groovy",
+                "core/src/main/java/org/elasticsearch/bootstrap/Security.java",
+                "qa/smoke-test-tribe-node/build.gradle",
+                "qa/smoke-test-tribe-node/src/test/java/org/elasticsearch/tribe/TribeClientYamlTestSuiteIT.java",
+                "qa/smoke-test-tribe-node/src/test/resources/rest-api-spec/test/tribe/10_basic.yaml",
+                "settings.gradle",
+                "test/framework/src/main/java/org/elasticsearch/test/rest/ESRestTestCase.java"
+            ],
+            "reason": "fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 66340,
+            "url": "https://github.com/kubernetes/kubernetes/issues/66340",
+            "createdAt": "2018-07-18T15:49:57Z",
+            "files": []
+        },
+        "target": {
+            "number": "66342",
+            "url": "https://github.com/kubernetes/kubernetes/pull/66342",
+            "createdAt": "2018-07-18T16:03:35Z",
+            "create_time_interval": 818.0,
+            "link_time_interval": 825.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "cluster/gce/gci/apiserver_manifest_test.go"
+            ],
+            "reason": "fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 37485,
+            "url": "https://github.com/rails/rails/pull/37485",
+            "createdAt": "2019-10-16T20:43:24Z",
+            "files": [
+                "actioncable/test/javascript_package_test.rb"
+            ]
+        },
+        "target": {
+            "number": "34473",
+            "url": "https://github.com/rails/rails/issues/34473",
+            "createdAt": "2018-11-17T04:00:16Z",
+            "create_time_interval": -28831388.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 25074,
+            "url": "https://github.com/joomla/joomla-cms/issues/25074",
+            "createdAt": "2019-05-31T14:28:09Z",
+            "files": []
+        },
+        "target": {
+            "number": 25076,
+            "url": "https://github.com/joomla/joomla-cms/pull/25076",
+            "createdAt": "2019-05-31T21:05:14Z",
+            "create_time_interval": 23825.0,
+            "link_time_interval": 46.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "administrator/language/en-GB/en-GB.plg_content_loadmodule.ini",
+                "administrator/language/en-GB/en-GB.plg_content_loadmodule.sys.ini"
+            ],
+            "reason":"fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 1569,
+            "url": "https://github.com/kubernetes/kubernetes/pull/1569",
+            "createdAt": "2014-10-03T19:14:15Z",
+            "files": [
+                "hack/e2e-suite/basic.sh",
+                "hack/e2e-suite/update.sh",
+                "pkg/api/types.go",
+                "pkg/api/v1beta1/types.go",
+                "pkg/api/v1beta2/types.go",
+                "pkg/api/v1beta3/types.go",
+                "pkg/client/podinfo_test.go",
+                "pkg/kubelet/dockertools/docker.go",
+                "pkg/kubelet/dockertools/fake_docker_client.go",
+                "pkg/kubelet/handlers.go",
+                "pkg/kubelet/kubelet.go",
+                "pkg/kubelet/kubelet_test.go",
+                "pkg/kubelet/runonce_test.go",
+                "pkg/kubelet/server_test.go",
+                "pkg/master/pod_cache_test.go",
+                "pkg/registry/pod/rest.go",
+                "pkg/registry/pod/rest_test.go"
+            ]
+        },
+        "target": {
+            "number": "1462",
+            "url": "https://github.com/kubernetes/kubernetes/issues/1462",
+            "createdAt": "2014-09-26T18:29:39Z",
+            "create_time_interval": -607476.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "related issue"
+        }
+    },
+    {
+        "source": {
+            "number": 41869,
+            "url": "https://github.com/kubernetes/kubernetes/pull/41869",
+            "createdAt": "2017-02-22T06:14:21Z",
+            "files": []
+        },
+        "target": {
+            "number": "1",
+            "url": "https://github.com/kubernetes/kubernetes/issues/1",
+            "createdAt": "2014-06-06T23:52:50Z",
+            "create_time_interval": -85645291.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "title",
+            "files": [],
+            "reason": "invalid link"
+        }
+    },
+    {
+        "source": {
+            "number": 12800,
+            "url": "https://github.com/kubernetes/kubernetes/issues/12800",
+            "createdAt": "2015-08-17T15:37:48Z",
+            "files": []
+        },
+        "target": {
+            "number": 12824,
+            "url": "https://github.com/kubernetes/kubernetes/pull/12824",
+            "createdAt": "2015-08-17T20:58:06Z",
+            "create_time_interval": 19218.0,
+            "link_time_interval": 271927.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "test/e2e/reboot.go"
+            ],
+            "reason": "fixed by pr"
+        }
+    }
+]

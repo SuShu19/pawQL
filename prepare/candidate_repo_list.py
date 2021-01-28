@@ -17,7 +17,7 @@ def read_token():
 
 def query_request(query, last_star=None):
     tokens = read_token()
-    token = tokens[random.randint(0,12)].strip()
+    token = tokens[random.randint(0,7)].strip()
     headers = {"Authorization": "Bearer %s" % token}
     if last_star:
         query_ = query % (last_star)
@@ -133,5 +133,5 @@ def select_repos():
     create_repo_list(iss_pr_number_list)
 
 if __name__ == '__main__':
-    # search_repos()        # 获取仓库的信息，一次获取之后就存储了文件，不需要每次都跑
-    select_repos()          # 按照条件筛选符合的仓库，并写下详细信息，以及生成repository_list.txt
+    search_repos()        # 获取仓库的信息，一次获取之后就存储了文件，不需要每次都跑
+    # select_repos()          # 按照条件筛选符合的仓库，并写下详细信息，以及生成repository_list.txt

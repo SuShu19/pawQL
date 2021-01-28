@@ -68,7 +68,7 @@ def parse_link_cluster(link_1_1,link_1_N):
             cluster["nodes_count"] = node_count
             time_interval_s = sorted(time_list, key=lambda data: get_time(data))
             time_format = "%Y-%m-%dT%H:%M:%SZ"
-            time_interval = datetime.strptime(time_interval_s[-1],time_format).__sub__(datetime.strptime(time_interval_s[0], time_format)).days
+            time_interval = datetime.strptime(time_interval_s[-1],time_format).__sub__(datetime.strptime(time_interval_s[0], time_format)).total_seconds()
             cluster["cluster_time_interval"] = time_interval
 
             cluster_list.append(cluster)
@@ -172,6 +172,6 @@ def work(fullrepo):
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=4) as executor:
+    with PoolExecutor(max_workers=5) as executor:
         for _ in executor.map(work, repolist):
             pass

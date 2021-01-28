@@ -1,0 +1,1284 @@
+[
+    {
+        "source": {
+            "number": 37848,
+            "url": "https://github.com/elastic/elasticsearch/pull/37848",
+            "createdAt": "2019-01-25T04:27:19Z",
+            "files": [
+                "docs/reference/mapping/fields/meta-field.asciidoc"
+            ]
+        },
+        "target": {
+            "number": 35893,
+            "url": "https://github.com/elastic/elasticsearch/pull/35893",
+            "createdAt": "2018-11-26T05:18:11Z",
+            "create_time_interval": -5180948.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "docs/reference/mapping/fields/meta-field.asciidoc"
+            ],
+            "reason": "backport pull request"
+        }
+    },
+    {
+        "source": {
+            "number": 94776,
+            "url": "https://github.com/kubernetes/kubernetes/issues/94776",
+            "createdAt": "2020-09-14T17:06:39Z",
+            "files": []
+        },
+        "target": {
+            "number": "92199",
+            "url": "https://github.com/kubernetes/kubernetes/issues/92199",
+            "createdAt": "2020-06-16T20:03:31Z",
+            "create_time_interval": -7765388.0,
+            "link_time_interval": 1,
+            "type": "issue to issue",
+            "location": "body",
+            "files": [],
+            "reason": "related issues"
+        }
+    },
+    {
+        "source": {
+            "number": 25211,
+            "url": "https://github.com/joomla/joomla-cms/issues/25211",
+            "createdAt": "2019-06-15T17:56:20Z",
+            "files": []
+        },
+        "target": {
+            "number": "55",
+            "url": "https://github.com/joomla/joomla-cms/pull/55",
+            "createdAt": "2011-12-22T20:14:55Z",
+            "create_time_interval": -236036485.0,
+            "link_time_interval": 1,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "administrator/components/com_categories/models/category.php",
+                "plugins/content/finder/finder.php"
+            ],
+            "reason": "invalid link"
+        }
+    },
+    {
+        "source": {
+            "number": 41758,
+            "url": "https://github.com/elastic/elasticsearch/pull/41758",
+            "createdAt": "2019-05-02T16:28:32Z",
+            "files": [
+                "server/src/main/java/org/elasticsearch/common/network/NetworkUtils.java",
+                "x-pack/plugin/core/src/main/java/org/elasticsearch/common/network/InetAddressHelper.java",
+                "x-pack/plugin/security/cli/src/main/java/org/elasticsearch/xpack/security/cli/CertGenUtils.java"
+            ]
+        },
+        "target": {
+            "number": "41549",
+            "url": "https://github.com/elastic/elasticsearch/issues/41549",
+            "createdAt": "2019-04-25T18:51:11Z",
+            "create_time_interval": -596241.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 51870,
+            "url": "https://github.com/kubernetes/kubernetes/pull/51870",
+            "createdAt": "2017-09-03T14:58:30Z",
+            "files": [
+                "pkg/kubelet/dockershim/BUILD",
+                "pkg/kubelet/dockershim/helpers.go",
+                "pkg/kubelet/dockershim/helpers_test.go"
+            ]
+        },
+        "target": {
+            "number": "52307",
+            "url": "https://github.com/kubernetes/kubernetes/issues/52307",
+            "createdAt": "2017-09-11T20:49:22Z",
+            "create_time_interval": 712252.0,
+            "link_time_interval": 7767.0,
+            "type": "pullRequest to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "block by issue"
+        }
+    },
+    {
+        "source": {
+            "number": 10256,
+            "url": "https://github.com/pandas-dev/pandas/issues/10256",
+            "createdAt": "2015-06-03T11:00:38Z",
+            "files": []
+        },
+        "target": {
+            "number": 9817,
+            "url": "https://github.com/pandas-dev/pandas/issues/9817",
+            "createdAt": "2015-04-05T23:26:48Z",
+            "create_time_interval": -5052830.0,
+            "link_time_interval": 1898.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "duplicate (unintended duplicate)"
+        }
+    },
+    {
+        "source": {
+            "number": 38471,
+            "url": "https://github.com/kubernetes/kubernetes/issues/38471",
+            "createdAt": "2016-12-09T11:47:06Z",
+            "files": []
+        },
+        "target": {
+            "number": 31429,
+            "url": "https://github.com/kubernetes/kubernetes/issues/31429",
+            "createdAt": "2016-08-25T13:38:45Z",
+            "create_time_interval": -9151701.0,
+            "link_time_interval": 67820.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "broken test related issue"
+        }
+    },
+    {
+        "source": {
+            "number": 30470,
+            "url": "https://github.com/pandas-dev/pandas/issues/30470",
+            "createdAt": "2019-12-25T20:57:02Z",
+            "files": []
+        },
+        "target": {
+            "number": "30478",
+            "url": "https://github.com/pandas-dev/pandas/pull/30478",
+            "createdAt": "2019-12-26T03:03:31Z",
+            "create_time_interval": 21989.0,
+            "link_time_interval": 71586.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "pandas/core/frame.py",
+                "pandas/tests/io/test_gbq.py"
+            ],
+            "reason": "fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 11307,
+            "url": "https://github.com/kubernetes/kubernetes/issues/11307",
+            "createdAt": "2015-07-15T13:56:47Z",
+            "files": []
+        },
+        "target": {
+            "number": 11172,
+            "url": "https://github.com/kubernetes/kubernetes/issues/11172",
+            "createdAt": "2015-07-13T20:06:13Z",
+            "create_time_interval": -150634.0,
+            "link_time_interval": 76.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "related issues"
+        }
+    },
+    {
+        "source": {
+            "number": 23350,
+            "url": "https://github.com/kubernetes/kubernetes/issues/23350",
+            "createdAt": "2016-03-22T20:16:09Z",
+            "files": []
+        },
+        "target": {
+            "number": 23321,
+            "url": "https://github.com/kubernetes/kubernetes/issues/23321",
+            "createdAt": "2016-03-22T09:08:22Z",
+            "create_time_interval": -40067.0,
+            "link_time_interval": 76144.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "related issues"
+        }
+    },
+    {
+        "source": {
+            "number": "50966",
+            "url": "https://github.com/elastic/elasticsearch/pull/50966",
+            "createdAt": "2020-01-14T11:22:33Z",
+            "files": [
+                "x-pack/plugin/security/cli/src/test/java/org/elasticsearch/xpack/security/cli/HttpCertificateCommandTests.java"
+            ]
+        },
+        "target": {
+            "number": "50965",
+            "url": "https://github.com/elastic/elasticsearch/pull/50965",
+            "createdAt": "2020-01-14T11:08:57Z",
+            "create_time_interval": -816.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "title",
+            "files": [
+                "x-pack/plugin/security/cli/src/test/java/org/elasticsearch/xpack/security/cli/HttpCertificateCommandTests.java"
+            ],
+            "reason": "collaborate contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 34290,
+            "url": "https://github.com/kubernetes/kubernetes/pull/34290",
+            "createdAt": "2016-10-07T01:52:02Z",
+            "files": [
+                "build/kube-dns/Changelog",
+                "build/kube-dns/Makefile",
+                "cluster/addons/dns/skydns-rc.yaml.base",
+                "cluster/addons/dns/skydns-rc.yaml.in",
+                "cluster/addons/dns/skydns-rc.yaml.sed",
+                "cluster/gce/coreos/kube-manifests/addons/dns/skydns-rc.yaml",
+                "cluster/juju/layers/kubernetes/templates/kubedns-rc.yaml",
+                "cmd/kube-dns/app/server.go"
+            ]
+        },
+        "target": {
+            "number": 31894,
+            "url": "https://github.com/kubernetes/kubernetes/pull/31894",
+            "createdAt": "2016-09-01T17:05:19Z",
+            "create_time_interval": -3055603.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "cmd/kube-dns/app/server.go"
+            ],
+            "reason": "do cherry pick"
+        }
+    },
+    {
+        "source": {
+            "number": 1958,
+            "url": "https://github.com/kubernetes/kubernetes/pull/1958",
+            "createdAt": "2014-10-22T12:22:50Z",
+            "files": [
+                "pkg/config/config.go",
+                "pkg/config/config_test.go",
+                "pkg/config/config_test.json",
+                "pkg/kubectl/cmd/cmd.go",
+                "pkg/kubectl/cmd/createall.go"
+            ]
+        },
+        "target": {
+            "number": "1980",
+            "url": "https://github.com/kubernetes/kubernetes/pull/1980",
+            "createdAt": "2014-10-24T00:18:54Z",
+            "create_time_interval": 129364.0,
+            "link_time_interval": 663175.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "contrib/enscope/README.md",
+                "contrib/enscope/enscope.go",
+                "contrib/flags2yaml/README.md",
+                "contrib/flags2yaml/flags2yaml.go",
+                "contrib/simplegen/README.md",
+                "contrib/simplegen/simplegen.go",
+                "contrib/srvexpand/README.md",
+                "contrib/srvexpand/srvexpand.go"
+            ],
+            "reason": "invalid link"
+        }
+    },
+    {
+        "source": {
+            "number": 27686,
+            "url": "https://github.com/kubernetes/kubernetes/pull/27686",
+            "createdAt": "2016-06-19T06:06:35Z",
+            "files": [
+                "hack/verify-api-reference-docs.sh"
+            ]
+        },
+        "target": {
+            "number": "27685",
+            "url": "https://github.com/kubernetes/kubernetes/issues/27685",
+            "createdAt": "2016-06-19T06:03:13Z",
+            "create_time_interval": -202.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 38002,
+            "url": "https://github.com/rails/rails/pull/38002",
+            "createdAt": "2019-12-17T16:50:42Z",
+            "files": [
+                ".github/stale.yml"
+            ]
+        },
+        "target": {
+            "number": 13086,
+            "url": "https://github.com/rails/rails/pull/13086",
+            "createdAt": "2013-11-28T14:19:27Z",
+            "create_time_interval": -190953075.0,
+            "link_time_interval": 1735234.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "activerecord/lib/active_record/associations/collection_association.rb",
+                "activerecord/lib/active_record/associations/collection_proxy.rb"
+            ],
+            "reason":"related pull requests"
+        }
+    },
+    {
+        "source": {
+            "number": 12951,
+            "url": "https://github.com/kubernetes/kubernetes/pull/12951",
+            "createdAt": "2015-08-19T23:32:28Z",
+            "files": [
+                "docs/proposals/api-group.md"
+            ]
+        },
+        "target": {
+            "number": 12944,
+            "url": "https://github.com/kubernetes/kubernetes/pull/12944",
+            "createdAt": "2015-08-19T21:47:07Z",
+            "create_time_interval": -6321.0,
+            "link_time_interval": 618914.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "docs/proposals/volumes.md"
+            ],
+            "reason": "invalid link"
+        }
+    },
+    {
+        "source": {
+            "number": 20310,
+            "url": "https://github.com/kubernetes/kubernetes/pull/20310",
+            "createdAt": "2016-01-29T03:10:12Z",
+            "files": [
+                "test/e2e/deployment.go"
+            ]
+        },
+        "target": {
+            "number": "18996",
+            "url": "https://github.com/kubernetes/kubernetes/issues/18996",
+            "createdAt": "2015-12-22T07:01:43Z",
+            "create_time_interval": -3269309.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 38582,
+            "url": "https://github.com/kubernetes/kubernetes/issues/38582",
+            "createdAt": "2016-12-11T15:21:04Z",
+            "files": []
+        },
+        "target": {
+            "number": 29816,
+            "url": "https://github.com/kubernetes/kubernetes/issues/29816",
+            "createdAt": "2016-07-30T02:47:32Z",
+            "create_time_interval": -11622812.0,
+            "link_time_interval": 460975.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "broken test related issue"
+        }
+    },
+    {
+        "source": {
+            "number": 33253,
+            "url": "https://github.com/elastic/elasticsearch/pull/33253",
+            "createdAt": "2018-08-29T22:37:24Z",
+            "files": [
+                "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/kerberos/KerberosTestCase.java"
+            ]
+        },
+        "target": {
+            "number": "33228",
+            "url": "https://github.com/elastic/elasticsearch/issues/33228",
+            "createdAt": "2018-08-29T07:05:38Z",
+            "create_time_interval": -55906.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 4369,
+            "url": "https://github.com/joomla/joomla-cms/pull/4369",
+            "createdAt": "2014-09-27T17:09:35Z",
+            "files": [
+                "libraries/cms/form/field/contenthistory.php"
+            ]
+        },
+        "target": {
+            "number": "4561",
+            "url": "https://github.com/joomla/joomla-cms/pull/4561",
+            "createdAt": "2014-10-12T00:16:28Z",
+            "create_time_interval": 1235213.0,
+            "link_time_interval": 1144.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "administrator/components/com_contenthistory/views/history/tmpl/modal.php",
+                "administrator/includes/toolbar.php",
+                "administrator/templates/isis/css/template-rtl.css",
+                "administrator/templates/isis/css/template.css",
+                "components/com_content/views/article/tmpl/default_links.php",
+                "components/com_weblinks/views/category/tmpl/default_items.php",
+                "layouts/joomla/toolbar/versions.php",
+                "libraries/cms/form/field/contenthistory.php",
+                "media/jui/less/modals.joomla.less",
+                "media/jui/less/modals.less",
+                "templates/protostar/css/template.css"
+            ],
+            "reason": "collaborate contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 86261,
+            "url": "https://github.com/kubernetes/kubernetes/pull/86261",
+            "createdAt": "2019-12-13T18:48:09Z",
+            "files": [
+                "pkg/kubectl/cmd/auth/cani.go"
+            ]
+        },
+        "target": {
+            "number": "86179",
+            "url": "https://github.com/kubernetes/kubernetes/issues/86179",
+            "createdAt": "2019-12-11T21:46:13Z",
+            "create_time_interval": -162116.0,
+            "link_time_interval": 243031.0,
+            "type": "pullRequest to issue",
+            "location": "comment",
+            "files": [],
+            "reason":"flake?"
+        }
+    },
+    {
+        "source": {
+            "number": 18231,
+            "url": "https://github.com/kubernetes/kubernetes/pull/18231",
+            "createdAt": "2015-12-04T21:30:53Z",
+            "files": [
+                "cmd/libs/go2idl/client-gen/generators/client-generator.go",
+                "cmd/libs/go2idl/client-gen/generators/generator-for-group.go",
+                "cmd/libs/go2idl/client-gen/generators/generator-for-type.go",
+                "cmd/libs/go2idl/client-gen/main.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/install/install.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/register.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/types.generated.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/types.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/v1/register.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/v1/types.generated.go",
+                "cmd/libs/go2idl/client-gen/testdata/apis/testgroup/v1/types.go",
+                "cmd/libs/go2idl/client-gen/testoutput/doc.go",
+                "cmd/libs/go2idl/client-gen/testoutput/testType.go",
+                "cmd/libs/go2idl/client-gen/testoutput/testgroup.go",
+                "cmd/libs/go2idl/client-gen/testoutput/testgroup_test.go",
+                "pkg/api/testapi/testapi.go",
+                "pkg/client/unversioned/testclient/simple/simple_testclient.go"
+            ]
+        },
+        "target": {
+            "number": "18476",
+            "url": "https://github.com/kubernetes/kubernetes/pull/18476",
+            "createdAt": "2015-12-09T23:36:25Z",
+            "create_time_interval": 439532.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "pkg/client/unversioned/deployment_test.go",
+                "pkg/conversion/queryparams/convert.go"
+            ],
+            "reason": "collaborate contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 74331,
+            "url": "https://github.com/kubernetes/kubernetes/issues/74331",
+            "createdAt": "2019-02-21T04:14:36Z",
+            "files": []
+        },
+        "target": {
+            "number": "72823",
+            "url": "https://github.com/kubernetes/kubernetes/pull/72823",
+            "createdAt": "2019-01-11T14:31:07Z",
+            "create_time_interval": -3505409.0,
+            "link_time_interval": 1,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "cmd/kubeadm/app/util/system/docker_validator.go",
+                "cmd/kubeadm/app/util/system/docker_validator_test.go",
+                "test/images/image-util.sh"
+            ],
+            "reason": "report defect"
+        }
+    },
+    {
+        "source": {
+            "number": 72004,
+            "url": "https://github.com/kubernetes/kubernetes/pull/72004",
+            "createdAt": "2018-12-12T21:50:42Z",
+            "files": [
+                "pkg/kubelet/server/stats/BUILD",
+                "pkg/kubelet/server/stats/summary.go",
+                "pkg/kubelet/server/stats/summary_sys_containers.go",
+                "pkg/kubelet/server/stats/summary_test.go",
+                "pkg/kubelet/util/BUILD",
+                "pkg/kubelet/util/boottime_util_darwin.go",
+                "pkg/kubelet/util/boottime_util_linux.go",
+                "pkg/kubelet/util/util_unsupported.go",
+                "pkg/kubelet/util/util_windows.go",
+                "test/e2e_node/BUILD",
+                "test/e2e_node/node_problem_detector_linux.go"
+            ]
+        },
+        "target": {
+            "number": 59525,
+            "url": "https://github.com/kubernetes/kubernetes/pull/59525",
+            "createdAt": "2018-02-08T02:49:54Z",
+            "create_time_interval": -26593248.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "pkg/kubelet/server/stats/BUILD",
+                "pkg/kubelet/server/stats/summary.go",
+                "pkg/kubelet/server/stats/summary_sys_containers.go",
+                "pkg/kubelet/server/stats/summary_test.go",
+                "pkg/kubelet/util/BUILD",
+                "pkg/kubelet/util/boottime_util_darwin.go",
+                "pkg/kubelet/util/boottime_util_linux.go",
+                "pkg/kubelet/util/util_unsupported.go",
+                "pkg/kubelet/util/util_windows.go",
+                "test/e2e_node/node_problem_detector_linux.go"
+            ],
+            "reason": "do cherry pick"
+        }
+    },
+    {
+        "source": {
+            "number": 17264,
+            "url": "https://github.com/kubernetes/kubernetes/pull/17264",
+            "createdAt": "2015-11-14T00:14:32Z",
+            "files": [
+                "pkg/kubectl/run.go"
+            ]
+        },
+        "target": {
+            "number": "17258",
+            "url": "https://github.com/kubernetes/kubernetes/issues/17258",
+            "createdAt": "2015-11-13T23:37:53Z",
+            "create_time_interval": -2199.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "title",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 4785,
+            "url": "https://github.com/pandas-dev/pandas/issues/4785",
+            "createdAt": "2013-09-09T07:10:50Z",
+            "files": []
+        },
+        "target": {
+            "number": 4783,
+            "url": "https://github.com/pandas-dev/pandas/pull/4783",
+            "createdAt": "2013-09-09T03:45:05Z",
+            "create_time_interval": -12345.0,
+            "link_time_interval": 413388.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "doc/source/release.rst",
+                "pandas/compat/__init__.py",
+                "pandas/core/common.py",
+                "pandas/io/parsers.py",
+                "pandas/io/tests/test_parsers.py"
+            ],
+            "reason": "fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 27980,
+            "url": "https://github.com/kubernetes/kubernetes/issues/27980",
+            "createdAt": "2016-06-23T22:09:35Z",
+            "files": []
+        },
+        "target": {
+            "number": "46254",
+            "url": "https://github.com/kubernetes/kubernetes/pull/46254",
+            "createdAt": "2017-05-22T22:43:52Z",
+            "create_time_interval": 28773257.0,
+            "link_time_interval": 28839556.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "api/openapi-spec/swagger.json",
+                "api/swagger-spec/v1.json",
+                "cmd/hyperkube/kubelet.go",
+                "cmd/hyperkube/main.go",
+                "cmd/kubelet/BUILD",
+                "cmd/kubelet/app/BUILD",
+                "cmd/kubelet/app/options/BUILD",
+                "cmd/kubelet/app/options/options.go",
+                "cmd/kubelet/app/server.go",
+                "cmd/kubelet/kubelet.go",
+                "docs/api-reference/v1/definitions.html",
+                "hack/.golint_failures",
+                "hack/verify-flags/known-flags.txt",
+                "pkg/api/register.go",
+                "pkg/api/types.go",
+                "pkg/api/v1/zz_generated.conversion.go",
+                "pkg/api/validation/validation.go",
+                "pkg/api/zz_generated.deepcopy.go",
+                "pkg/apis/componentconfig/BUILD",
+                "pkg/apis/componentconfig/types.go",
+                "pkg/apis/componentconfig/v1alpha1/defaults.go",
+                "pkg/apis/componentconfig/v1alpha1/types.go",
+                "pkg/apis/componentconfig/v1alpha1/zz_generated.conversion.go",
+                "pkg/apis/componentconfig/v1alpha1/zz_generated.deepcopy.go",
+                "pkg/apis/componentconfig/validation/BUILD",
+                "pkg/apis/componentconfig/validation/validation.go",
+                "pkg/apis/componentconfig/zz_generated.deepcopy.go",
+                "pkg/kubelet/BUILD",
+                "pkg/kubelet/certificate/kubelet.go",
+                "pkg/kubelet/kubelet.go",
+                "pkg/kubelet/kubeletconfig/BUILD",
+                "pkg/kubelet/kubeletconfig/OWNERS",
+                "pkg/kubelet/kubeletconfig/badconfig/BUILD",
+                "pkg/kubelet/kubeletconfig/badconfig/badconfig.go",
+                "pkg/kubelet/kubeletconfig/badconfig/badconfig_test.go",
+                "pkg/kubelet/kubeletconfig/badconfig/fstracker.go",
+                "pkg/kubelet/kubeletconfig/badconfig/fstracker_test.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/BUILD",
+                "pkg/kubelet/kubeletconfig/checkpoint/checkpoint.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/checkpoint_test.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/configmap.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/configmap_test.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/download.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/download_test.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/BUILD",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/fakestore.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/fsstore.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/fsstore_test.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/store.go",
+                "pkg/kubelet/kubeletconfig/checkpoint/store/store_test.go",
+                "pkg/kubelet/kubeletconfig/configfiles/BUILD",
+                "pkg/kubelet/kubeletconfig/configfiles/configfiles.go",
+                "pkg/kubelet/kubeletconfig/configsync.go",
+                "pkg/kubelet/kubeletconfig/controller.go",
+                "pkg/kubelet/kubeletconfig/rollback.go",
+                "pkg/kubelet/kubeletconfig/startups/BUILD",
+                "pkg/kubelet/kubeletconfig/startups/fstracker.go",
+                "pkg/kubelet/kubeletconfig/startups/fstracker_test.go",
+                "pkg/kubelet/kubeletconfig/startups/startups.go",
+                "pkg/kubelet/kubeletconfig/startups/startups_test.go",
+                "pkg/kubelet/kubeletconfig/status/BUILD",
+                "pkg/kubelet/kubeletconfig/status/status.go",
+                "pkg/kubelet/kubeletconfig/util/codec/BUILD",
+                "pkg/kubelet/kubeletconfig/util/codec/codec.go",
+                "pkg/kubelet/kubeletconfig/util/equal/BUILD",
+                "pkg/kubelet/kubeletconfig/util/equal/equal.go",
+                "pkg/kubelet/kubeletconfig/util/files/BUILD",
+                "pkg/kubelet/kubeletconfig/util/files/files.go",
+                "pkg/kubelet/kubeletconfig/util/filesystem/BUILD",
+                "pkg/kubelet/kubeletconfig/util/filesystem/defaultfs.go",
+                "pkg/kubelet/kubeletconfig/util/filesystem/fakefs.go",
+                "pkg/kubelet/kubeletconfig/util/filesystem/filesystem.go",
+                "pkg/kubelet/kubeletconfig/util/log/BUILD",
+                "pkg/kubelet/kubeletconfig/util/log/log.go",
+                "pkg/kubelet/kubeletconfig/util/panic/BUILD",
+                "pkg/kubelet/kubeletconfig/util/panic/panic.go",
+                "pkg/kubelet/kubeletconfig/util/test/BUILD",
+                "pkg/kubelet/kubeletconfig/util/test/test.go",
+                "pkg/kubelet/kubeletconfig/watch.go",
+                "pkg/kubemark/hollow_kubelet.go",
+                "plugin/pkg/admission/noderestriction/BUILD",
+                "plugin/pkg/admission/noderestriction/admission.go",
+                "plugin/pkg/admission/noderestriction/admission_test.go",
+                "staging/src/k8s.io/api/core/v1/generated.pb.go",
+                "staging/src/k8s.io/api/core/v1/generated.proto",
+                "staging/src/k8s.io/api/core/v1/register.go",
+                "staging/src/k8s.io/api/core/v1/types.generated.go",
+                "staging/src/k8s.io/api/core/v1/types.go",
+                "staging/src/k8s.io/api/core/v1/types_swagger_doc_generated.go",
+                "staging/src/k8s.io/api/core/v1/zz_generated.deepcopy.go",
+                "staging/src/k8s.io/apimachinery/pkg/apis/meta/v1/conversion.go",
+                "staging/src/k8s.io/sample-apiserver/pkg/registry/registry.go",
+                "test/e2e_node/BUILD",
+                "test/e2e_node/dynamic_kubelet_configuration_test.go",
+                "test/e2e_node/services/BUILD",
+                "test/e2e_node/services/kubelet.go",
+                "test/e2e_node/util.go",
+                "test/integration/etcd/etcd_storage_path_test.go"
+            ],
+            "reason": "provide suggestion to the issue"
+        }
+    },
+    {
+        "source": {
+            "number": 2209,
+            "url": "https://github.com/kubernetes/kubernetes/issues/2209",
+            "createdAt": "2014-11-06T19:46:30Z",
+            "files": []
+        },
+        "target": {
+            "number": 2030,
+            "url": "https://github.com/kubernetes/kubernetes/issues/2030",
+            "createdAt": "2014-10-28T14:47:37Z",
+            "create_time_interval": -795533.0,
+            "link_time_interval": 3625.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "related issues"
+        }
+    },
+    {
+        "source": {
+            "number": 40956,
+            "url": "https://github.com/kubernetes/kubernetes/pull/40956",
+            "createdAt": "2017-02-04T00:24:56Z",
+            "files": [
+                "pkg/kubectl/cmd/apply_test.go",
+                "pkg/kubectl/cmd/testing/fake.go",
+                "staging/src/k8s.io/client-go/rest/fake/fake.go",
+                "test/fixtures/pkg/kubectl/cmd/apply/third-party-resource-entry.yaml",
+                "test/fixtures/pkg/kubectl/cmd/apply/third-party-resource.yaml"
+            ]
+        },
+        "target": {
+            "number": 40775,
+            "url": "https://github.com/kubernetes/kubernetes/pull/40775",
+            "createdAt": "2017-02-01T00:46:06Z",
+            "create_time_interval": -257930.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "pkg/client/unversioned/fake/fake.go",
+                "pkg/kubectl/cmd/apply_test.go",
+                "pkg/kubectl/cmd/cmd_test.go",
+                "test/fixtures/pkg/kubectl/cmd/apply/third-party-resource-entry.yaml",
+                "test/fixtures/pkg/kubectl/cmd/apply/third-party-resource.yaml"
+            ],
+            "reason": "cherry pick (intended duplicate)"
+        }
+    },
+    {
+        "source": {
+            "number": "40861",
+            "url": "https://github.com/kubernetes/kubernetes/pull/40861",
+            "createdAt": "2017-02-02T13:09:57Z",
+            "files": [
+                "cluster/saltbase/salt/e2e-image-puller/e2e-image-puller.manifest",
+                "pkg/volume/util/operationexecutor/operation_executor_test.go",
+                "test/e2e/common/configmap.go",
+                "test/e2e/common/downwardapi_volume.go",
+                "test/e2e/common/empty_dir.go",
+                "test/e2e/common/host_path.go",
+                "test/e2e/common/secrets.go",
+                "test/e2e/common/util.go",
+                "test/e2e/service_accounts.go",
+                "test/fixtures/doc-yaml/user-guide/secrets/secret-pod.yaml"
+            ]
+        },
+        "target": {
+            "number": "40613",
+            "url": "https://github.com/kubernetes/kubernetes/pull/40613",
+            "createdAt": "2017-01-27T16:56:57Z",
+            "create_time_interval": -504780.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "test/images/mount-tester/Makefile"
+            ],
+            "reason": "collaborate contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 25427,
+            "url": "https://github.com/rails/rails/pull/25427",
+            "createdAt": "2016-06-17T22:55:22Z",
+            "files": [
+                "activerecord/lib/active_record/persistence.rb",
+                "guides/source/active_record_callbacks.md"
+            ]
+        },
+        "target": {
+            "number": "11410",
+            "url": "https://github.com/rails/rails/pull/11410",
+            "createdAt": "2013-07-12T13:17:01Z",
+            "create_time_interval": -92569101.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record/associations/belongs_to_association.rb",
+                "activerecord/lib/active_record/associations/has_many_association.rb",
+                "activerecord/lib/active_record/persistence.rb",
+                "activerecord/test/cases/persistence_test.rb"
+            ],
+            "reason": "cherry pick (intended duplicate)"
+        }
+    },
+    {
+        "source": {
+            "number": 18959,
+            "url": "https://github.com/joomla/joomla-cms/pull/18959",
+            "createdAt": "2017-12-02T15:51:06Z",
+            "files": [
+                "administrator/components/com_finder/tmpl/indexer/default.php",
+                "media/com_finder/js/indexer.js",
+                "media/com_finder/js/indexer.min.js"
+            ]
+        },
+        "target": {
+            "number": "18861",
+            "url": "https://github.com/joomla/joomla-cms/issues/18861",
+            "createdAt": "2017-11-25T12:44:08Z",
+            "create_time_interval": -616018.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 5361,
+            "url": "https://github.com/elastic/elasticsearch/issues/5361",
+            "createdAt": "2014-03-07T07:02:07Z",
+            "files": []
+        },
+        "target": {
+            "number": "10217",
+            "url": "https://github.com/elastic/elasticsearch/issues/10217",
+            "createdAt": "2015-03-23T04:43:40Z",
+            "create_time_interval": 32910093.0,
+            "link_time_interval": 1599302.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "duplicate (unintended duplicate)"
+        }
+    },
+    {
+        "source": {
+            "number": 38044,
+            "url": "https://github.com/pandas-dev/pandas/pull/38044",
+            "createdAt": "2020-11-24T17:58:15Z",
+            "files": [
+                "pandas/core/groupby/groupby.py"
+            ]
+        },
+        "target": {
+            "number": "22046",
+            "url": "https://github.com/pandas-dev/pandas/issues/22046",
+            "createdAt": "2018-07-24T22:58:31Z",
+            "create_time_interval": -73767584.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": "54669",
+            "url": "https://github.com/elastic/elasticsearch/pull/54669",
+            "createdAt": "2020-04-02T17:48:10Z",
+            "files": [
+                "rest-api-spec/src/main/resources/rest-api-spec/test/indices.put_index_template/15_composition.yml",
+                "server/src/main/java/org/elasticsearch/action/admin/indices/rollover/MetadataRolloverService.java",
+                "server/src/main/java/org/elasticsearch/action/admin/indices/template/put/TransportPutIndexTemplateV2Action.java",
+                "server/src/main/java/org/elasticsearch/action/bulk/TransportBulkAction.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/IndexTemplateV2.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/MetadataCreateIndexService.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/MetadataIndexTemplateService.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/Template.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/ComponentTemplateTests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/IndexTemplateV2Tests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/MetadataCreateIndexServiceTests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/MetadataIndexTemplateServiceTests.java"
+            ]
+        },
+        "target": {
+            "number": "54750",
+            "url": "https://github.com/elastic/elasticsearch/pull/54750",
+            "createdAt": "2020-04-03T20:00:48Z",
+            "create_time_interval": 94358.0,
+            "link_time_interval": 2728.0,
+            "type": "pullRequest to pullRequest",
+            "location": "commit",
+            "files": [
+                "rest-api-spec/src/main/resources/rest-api-spec/test/indices.put_index_template/15_composition.yml",
+                "server/src/main/java/org/elasticsearch/action/admin/indices/rollover/MetadataRolloverService.java",
+                "server/src/main/java/org/elasticsearch/action/admin/indices/template/put/TransportPutIndexTemplateV2Action.java",
+                "server/src/main/java/org/elasticsearch/action/bulk/TransportBulkAction.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/IndexTemplateV2.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/MetadataCreateIndexService.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/MetadataIndexTemplateService.java",
+                "server/src/main/java/org/elasticsearch/cluster/metadata/Template.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/ComponentTemplateTests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/IndexTemplateV2Tests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/MetadataCreateIndexServiceTests.java",
+                "server/src/test/java/org/elasticsearch/cluster/metadata/MetadataIndexTemplateServiceTests.java"
+            ],
+            "reason": "collaborate contribution"
+        }
+    },
+    {
+        "source": {
+            "number": 32531,
+            "url": "https://github.com/kubernetes/kubernetes/issues/32531",
+            "createdAt": "2016-09-12T23:12:16Z",
+            "files": []
+        },
+        "target": {
+            "number": "35600",
+            "url": "https://github.com/kubernetes/kubernetes/issues/35600",
+            "createdAt": "2016-10-26T08:22:42Z",
+            "create_time_interval": 3748226.0,
+            "link_time_interval": 3596534.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "invalid link"
+        }
+    },
+    {
+        "source": {
+            "number": 42900,
+            "url": "https://github.com/elastic/elasticsearch/pull/42900",
+            "createdAt": "2019-06-05T16:57:25Z",
+            "files": [
+                "buildSrc/src/main/java/org/elasticsearch/gradle/testclusters/ElasticsearchNode.java"
+            ]
+        },
+        "target": {
+            "number": "42532",
+            "url": "https://github.com/elastic/elasticsearch/issues/42532",
+            "createdAt": "2019-05-24T16:10:26Z",
+            "create_time_interval": -1039619.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 8827,
+            "url": "https://github.com/kubernetes/kubernetes/issues/8827",
+            "createdAt": "2015-05-26T19:58:23Z",
+            "files": []
+        },
+        "target": {
+            "number": 1697,
+            "url": "https://github.com/kubernetes/kubernetes/issues/1697",
+            "createdAt": "2014-10-09T22:02:57Z",
+            "create_time_interval": -19778126.0,
+            "link_time_interval": 8144900.0,
+            "type": "issue to issue",
+            "location": "comment",
+            "files": [],
+            "reason": "cherry pick (intended duplicate)"
+        }
+    },
+    {
+        "source": {
+            "number": 18577,
+            "url": "https://github.com/pandas-dev/pandas/pull/18577",
+            "createdAt": "2017-11-30T14:08:17Z",
+            "files": [
+                "doc/source/basics.rst",
+                "doc/source/whatsnew/v0.23.0.txt",
+                "pandas/core/apply.py",
+                "pandas/core/frame.py",
+                "pandas/core/sparse/frame.py",
+                "pandas/io/formats/style.py",
+                "pandas/tests/frame/test_apply.py",
+                "pandas/tests/sparse/frame/test_apply.py",
+                "pandas/tests/sparse/frame/test_frame.py"
+            ]
+        },
+        "target": {
+            "number": "16353",
+            "url": "https://github.com/pandas-dev/pandas/issues/16353",
+            "createdAt": "2017-05-14T19:59:22Z",
+            "create_time_interval": -17258935.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 25863,
+            "url": "https://github.com/joomla/joomla-cms/issues/25863",
+            "createdAt": "2019-08-15T11:41:30Z",
+            "files": []
+        },
+        "target": {
+            "number": 25635,
+            "url": "https://github.com/joomla/joomla-cms/pull/25635",
+            "createdAt": "2019-07-18T16:38:28Z",
+            "create_time_interval": -2401382.0,
+            "link_time_interval": 0.0,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "administrator/components/com_categories/tmpl/category/edit_metadata.php",
+                "administrator/components/com_categories/tmpl/category/modal_associations.php",
+                "administrator/components/com_categories/tmpl/category/modal_extrafields.php",
+                "administrator/components/com_categories/tmpl/category/modal_metadata.php",
+                "administrator/components/com_categories/tmpl/category/modal_options.php",
+                "administrator/components/com_contact/tmpl/contact/edit_metadata.php",
+                "administrator/components/com_contact/tmpl/contact/edit_params.php",
+                "administrator/components/com_contact/tmpl/contact/modal_associations.php",
+                "administrator/components/com_contact/tmpl/contact/modal_metadata.php",
+                "administrator/components/com_contact/tmpl/contact/modal_params.php",
+                "administrator/components/com_content/tmpl/article/edit_metadata.php",
+                "administrator/components/com_content/tmpl/article/modal_associations.php",
+                "administrator/components/com_content/tmpl/article/modal_metadata.php",
+                "administrator/components/com_fields/tmpl/field/modal_options.php",
+                "administrator/components/com_menus/tmpl/item/edit_options.php",
+                "administrator/components/com_menus/tmpl/item/modal_associations.php",
+                "administrator/components/com_menus/tmpl/item/modal_options.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/edit_metadata.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/edit_params.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/modal_associations.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/modal_display.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/modal_metadata.php",
+                "administrator/components/com_newsfeeds/tmpl/newsfeed/modal_params.php",
+                "administrator/components/com_plugins/tmpl/plugin/edit_options.php",
+                "administrator/components/com_tags/tmpl/tag/edit_metadata.php",
+                "administrator/components/com_tags/tmpl/tag/edit_options.php",
+                "administrator/components/com_templates/tmpl/style/edit_options.php"
+            ],
+            "reason": "provide suggestion to the issue"
+        }
+    },
+    {
+        "source": {
+            "number": 29367,
+            "url": "https://github.com/joomla/joomla-cms/pull/29367",
+            "createdAt": "2020-06-01T17:02:35Z",
+            "files": [
+                "components/com_users/tmpl/profile/edit.php"
+            ]
+        },
+        "target": {
+            "number": "29312",
+            "url": "https://github.com/joomla/joomla-cms/issues/29312",
+            "createdAt": "2020-05-31T11:21:59Z",
+            "create_time_interval": -106836.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 65804,
+            "url": "https://github.com/kubernetes/kubernetes/issues/65804",
+            "createdAt": "2018-07-04T07:55:13Z",
+            "files": []
+        },
+        "target": {
+            "number": 65909,
+            "url": "https://github.com/kubernetes/kubernetes/pull/65909",
+            "createdAt": "2018-07-06T15:42:18Z",
+            "create_time_interval": 200825.0,
+            "link_time_interval": 550.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "pkg/registry/rbac/validation/BUILD",
+                "pkg/registry/rbac/validation/rule.go"
+            ],
+            "reason": "fixed by pr"
+        }
+    },
+    {
+        "source": {
+            "number": 18910,
+            "url": "https://github.com/rails/rails/pull/18910",
+            "createdAt": "2015-02-12T05:30:12Z",
+            "files": [
+                "activerecord/CHANGELOG.md",
+                "activerecord/lib/active_record.rb",
+                "activerecord/lib/active_record/base.rb",
+                "activerecord/lib/active_record/suppressor.rb",
+                "activerecord/test/cases/suppressor_test.rb",
+                "activerecord/test/models/notification.rb",
+                "activerecord/test/models/user.rb",
+                "activerecord/test/schema/schema.rb"
+            ]
+        },
+        "target": {
+            "number": "18847",
+            "url": "https://github.com/rails/rails/issues/18847",
+            "createdAt": "2015-02-08T01:11:43Z",
+            "create_time_interval": -361109.0,
+            "link_time_interval": 1,
+            "type": "pullRequest to issue",
+            "location": "body",
+            "files": [],
+            "reason": "fix defect"
+        }
+    },
+    {
+        "source": {
+            "number": 26400,
+            "url": "https://github.com/pandas-dev/pandas/pull/26400",
+            "createdAt": "2019-05-15T04:57:28Z",
+            "files": []
+        },
+        "target": {
+            "number": "26628",
+            "url": "https://github.com/pandas-dev/pandas/pull/26628",
+            "createdAt": "2019-06-03T08:00:14Z",
+            "create_time_interval": 1652566.0,
+            "link_time_interval": 1376.0,
+            "type": "pullRequest to pullRequest",
+            "location": "comment",
+            "files": [
+                "doc/source/whatsnew/v0.25.0.rst",
+                "pandas/tests/tseries/offsets/test_offsets.py",
+                "pandas/tseries/offsets.py"
+            ]
+        }
+    },
+    {
+        "source": {
+            "number": 45197,
+            "url": "https://github.com/elastic/elasticsearch/issues/45197",
+            "createdAt": "2019-08-05T12:23:22Z",
+            "files": []
+        },
+        "target": {
+            "number": 45446,
+            "url": "https://github.com/elastic/elasticsearch/pull/45446",
+            "createdAt": "2019-08-12T10:44:41Z",
+            "create_time_interval": 598879.0,
+            "link_time_interval": 1,
+            "type": "issue to pullRequest",
+            "location": "body",
+            "files": [
+                "docs/reference/cluster/nodes-info.asciidoc",
+                "docs/reference/ingest/ingest-node.asciidoc"
+            ]
+        }
+    },
+    {
+        "source": {
+            "number": 54482,
+            "url": "https://github.com/kubernetes/kubernetes/issues/54482",
+            "createdAt": "2017-10-24T13:06:43Z",
+            "files": []
+        },
+        "target": {
+            "number": "61878",
+            "url": "https://github.com/kubernetes/kubernetes/pull/61878",
+            "createdAt": "2018-03-29T05:11:33Z",
+            "create_time_interval": 13449890.0,
+            "link_time_interval": 13910430.0,
+            "type": "issue to pullRequest",
+            "location": "comment",
+            "files": [
+                "pkg/cloudprovider/providers/aws/aws.go",
+                "pkg/cloudprovider/providers/aws/aws_routes.go",
+                "pkg/cloudprovider/providers/aws/tags.go",
+                "pkg/cloudprovider/providers/aws/volumes.go"
+            ]
+        }
+    },
+    {
+        "source": {
+            "number": "3029",
+            "url": "https://github.com/joomla/joomla-cms/pull/3029",
+            "createdAt": "2014-02-03T08:08:02Z",
+            "files": [
+                "components/com_tags/views/tag/tmpl/default.php"
+            ]
+        },
+        "target": {
+            "number": "3040",
+            "url": "https://github.com/joomla/joomla-cms/pull/3040",
+            "createdAt": "2014-02-04T08:31:35Z",
+            "create_time_interval": 87813.0,
+            "link_time_interval": 383090.0,
+            "type": "pullRequest to pullRequest",
+            "location": "commit",
+            "files": [
+                "administrator/components/com_weblinks/controller.php"
+            ]
+        }
+    },
+    {
+        "source": {
+            "number": 49872,
+            "url": "https://github.com/kubernetes/kubernetes/pull/49872",
+            "createdAt": "2017-07-31T12:20:52Z",
+            "files": [
+                "cmd/kubeadm/app/cmd/version.go"
+            ]
+        },
+        "target": {
+            "number": 46598,
+            "url": "https://github.com/kubernetes/kubernetes/pull/46598",
+            "createdAt": "2017-05-29T16:08:35Z",
+            "create_time_interval": -5429537.0,
+            "link_time_interval": 0.0,
+            "type": "pullRequest to pullRequest",
+            "location": "body",
+            "files": [
+                "hack/lib/test.sh",
+                "pkg/kubectl/cmd/version.go"
+            ]
+        }
+    }
+]

@@ -156,13 +156,14 @@ def parse_node2_in_num(nodes,quote_num, location, node1, owner, name, link_time,
 def detect_dup(links,link):
     repeat = 0
     for i in range(len(links)-1, -1, -1):
-        if link['source']['number'] == links[i]['source']['number'] and \
-                link['target']['number'] == links[i]['target']['number']:
+        if int(link['source']['number']) == int(links[i]['source']['number']) and \
+                int(link['target']['number']) == int(links[i]['target']['number']):
             repeat = 1
             # 比较两个link的link time interval, 取小的那一个，是更早的一条link
             if link['target']['link_time_interval'] < links[i]['target']['link_time_interval']:
-                links[i]['link_time_interval'] = link['target']['link_time_interval']
-                links[i]['create_time_interval'] = link['target']['create_time_interval']
+                links[i]['target']['link_time_interval'] = link['target']['link_time_interval']
+                links[i]['target']['create_time_interval'] = link['target']['create_time_interval']
+                links[i]['target']['location'] = link['target']['location']
             else:
                 pass
         else:
@@ -184,7 +185,7 @@ def extract_link_in_title(nodes, node, links):
                     source_file = get_file(node)
                     target_file = get_file(target_node)
                     create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).seconds
+                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
                     link_time_interval = 1  # title里的link都是在创建node的时候就link上了，所以这里定义link time interval为1秒
                     link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
                     link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
@@ -197,7 +198,9 @@ def extract_link_in_title(nodes, node, links):
 
 def extract_link_in_body(nodes, node, links):
     target_number_list = []
-    body_url = re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+\w+/+[0-9]+'), preprocess.clear_body(node['body']))
+    body_url = []
+    body_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+pull+/+[0-9]+'), preprocess.clear_body(node['body']))
+    body_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+issues+/+[0-9]+'), preprocess.clear_body(node['body']))
     if len(body_url) != 0:
         for url in body_url:
             target_number_list.append(url.split('/')[-1])
@@ -214,7 +217,7 @@ def extract_link_in_body(nodes, node, links):
                 source_file = get_file(node)
                 target_file = get_file(target_node)
                 create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                    datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).seconds
+                    datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
                 link_time_interval = 1  # title里的link都是在创建node的时候就link上了，所以这里定义link time interval为1秒
                 link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
                 link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
@@ -226,25 +229,41 @@ def extract_link_in_body(nodes, node, links):
                 links = detect_dup(links, link)
     return links
 
-def extract_link_in_comment(nodes, node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links):
+def extract_link_in_comment(nodes, node, links):
     # 处理comment
-    location = 'comment'
-    if len(node['comments']['nodes']) != 0:
-        for comment in node['comments']['nodes']:
-            clean_comment = preprocess.clear_body(comment['body'])
-            # 处理body中url的link
-            comment_url = re.findall(re.compile(r'https://github.com/'+owner+'/'+name+'/+\w+/+[0-9]+'),clean_comment)
-            link_time = comment['createdAt']
-            if len(comment_url) != 0:
-                for url in comment_url:
-                    link = parse_node2_in_url(nodes, url, location, node1,link_time,pr_list, pr_createAt, issue_list, issue_createAt,owner,name)
-                    links = detect_dup(links,link)
-            # 处理body中的#12345的link
-            comment_quote = re.findall(re.compile(r'#[0-9]+'), clean_comment)
-            if len(comment_quote) != 0:
-                for quote in comment_quote:
-                    link = parse_node2_in_num(nodes, quote, location, node1, owner, name, link_time,pr_list, pr_createAt, issue_list, issue_createAt)
-                    links = detect_dup(links,link)
+    for comment in node['comments']['nodes']:
+        target_number_list = []
+        comment_url = []
+        comment_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+pull+/+[0-9]+'), preprocess.clear_body(comment['body']))
+        comment_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+issues+/+[0-9]+'), preprocess.clear_body(comment['body']))
+        if len(comment_url) != 0:
+            for url in comment_url:
+                target_number_list.append(url.split('/')[-1])
+        comment_quote = re.findall(re.compile(r'#[0-9]+'), preprocess.clear_body(comment['body']))
+        if len(comment_quote) != 0:
+            for quote in comment_quote:
+                target_number_list.append(quote.replace("#",""))
+
+        for target_number in target_number_list:
+            for target_node in nodes:
+                if target_node['number'] == int(target_number):
+                    source_number = node['number']
+                    source_url = node['url']
+                    target_url = target_node['url']
+                    source_file = get_file(node)
+                    target_file = get_file(target_node)
+                    create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
+                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
+                    link_time_interval = datetime.strptime(comment['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
+                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
+                    link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
+                    link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
+                                       'files': source_file},
+                            'target': {'number': target_number, 'url': target_url, 'createdAt': target_node['createdAt'],
+                                       'create_time_interval': create_time_interval,
+                                       'link_time_interval': link_time_interval,
+                                       'type': link_type, 'location': "comment", 'files': target_file}}
+                    links = detect_dup(links, link)
     return links
 
 def extract_link_in_review(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links):
@@ -254,8 +273,9 @@ def extract_link_in_review(node, node1, owner, name, pr_list, pr_createAt, issue
         for review in node['reviews']['nodes']:
             review_comments = review['comments']['nodes']
             for rc in review_comments:
-                review_url = re.findall(re.compile(r'https://github.com/' + owner + '/' + name + '/+\w+/+[0-9]+'),
-                                        rc['body'])
+                review_url = []
+                review_url += re.findall(re.compile(r'https://github.com/' + owner + '/' + name + '/+pull+/+[0-9]+'), rc['body'])
+                review_url += re.findall(re.compile(r'https://github.com/' + owner + '/' + name + '/+issues+/+[0-9]+'), rc['body'])
                 if len(review_url) != 0:
                     location = 'review'
                     for url in review_url:
@@ -293,10 +313,10 @@ def extract_link_in_crossReference(nodes, node, links):
             target_number = item['target']['number']
             target_url = item['target']['url']
             create_time_interval = datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).seconds
+                datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
             link_time_interval = datetime.strptime(item['referencedAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__\
                 (max(datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"),
-                     datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"))).seconds
+                     datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"))).total_seconds()
             target_file_path = get_file(node)
             link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
             # 找source
@@ -307,7 +327,7 @@ def extract_link_in_crossReference(nodes, node, links):
                     # 确定location ，这里只有body和comment两种情况，用正则匹配出来
                     # body
                     link_text = re.findall(re.compile(r'#+%s' % str(target_number)), preprocess.clear_body(source_node['body']))
-                    if link_text is not None:
+                    if len(link_text) != 0:
                         location = "body"
                         link = {'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt'],
                                                 'files':source_file_path},
@@ -316,9 +336,9 @@ def extract_link_in_crossReference(nodes, node, links):
                                                 'type': link_type, 'location': location, 'files':target_file_path}}
                         links = detect_dup(links,link)
                     # comment
-                    for comment in source_node['comments']['nodes']:
+                    for comment in source_node['comments']['nodes']: # todo 这里comment一条记录都没有，检查一下
                         link_text = re.findall(re.compile(r'#+%s' % str(target_number)), preprocess.clear_body(comment['body']))
-                        if link_text is not None:
+                        if len(link_text) != 0:
                             location = "comment"
                             link = {'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt'],
                                                 'files':source_file_path},
@@ -368,21 +388,24 @@ def extract_link_in_referencedEvent(nodes, node, links):
             target_number = item['subject']['url'].split("/")[-1]
             target_url = item['subject']['url']
 
-            urls = re.findall(re.compile(r'https://github.com/+\w+/+\w+/+\w+/+[0-9]+'), item['commit']['messageHeadlineHTML'])
+            urls = []
+            urls += re.findall(re.compile(r'https://github.com/+\S+/+\S+/+pull+/+[0-9]+'), item['commit']['messageHeadlineHTML'])
+            urls += re.findall(re.compile(r'https://github.com/+\S+/+\S+/+issues+/+[0-9]+'), item['commit']['messageHeadlineHTML'])
             if urls == []:
                 continue
-            for source_url in urls:
-                if source_url.replace(source_url.split('/')[-2],'') == item['subject']['url'].replace(item['subject']['url'].split('/')[-2],''):
+            for match_url in urls:
+                if match_url.replace(match_url.split('/')[-2],'') == item['subject']['url'].replace(item['subject']['url'].split('/')[-2],''):
                     continue
                 else:
-                    source_number = source_url.split('/')[-1]
+                    source_number = match_url.split('/')[-1]
                     for source_node in nodes:
                         if source_node['number'] == int(source_number):
                             create_time_interval = datetime.strptime(item['subject']['createdAt'],"%Y-%m-%dT%H:%M:%SZ").__sub__(
-                                datetime.strptime(source_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).days
+                                datetime.strptime(source_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
                             link_time_interval = datetime.strptime(item['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__ \
                                 (max(datetime.strptime(item['subject']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"),
-                                     datetime.strptime(source_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ"))).seconds
+                                     datetime.strptime(source_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ"))).total_seconds()
+                            source_url = source_node['url']
                             source_file = get_file(source_node)
                             target_file = get_file(node)
                             source_type = extract_type_in_url(source_url)
@@ -423,7 +446,7 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
                 continue_nodes = nodes
                 break
             else:
-                if node['number'] == links[-1]['source']['number']:
+                if str(node['number']) == str(links[-1]['source']['number']):
                     continue_nodes = nodes[nodes.index(node)+1:]
                     break
                 else:
@@ -433,10 +456,13 @@ def extract_link_type(response_p, response_i, renew, filepath=None):
                 links = extract_link_in_crossReference(nodes, node, links)
                 links = extract_link_in_referencedEvent(nodes, node, links)
                 links = extract_link_in_title(nodes, node, links)
-                links = extract_link_in_body(nodes, node, links)        # 直接从crossReference里面提取link，不再需要body和comment了
-            file_opt.save_json_to_file(filepath + "links_type.json", links)
+                links = extract_link_in_body(nodes, node, links)
+                links = extract_link_in_comment(nodes, node, links)
+                if len(links) % 100 == 0:
+                    file_opt.save_json_to_file(filepath + "links_type_sl.json", links)
+            file_opt.save_json_to_file(filepath + "links_type_sl.json", links)
     elif renew == 0:
-        links = file_opt.read_json_from_file(filepath + "links_type.json")
+        links = file_opt.read_json_from_file(filepath + "links_type_sl.json")
     return
 
 def visualization_multi_repos():
