@@ -11,8 +11,8 @@ from matplotlib import ticker as mticker
 import math
 
 seconds_a_minit = 60
-# seconds_in_day = 86400  # 取时间为天
-seconds_in_day = 1  # 取时间为秒
+seconds_in_day = 86400  # 取时间为天
+# seconds_in_day = 1  # 取时间为秒
 seconds_a_year = seconds_a_minit * 60 * 24 * 365
 repo_list = ["elasticsearch","joomla-cms","kubernetes","pandas","rails"]
 # repo_list = ["elasticsearch","joomla-cms","pandas","rails"]
@@ -21,7 +21,7 @@ def extract_pr_iss_list(owner, repo):
     response_pr = file_opt.read_json_from_file(
         init.local_data_filepath + owner + "/" + repo + "/response_pullRequests.json")
     response_iss = file_opt.read_json_from_file(init.local_data_filepath + owner + "/" + repo + "/response_issues.json")
-    pr_list, pr_createAt, issue_list, issue_createAt = [], [], [], []
+    pr_list, pr_createAt, issue_list0, issue_createAt = [], [], [], []
     for item in response_pr['data']['repository']['pullRequests']['nodes']:
         pr_list.append(item['number'])
         pr_createAt.append(item['createdAt'])
@@ -444,16 +444,16 @@ def plot_RQ3(dataset):
             ct = link["target"]["create_time_interval"]
             lt = link["target"]["link_time_interval"]
             if ct > 0:
-                create_time_posi.append(ct)
+                create_time_posi.append(ct/seconds_in_day)
             elif ct < 0:
-                create_time_neg.append(-ct)
+                create_time_neg.append(-ct/seconds_in_day)
             elif ct-0 < 0.001:  # ct为0的情况
-                create_time_neg.append((ct+1))
+                create_time_neg.append((ct+1)/seconds_in_day)
             if lt >= 0:             # 把link time interval中为负的错误情况去除
                 if lt-0 < 0.001:
-                    link_time.append((lt + 1))        # link time interval为0的变成1, 86400是一天中的秒数
+                    link_time.append((lt + 1)/seconds_in_day)        # link time interval为0的变成1, 86400是一天中的秒数
                 else:
-                    link_time.append(lt)
+                    link_time.append(lt/seconds_in_day)
             else:
                 pass
         create_time_posi_list.append(create_time_posi)
@@ -489,14 +489,14 @@ def plot_RQ3(dataset):
     plt.yticks([math.log10(seconds_a_minit), math.log10(seconds_a_minit * 60), math.log10(seconds_a_minit * 60 * 24),
                 math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365)],
                ['1 minite', '1 hour', '1 day', '1 month', '1 year'])
-    # plt.ylabel("Positive create time (log)")
+    plt.ylabel("Positive create time (log)")
     plt.show()
 
     sns.violinplot(data=create_neg_dic,color="Lightgrey", linewidth=1, cut=0)
     plt.yticks([math.log10(seconds_a_minit), math.log10(seconds_a_minit * 60), math.log10(seconds_a_minit * 60 * 24),
                 math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365)],
                ['1 minite', '1 hour', '1 day', '1 month', '1 year'])
-    # plt.ylabel("Negative create time (log)")
+    plt.ylabel("Negative create time (log)")
     plt.show()
 
     sns.violinplot(data=link_dic,color="Lightgrey", linewidth=1, cut=0)
@@ -541,9 +541,9 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
             cluster_layer.append(cluster["layers_count"])
             cluster_node.append(cluster["nodes_count"])
             if cluster["cluster_time_interval"] == 0:
-                duration.append((cluster["cluster_time_interval"]+1))
+                duration.append((cluster["cluster_time_interval"]+1)/seconds_in_day)
             else:
-                duration.append((cluster["cluster_time_interval"]))
+                duration.append((cluster["cluster_time_interval"])/seconds_in_day)
         layer_list[repo_list[i]] = cluster_layer
         nodes_list[repo_list[i]] = cluster_node
         duration_list [repo_list[i]] = sorted(duration)
@@ -559,6 +559,8 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     print(layer_list.median())
     print("---- layer 最大值 ----")
     print(layer_list.max())
+    print("---- layer 最小值 ----")
+    print(layer_list.min())
 
     print("---- layer node 均值 ----")
     print(nodes_list.mean())
@@ -566,6 +568,8 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     print(nodes_list.median())
     print("---- layer node 最大值 ----")
     print(nodes_list.max())
+    print("---- layer node 最小值 ----")
+    print(nodes_list.min())
 
     print("---- duration 均值 ----")
     print(duration_list.mean())
@@ -573,11 +577,13 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     print(duration_list.median())
     print("---- duration 最大值 ----")
     print(duration_list.max())
+    print("---- duration 最小值 ----")
+    print(duration_list.min())
 
     # 对cluster的三个变量取对数
     # layer_list = layer_list.apply(np.log)
-    nodes_list = nodes_list.apply(np.log)
-    # duration_list = duration_list.apply(np.log)
+    nodes_list = nodes_list.apply(np.log10)
+    duration_list = duration_list.apply(np.log10)
 
     sns.violinplot(data=layer_list,color="Lightgrey", linewidth=1)
     plt.ylabel("Cluster layers")
@@ -588,13 +594,15 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     plt.show()
 
     seconds_a_minit = 60
-    sns.violinplot(data=duration_list,color="Lightgrey", linewidth=1)
-    # plt.yticks([math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365),
-    #             math.log10(seconds_a_minit * 60 * 24 * 365 * 10), math.log10(seconds_a_minit * 60 * 24 * 365 * 5)],
-    plt.yticks([seconds_a_minit * 60 * 24 * 30, seconds_a_minit * 60 * 24 * 365,
-                seconds_a_minit * 60 * 24 * 365 * 10, seconds_a_minit * 60 * 24 * 365 * 5],
-               ['1 month', '1 year', '10 years', '5 years'])
-    plt.ylabel("Cluster duration in days")
+    sns.violinplot(data=duration_list,color="Lightgrey", linewidth=1, cut=0)
+    plt.yticks([math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365),
+                math.log10(seconds_a_minit * 60 * 24 * 365 * 5)],
+               ['1 month', '1 year', '5 years'])
+    # plt.yticks([seconds_a_minit * 60 * 24 * 30, seconds_a_minit * 60 * 24 * 365,
+    #             seconds_a_minit * 60 * 24 * 365 * 5, seconds_a_minit * 60 * 24 * 365 * 10],
+    #            ['1 month', '1 year', '5 years', '10 years'])
+    # plt.grid()
+    plt.ylabel("Cluster duration (log)")
     plt.show()
 
 if __name__ == '__main__':
@@ -609,8 +617,8 @@ if __name__ == '__main__':
     RQ4_1_n = read_repos_data("link_1_N.json")
     RQ4_cluster = read_repos_data("link_cluster.json")
 
-    plot_RQ1(RQ1)
-    plot_RQ2(RQ2)
-    plot_RQ3(RQ3)
+    # plot_RQ1(RQ1)
+    # plot_RQ2(RQ2)
+    # plot_RQ3(RQ3)
     plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
 
