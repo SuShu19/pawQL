@@ -1,5 +1,1 @@
-elastic/elasticsearch
-joomla/joomla-cms
-kubernetes/kubernetes
-pydata/pandas
 rails/rails

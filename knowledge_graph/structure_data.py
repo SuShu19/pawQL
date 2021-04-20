@@ -10,7 +10,11 @@ from prepare import queries
 from tqdm import tqdm
 from prepare import preprocess
 import os
+from py2neo import Graph, Node, Relationship, NodeMatcher
+import py2neo
+import shutil
 
+g = Graph('http://localhost:7474', user="neo4j", password="native-orchid-match-virus-parking-5393")
 renew = 1       # 0-直接读文件，1-续写文件，2-重写文件 todo 把2写完
 
 def parse_node2(url):
@@ -172,99 +176,106 @@ def detect_dup(links,link):
         links.append(link)
     return links
 
-def extract_link_in_title(nodes, node, links):
-    title_quote = re.findall(re.compile(r'#[0-9]+'), node['title'])
-    if len(title_quote) != 0:
-        for quote in title_quote:
-            source_number = node['number']
-            target_number = quote.replace("#",'')
-            for target_node in nodes:
-                if target_node['number'] == int(target_number):
-                    source_url = node['url']
-                    target_url = target_node['url']
-                    source_file = get_file(node)
-                    target_file = get_file(target_node)
-                    create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
-                    link_time_interval = 1  # title里的link都是在创建node的时候就link上了，所以这里定义link time interval为1秒
-                    link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
-                    link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
-                               'files': source_file},
-                            'target': {'number': target_number, 'url': target_url, 'createdAt': target_node['createdAt'],
-                                       'create_time_interval': create_time_interval,'link_time_interval': link_time_interval,
-                                       'type': link_type, 'location': "title",'files': target_file}}
-                    links = detect_dup(links,link)
-    return links
+def extract_relations_in_title(pr_list, issue_list, node, develop_unit):
+    title = Node("title", content=node['title'])  # 创建标题实体
+    g.merge(title, 'title', "content")
+    g.merge(Relationship(develop_unit, "title", title))
 
-def extract_link_in_body(nodes, node, links):
-    target_number_list = []
-    body_url = []
+    title_quote = re.findall(re.compile(r'#[0-9]+'), node['title'])
+    if title_quote != []:
+        for quote in title_quote:
+            target_number = quote.replace("#",'')
+            for item in pr_list:
+                if str(item) == str(target_number):
+                    target_node = Node("pullRequest", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "pullRequest", 'number')
+                    g.merge(Relationship(title, "linkTo", target_node))
+                    continue
+            for item in issue_list:
+                if str(item) == str(target_number):
+                    target_node = Node("issue", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "issue", 'number')
+                    g.merge(Relationship(title, "linkTo", target_node))
+                    continue
+
+
+def extract_relations_in_body(pr_list, issue_list, node, develop_unit):
+
+    body = Node("body", content=node['body'])  # 创建标题实体
+    g.merge(body, 'body', "content")
+    g.merge(Relationship(develop_unit, "body", body))
+
+    body_link, body_url = [], []
     body_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+pull+/+[0-9]+'), preprocess.clear_body(node['body']))
     body_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+issues+/+[0-9]+'), preprocess.clear_body(node['body']))
     if len(body_url) != 0:
         for url in body_url:
-            target_number_list.append(url.split('/')[-1])
+            body_link.append(url.split('/')[-1])
     body_quote = re.findall(re.compile(r'#[0-9]+'), preprocess.clear_body(node['body']))
     if len(body_quote) != 0:
         for quote in body_quote:
-            target_number_list.append(quote.replace("#",""))
-    for target_number in target_number_list:
-        for target_node in nodes:
-            if target_node['number'] == int(target_number):
-                source_number = node['number']
-                source_url = node['url']
-                target_url = target_node['url']
-                source_file = get_file(node)
-                target_file = get_file(target_node)
-                create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                    datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
-                link_time_interval = 1  # title里的link都是在创建node的时候就link上了，所以这里定义link time interval为1秒
-                link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
-                link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
-                                   'files': source_file},
-                        'target': {'number': target_number, 'url': target_url, 'createdAt': target_node['createdAt'],
-                                   'create_time_interval': create_time_interval,
-                                   'link_time_interval': link_time_interval,
-                                   'type': link_type, 'location': "body", 'files': target_file}}
-                links = detect_dup(links, link)
-    return links
+            body_link.append(quote.replace("#", ""))
 
-def extract_link_in_comment(nodes, node, links):
-    # 处理comment
+    if body_link != []:
+        for target_number in body_link:
+            for item in pr_list:
+                if str(item) == str(target_number):
+                    target_node = Node("pullRequest", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "pullRequest", 'number')
+                    g.merge(Relationship(body, "linkTo", target_node))
+                    continue
+            for item in issue_list:
+                if str(item) == str(target_number):
+                    target_node = Node("issue", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "issue", 'number')
+                    g.merge(Relationship(body, "linkTo", target_node))
+                    continue
+
+def extract_relations_in_comment(pr_list, issue_list, node, develop_unit):
     for comment in node['comments']['nodes']:
-        target_number_list = []
-        comment_url = []
+
+        comment_node = Node("comment", content=comment['body'])  # 创建标题实体
+        g.merge(comment_node, 'comment', "content")
+        g.merge(Relationship(develop_unit, "comment", comment_node))
+
+        if comment['author'] is not None:
+            author = Node("author", name=comment['author']['login'])  # 创建用户实体
+            g.merge(author, 'author', "name")
+            g.merge(Relationship(author, "create", comment_node))
+        else:
+            pass
+
+        time = Node("time", time=comment['createdAt'])  # 创建时间实体
+        g.merge(time, 'time', "time")
+        g.merge(Relationship(comment_node, "time", time))
+
+        comment_link, comment_url = [], []
         comment_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+pull+/+[0-9]+'), preprocess.clear_body(comment['body']))
         comment_url += re.findall(re.compile(r'https://github.com/' + node['url'].split('/')[-4] + '/' + node['url'].split('/')[-3] + '/+issues+/+[0-9]+'), preprocess.clear_body(comment['body']))
         if len(comment_url) != 0:
             for url in comment_url:
-                target_number_list.append(url.split('/')[-1])
+                comment_link.append(url.split('/')[-1])
         comment_quote = re.findall(re.compile(r'#[0-9]+'), preprocess.clear_body(comment['body']))
         if len(comment_quote) != 0:
             for quote in comment_quote:
-                target_number_list.append(quote.replace("#",""))
+                comment_link.append(quote.replace("#",""))
 
-        for target_number in target_number_list:
-            for target_node in nodes:
-                if target_node['number'] == int(target_number):
-                    source_number = node['number']
-                    source_url = node['url']
-                    target_url = target_node['url']
-                    source_file = get_file(node)
-                    target_file = get_file(target_node)
-                    create_time_interval = datetime.strptime(target_node['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
-                    link_time_interval = datetime.strptime(comment['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                        datetime.strptime(node['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
-                    link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
-                    link = {'source': {'number': source_number, 'url': source_url, 'createdAt': node['createdAt'],
-                                       'files': source_file},
-                            'target': {'number': target_number, 'url': target_url, 'createdAt': target_node['createdAt'],
-                                       'create_time_interval': create_time_interval,
-                                       'link_time_interval': link_time_interval,
-                                       'type': link_type, 'location': "comment", 'files': target_file}}
-                    links = detect_dup(links, link)
-    return links
+        for target_number in comment_link:
+            if target_number == develop_unit['number']:
+                continue
+            for item in pr_list:
+                if str(item) == str(target_number):
+                    target_node = Node("pullRequest", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "pullRequest", 'number')
+                    g.merge(Relationship(comment_node, "linkTo", target_node))
+                    continue
+            for item in issue_list:
+                if str(item) == str(target_number):
+                    target_node = Node("issue", number=str(target_number))  # 创建单元实体
+                    g.merge(target_node, "issue", 'number')
+                    g.merge(Relationship(comment_node, "linkTo", target_node))
+                    continue
+
 
 def extract_link_in_review(node, node1, owner, name, pr_list, pr_createAt, issue_list, issue_createAt, links):
     # 处理comment
@@ -302,7 +313,7 @@ def get_file(unit):
         pass
     return file_path
 
-def extract_link_in_crossReference(nodes, node, links):
+def extract_relations_in_crossReference(node, develop_unit):
     # 处理crossReference, 从target找source
     for item in node['timelineItems']['nodes']:
         if item:
@@ -310,43 +321,12 @@ def extract_link_in_crossReference(nodes, node, links):
                 continue
             source_number = item['source']['number']
             source_url = item['source']['url']
-            target_number = item['target']['number']
-            target_url = item['target']['url']
-            create_time_interval = datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__(
-                datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ")).total_seconds()
-            link_time_interval = datetime.strptime(item['referencedAt'], "%Y-%m-%dT%H:%M:%SZ").__sub__\
-                (max(datetime.strptime(item['source']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"),
-                     datetime.strptime(item['target']['createdAt'], "%Y-%m-%dT%H:%M:%SZ"))).total_seconds()
-            target_file_path = get_file(node)
-            link_type = determine_link_type(extract_type_in_url(source_url), extract_type_in_url(target_url))
-            # 找source
-            for source_node in nodes:
-                if source_node['number'] == source_number:
-                    # 提取source file
-                    source_file_path = get_file(source_node)
-                    # 确定location ，这里只有body和comment两种情况，用正则匹配出来
-                    # body
-                    link_text = re.findall(re.compile(r'#+%s' % str(target_number)), preprocess.clear_body(source_node['body']))
-                    if len(link_text) != 0:
-                        location = "body"
-                        link = {'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt'],
-                                                'files':source_file_path},
-                                      'target':{'number': target_number, 'url': target_url, 'createdAt':item['target']['createdAt'],
-                                                'create_time_interval': create_time_interval,'link_time_interval':link_time_interval,
-                                                'type': link_type, 'location': location, 'files':target_file_path}}
-                        links = detect_dup(links,link)
-                    # comment
-                    for comment in source_node['comments']['nodes']: # todo 这里comment一条记录都没有，检查一下
-                        link_text = re.findall(re.compile(r'#+%s' % str(target_number)), preprocess.clear_body(comment['body']))
-                        if len(link_text) != 0:
-                            location = "comment"
-                            link = {'source':{'number': source_number, 'url': source_url, 'createdAt': item['source']['createdAt'],
-                                                'files':source_file_path},
-                                      'target':{'number': target_number, 'url': target_url, 'createdAt':item['target']['createdAt'],
-                                                'create_time_interval': create_time_interval,'link_time_interval':link_time_interval,
-                                                'type': link_type, 'location': location, 'files':target_file_path}}
-                            links = detect_dup(links, link)
-    return links
+            source_type = extract_type_in_url(source_url)
+
+            source_node = Node(source_type, number=source_number, url=source_url)  # 创建节点实体
+            g.merge(source_node, source_type, "number")
+            g.merge(Relationship(source_node, "linkTo", develop_unit))
+
 
 def fetch_ReferencedEvent_source(source_number, source_owner, source_name, source_type):
     r = prepare_response.query_request(queries.search_one_node, source_owner, source_name, type=source_type, number=source_number)
@@ -376,7 +356,7 @@ def fetch_ReferencedEvent_source(source_number, source_owner, source_name, sourc
 
     return response_one
 
-def extract_link_in_referencedEvent(nodes, node, links):
+def extract_relations_in_referencedEvent(node, develop_unit):
     for item in node['timelineItems']['nodes']:
         if item:
             if "commitRepository" not in item:                      # 排除ReferencedAt的情况
@@ -433,37 +413,59 @@ def extract_type_in_url(url):
         type_ = None
     return type_
 
-def extract_link_type(response_p, response_i, renew, filepath=None):
-    if renew == 1:
-        nodes = response_p['data']['repository']['pullRequests']['nodes'] + response_i['data']['repository']['issues']['nodes']
-        if os.path.isfile(filepath + "links_type.json"):        # 如果已有link_type.json，查找后断点重启
-            links = file_opt.read_json_from_file(filepath + "links_type.json")
-        else:                                                   # 从0开始提取Link
-            links = []
-        continue_nodes = []
-        for node in nodes:          # 用来找到新的起点
-            if links == []:
-                continue_nodes = nodes
-                break
-            else:
-                if str(node['number']) == str(links[-1]['source']['number']):
-                    continue_nodes = nodes[nodes.index(node)+1:]
-                    break
-                else:
+def find_break(owner, repo):
+    filefolder = '../data/' + owner + "/" + repo
+    if not os.path.exists(filefolder + '/pullRequests.txt') :
+        os.makedirs(filefolder)
+        file = open(filefolder + '/pullRequests.txt','w')
+        file.close()
+    if not os.path.exists(filefolder + '/issues.txt'):
+        file = open(filefolder + '/issues.txt','w')
+        file.close()
+    last_pr = file_opt.read_lastline_in_file(filefolder + '/pullRequests.txt')
+    last_issue = file_opt.read_lastline_in_file(filefolder + '/issues.txt')
+    return last_pr, last_issue
+
+def create_noe4j(response_p, response_i, renew, owner, repo, filepath=None):
+    # 断点重启
+    last_pr_number, last_issue_number = find_break(owner, repo)
+    # 确定pr号和issue号的列表
+    pr_list = []
+    for node in response_p['data']['repository']['pullRequests']['nodes']:
+        pr_list.append(node['number'])
+    issue_list = []
+    for node in response_i['data']['repository']['issues']['nodes']:
+        issue_list.append(node['number'])
+
+    for nodes, node_type, last_number in zip([response_p,response_i],['pullRequests', 'issues'], [last_pr_number, last_issue_number]):
+        for node in tqdm(nodes['data']['repository'][node_type]['nodes']):
+            if last_number is not None:
+                if node['number'] <= int(last_number):
                     continue
-        if continue_nodes != []:
-            for node in tqdm(continue_nodes):       # 开始提取link
-                links = extract_link_in_title(nodes, node, links)
-                # links = extract_link_in_body(nodes, node, links)
-                # links = extract_link_in_comment(nodes, node, links)
-                # links = extract_link_in_crossReference(nodes, node, links)
-                links = extract_link_in_referencedEvent(nodes, node, links)
-                if len(links) % 100 == 0:
-                    file_opt.save_json_to_file(filepath + "links_type_sl.json", links)
-            file_opt.save_json_to_file(filepath + "links_type_sl.json", links)
-    elif renew == 0:
-        links = file_opt.read_json_from_file(filepath + "links_type_sl.json")
-    return
+            else:
+                pass
+            develop_unit = Node(node_type[:-1], number=str(node['number']), url=node['url'])     # 创建单元实体
+            g.merge(develop_unit, node_type[:-1], 'number')
+            if node['author'] is not None:     # 创建用户实体和用户与单元关系
+                author = Node("author", name=node['author']['login'])
+                g.merge(author, "author", "name")
+                g.merge(Relationship(author, 'create', develop_unit))
+            else:
+                pass
+            time = Node("time", time=node['createdAt'])    # 创建时间实体
+            g.merge(time, 'time', "time")
+            g.merge(Relationship(develop_unit,"time",time))
+
+            extract_relations_in_title(pr_list, issue_list, node, develop_unit)
+            extract_relations_in_body(pr_list, issue_list, node, develop_unit)
+            extract_relations_in_comment(pr_list, issue_list, node, develop_unit)
+            # extract_relations_in_crossReference(node, develop_unit)   # 要找到link的位置，暂时不用
+            # extract_relations_in_referencedEvent(node, develop_unit)  # 要找到link的位置，暂时不用
+
+            file_opt.save_line_to_file('../data/' + owner + "/" + repo + "/" + node_type + '.txt', str(node['number']))
+    # 删除记录number的2个文件
+    shutil.rmtree("../data/" + owner)
+
 
 def visualization_multi_repos():
     # 多个repo可视化
@@ -502,9 +504,7 @@ def work_on_repos(fullname_repo):
     print("--------------------handle " + owner + "/" + repo + "---------------------------")
     response_pr = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_pullRequests.json")
     response_iss = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+repo+"/response_issues.json")
-    print(repo, len(response_iss['data']['repository']['issues']['nodes']),len(response_pr['data']['repository']['pullRequests']['nodes']))
-    # calculate_data_number(response_pr, response_iss)
-    extract_link_type(response_pr, response_iss, renew, init.local_data_filepath + owner + "/" + repo + "/")    # 主程序
+    create_noe4j(response_pr, response_iss, renew, owner, repo, init.local_data_filepath + owner + "/" + repo + "/")    # 主程序
     print("--------------------finish " + owner + "/" + repo + "---------------------------")
 
 if __name__ == '__main__':

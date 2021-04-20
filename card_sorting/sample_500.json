@@ -23,7 +23,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
         
     },
@@ -55,7 +55,7 @@
         },
         "target": {
             "number": "82890",
-            "url": "https://github.com/kubernetes/kuber netes/pull/82890",
+            "url": "https://github.com/kubernetes/kubernetes/pull/82890",
             "createdAt": "2019-09-19T18:15:06Z",
             "create_time_interval": -2406334.0,
             "link_time_interval": 5276.0,
@@ -65,7 +65,7 @@
                 "staging/src/k8s.io/legacy-cloud-providers/azure/azure_loadbalancer.go",
                 "staging/src/k8s.io/legacy-cloud-providers/azure/azure_loadbalancer_test.go"
             ],
-            "reason": "related issue"
+            "reason": "report defect"
         }
     },
     {
@@ -108,7 +108,7 @@
                 "pandas/tests/internals/test_internals.py",
                 "pandas/tests/reshape/test_concat.py"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -177,7 +177,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "blocked issue"
         }
     },
     {
@@ -455,7 +455,7 @@
                 "pandas/tests/test_graphics.py",
                 "pandas/tools/plotting.py"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -597,7 +597,7 @@
                 "actionpack/lib/action_dispatch/routing/routes_proxy.rb",
                 "actionview/test/activerecord/polymorphic_routes_test.rb"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -1156,7 +1156,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issue"
         }
     },
     {
@@ -1375,7 +1375,7 @@
                 "docs/troubleshooting.md",
                 "docs/volumes.md"
             ],
-            "reason": "related pull requests"
+            "reason": "do cherry pick"
         }
     },
     {
@@ -1480,7 +1480,7 @@
             "files": [
                 "activerecord/test/cases/column_test.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -1601,7 +1601,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -1816,7 +1816,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -1860,7 +1860,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -2385,7 +2385,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -2412,7 +2412,7 @@
                 "server/src/test/java/org/elasticsearch/ingest/PipelineExecutionServiceTests.java",
                 "server/src/test/java/org/elasticsearch/ingest/PipelineStoreTests.java"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -2556,7 +2556,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -2643,7 +2643,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -2819,7 +2819,7 @@
                 "test_rebuild.sh",
                 "tox.ini"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -2922,7 +2922,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "replaced by other issue"
         }
     },
     {
@@ -2947,7 +2947,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -2989,7 +2989,7 @@
                 "activerecord/test/cases/finder_test.rb",
                 "activerecord/test/cases/scoping/relation_scoping_test.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "improvement"
         }
     },
     {
@@ -3082,7 +3082,7 @@
                 "rest-api-spec/src/main/resources/rest-api-spec/api/delete_by_query.json",
                 "rest-api-spec/src/main/resources/rest-api-spec/api/reindex.rethrottle.json"
             ],
-            "reason": "related pull requests"
+            "reason": "improvement"
         }
     },
     {
@@ -3128,7 +3128,7 @@
                 "hack/lib/golang.sh",
                 "hack/make-rules/cross.sh"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "report defect"
         }
     },
     {
@@ -3208,7 +3208,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -3279,7 +3279,7 @@
             "files": [
                 "shippable.yml"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -3348,7 +3348,7 @@
             "files": [
                 "x-pack/qa/rolling-upgrade/src/test/resources/rest-api-spec/test/upgraded_cluster/60_ml_config_migration.yml"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -3416,7 +3416,7 @@
                 "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/esnative/ReservedRealmTests.java",
                 "x-pack/plugin/security/src/test/java/org/elasticsearch/xpack/security/authc/file/FileRealmTests.java"
             ],
-            "reason": "related pull requests"
+            "reason": "improvement"
         }
     },
     {
@@ -3544,7 +3544,7 @@
             "type": "pullRequest to issue",
             "location": "commit",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -3658,7 +3658,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -3723,7 +3723,7 @@
                 "cmd/kubemark/hollow-node.go",
                 "pkg/kubelet/dockertools/fake_docker_client.go"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -3853,7 +3853,7 @@
                 "templates/protostar/html/layouts/joomla/form/field/media.php",
                 "templates/protostar/html/layouts/joomla/form/field/user.php"
             ],
-            "reason": "related pull requests"
+            "reason": "improvement"
         }
     },
     {
@@ -4216,7 +4216,7 @@
                 "staging/src/k8s.io/client-go/util/flowcontrol/throttle.go",
                 "staging/src/k8s.io/client-go/util/flowcontrol/throttle_test.go"
             ],
-            "reason": "related pull requests"
+            "reason": "improvement"
         }
     },
     {
@@ -4328,7 +4328,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -4349,7 +4349,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -4368,7 +4368,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issue"
         }
     },
     {
@@ -4505,7 +4505,7 @@
             "type": "pullRequest to issue",
             "location": "commit",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -4561,7 +4561,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -4583,7 +4583,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -4685,7 +4685,7 @@
                 "templates/cassiopeia/index.php",
                 "templates/cassiopeia/joomla.asset.json"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -4753,7 +4753,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -5012,7 +5012,7 @@
             "type": "pullRequest to issue",
             "location": "commit",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -5061,7 +5061,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -5101,7 +5101,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -5169,7 +5169,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -5273,7 +5273,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -5292,7 +5292,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -5625,7 +5625,7 @@
                 "x-pack/plugin/core/src/main/resources/watch-history.json",
                 "x-pack/plugin/watcher/src/main/java/org/elasticsearch/xpack/watcher/Watcher.java"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -5739,7 +5739,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -5809,7 +5809,7 @@
             "files": [
                 "cluster/saltbase/salt/kube-addons/kube-addon-update.sh"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -5917,7 +5917,7 @@
                 "libraries/vendor/paragonie/sodium_compat/src/File.php",
                 "tests/unit/suites/libraries/joomla/crypt/cipher/JCryptCipherSodiumTest.php"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -5936,7 +5936,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issue"
         }
     },
     {
@@ -6080,7 +6080,7 @@
                 "activerecord/lib/rails/generators/active_record/migration/templates/migration.rb",
                 "railties/test/generators/migration_generator_test.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -6188,7 +6188,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -6228,7 +6228,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -6662,7 +6662,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "non context"
         }
     },
     {
@@ -6681,7 +6681,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issues"
         }
     },
     {
@@ -6783,7 +6783,7 @@
                 "docs/reference/index-modules.asciidoc",
                 "docs/reference/migration/migrate_7_0/indices.asciidoc"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -6866,7 +6866,7 @@
                 "core/src/test/java/org/elasticsearch/bootstrap/BootstrapCheckTests.java",
                 "docs/reference/setup/bootstrap-checks.asciidoc"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -6993,7 +6993,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -7112,7 +7112,7 @@
                 "qa/os/src/test/java/org/elasticsearch/packaging/util/Installation.java",
                 "qa/os/src/test/java/org/elasticsearch/packaging/util/Packages.java"
             ],
-            "reason": "related pull requests"
+            "reason": "backport pull request"
         }
     },
     {
@@ -7163,7 +7163,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -7182,7 +7182,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issues"
         }
     },
     {
@@ -7422,7 +7422,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -7592,7 +7592,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -7871,7 +7871,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -8081,7 +8081,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -8214,7 +8214,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -8352,7 +8352,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -8371,7 +8371,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "extended issues"
         }
     },
     {
@@ -8390,7 +8390,7 @@
             "type": "issue to issue",
             "location": "body",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -8810,7 +8810,7 @@
                 "core/src/main/java/org/elasticsearch/rest/action/document/RestHeadAction.java",
                 "modules/transport-netty4/src/test/java/org/elasticsearch/rest/Netty4HeadBodyIsEmptyIT.java"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -8852,7 +8852,7 @@
                 "installation/sql/sqlazure/joomla.sql",
                 "plugins/captcha/recaptcha/postinstall/actions.php"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -8871,7 +8871,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -8998,7 +8998,7 @@
             "files": [
                 "activerecord/lib/active_record/connection_adapters/abstract_mysql_adapter.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -9069,7 +9069,7 @@
                 "plugins/sampledata/blog/blog.php",
                 "plugins/sampledata/multilang/multilang.php"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -9107,7 +9107,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -9202,7 +9202,7 @@
                 "activerecord/test/cases/associations/has_one_associations_test.rb",
                 "activerecord/test/cases/associations/has_one_through_associations_test.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -9464,7 +9464,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -9671,7 +9671,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -9778,7 +9778,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "duplicate (unintended duplicate)"
         }
     },
     {
@@ -9830,7 +9830,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -10198,7 +10198,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -10241,7 +10241,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -10297,7 +10297,7 @@
                 "activerecord/test/cases/relation/where_test.rb",
                 "activerecord/test/cases/relations_test.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "cherry pick"
         }
     },
     {
@@ -10953,7 +10953,7 @@
             "type": "issue to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issues"
+            "reason": "umbrella issues"
         }
     },
     {
@@ -11027,6 +11027,7 @@
             "url": "https://github.com/kubernetes/kubernetes/issues/14273",
             "createdAt": "2015-09-21T14:42:35Z",
             "files": []
+            
         },
         "target": {
             "number": 14391,
@@ -11087,7 +11088,7 @@
                 "pkg/apis/core/validation/validation.go",
                 "pkg/apis/core/validation/validation_test.go"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -11150,7 +11151,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "report defect"
         }
     },
     {
@@ -11227,7 +11228,7 @@
             "files": [
                 "actionpack/lib/action_dispatch/http/request.rb"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -11345,7 +11346,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "related issue"
+            "reason": "report defect"
             
         }
     },
@@ -11449,7 +11450,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -11491,7 +11492,7 @@
             "files": [
                 "administrator/components/com_menus/helpers/menus.php"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -11714,7 +11715,7 @@
                 "pkg/kubectl/resource/builder.go",
                 "pkg/kubectl/resource/builder_test.go"
             ],
-            "reason": "related pull requests"
+            "reason": "collaborate contribution"
         }
     },
     {
@@ -12844,7 +12845,7 @@
                 "pkg/kubectl/cmd/util/clientcache.go",
                 "pkg/kubectl/cmd/util/factory.go"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "report defect"
         }
     },
     {
@@ -13491,7 +13492,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -13563,7 +13564,7 @@
                 "test/conformance/testdata/conformance.txt",
                 "test/e2e/apps/job.go"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -13732,7 +13733,7 @@
                 "api/openapi-spec/swagger.json",
                 "federation/apis/openapi-spec/swagger.json"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -14291,7 +14292,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -14528,7 +14529,7 @@
                 "administrator/components/com_users/models/notes.php",
                 "administrator/components/com_users/models/users.php"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -14809,7 +14810,7 @@
                 "activemodel/lib/active_model/secure_password.rb",
                 "activemodel/test/cases/secure_password_test.rb"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {

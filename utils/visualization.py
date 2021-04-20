@@ -14,22 +14,7 @@ seconds_a_minit = 60
 seconds_in_day = 86400  # 取时间为天
 # seconds_in_day = 1  # 取时间为秒
 seconds_a_year = seconds_a_minit * 60 * 24 * 365
-repo_list = ["elasticsearch","joomla-cms","kubernetes","pandas","rails"]
-# repo_list = ["elasticsearch","joomla-cms","pandas","rails"]
-
-def extract_pr_iss_list(owner, repo):
-    response_pr = file_opt.read_json_from_file(
-        init.local_data_filepath + owner + "/" + repo + "/response_pullRequests.json")
-    response_iss = file_opt.read_json_from_file(init.local_data_filepath + owner + "/" + repo + "/response_issues.json")
-    pr_list, pr_createAt, issue_list0, issue_createAt = [], [], [], []
-    for item in response_pr['data']['repository']['pullRequests']['nodes']:
-        pr_list.append(item['number'])
-        pr_createAt.append(item['createdAt'])
-    for item in response_iss['data']['repository']['issues']['nodes']:
-        issue_list.append(item['number'])
-        issue_createAt.append(item['createdAt'])
-    return pr_list, pr_createAt, issue_list, issue_createAt
-
+repo_list = ["Elasticsearch","Joomla-cms","Kubernetes","Pandas","Rails"]
 
 def visualization_type(links):
     pr_pr, pr_iss, iss_pr, iss_iss = [], [], [], []
@@ -360,7 +345,7 @@ def plot_RQ2(dataset):
     commit_list = np.array(commit_list)
 
     a = plt.bar(repo_list,height=comment_list,bottom=0,color="dimgrey",label="Comment")
-    b = plt.bar(repo_list,height=title_body_list,bottom=comment_list,color="darkgray",label="Title & Description")
+    b = plt.bar(repo_list,height=title_body_list,bottom=comment_list,color="darkgray",label="Documentation")
     c = plt.bar(repo_list,height=commit_list,bottom=comment_list+title_body_list,color="gainsboro",label="Commit")
     auto_label(a)
     auto_label(b,former_bar=[a])
@@ -371,69 +356,15 @@ def plot_RQ2(dataset):
     plt.legend(loc="upper right", ncol=3, bbox_to_anchor=(1, 1.1))
     plt.show()
 
-def RQ3_print_statistics(create_posi_dic,create_neg_dic,link_dic):
-    # 查看大部分
-    # p_percent = 0.95
-    # n_percent = 0
-    # print("---- create time interval positive 集中在"+str(n_percent),str(p_percent)+"的值 ----")
-    # print(sorted(create_posi_dic['rails'])[math.ceil(len(create_posi_dic['rails']) * n_percent)],
-    #       sorted(create_posi_dic['rails'])[math.ceil(len(create_posi_dic['rails']) * p_percent)])
-    # print(sorted(create_posi_dic['kubernetes'])[math.ceil(len(create_posi_dic['kubernetes']) * n_percent)],
-    #       sorted(create_posi_dic['kubernetes'])[math.ceil(len(create_posi_dic['kubernetes']) * p_percent)])
-    # print(sorted(create_posi_dic['pandas'])[math.ceil(len(create_posi_dic['pandas']) * n_percent)],
-    #       sorted(create_posi_dic['pandas'])[math.ceil(len(create_posi_dic['pandas']) * p_percent)])
-    # print(sorted(create_posi_dic['elasticsearch'])[math.ceil(len(create_posi_dic['elasticsearch']) * n_percent)],
-    #       sorted(create_posi_dic['elasticsearch'])[math.ceil(len(create_posi_dic['elasticsearch']) * p_percent)])
-    # print(sorted(create_posi_dic['joomla-cms'])[math.ceil(len(create_posi_dic['joomla-cms']) * n_percent)],
-    #       sorted(create_posi_dic['joomla-cms'])[math.ceil(len(create_posi_dic['joomla-cms']) * p_percent)])
-    #
-    # p_percent = 0
-    # n_percent = 0.95
-    # print("---- create time interval positive 集中在"+str(n_percent),str(p_percent)+"的值 ----")
-    # print(sorted(create_neg_dic['rails'])[math.ceil(len(create_neg_dic['rails']) * n_percent)],
-    #       sorted(create_neg_dic['rails'])[math.ceil(len(create_neg_dic['rails']) * p_percent)])
-    # print(sorted(create_neg_dic['kubernetes'])[math.ceil(len(create_neg_dic['kubernetes']) * n_percent)],
-    #       sorted(create_neg_dic['kubernetes'])[math.ceil(len(create_neg_dic['kubernetes']) * p_percent)])
-    # print(sorted(create_neg_dic['pandas'])[math.ceil(len(create_neg_dic['pandas']) * n_percent)],
-    #       sorted(create_neg_dic['pandas'])[math.ceil(len(create_neg_dic['pandas']) * p_percent)])
-    # print(sorted(create_neg_dic['elasticsearch'])[math.ceil(len(create_neg_dic['elasticsearch']) * n_percent)],
-    #       sorted(create_neg_dic['elasticsearch'])[math.ceil(len(create_neg_dic['elasticsearch']) * p_percent)])
-    # print(sorted(create_neg_dic['joomla-cms'])[math.ceil(len(create_neg_dic['joomla-cms']) * n_percent)],
-    #       sorted(create_neg_dic['joomla-cms'])[math.ceil(len(create_neg_dic['joomla-cms']) * p_percent)])
-    #
-    # percent = 0.95
-    # print("---- link time interval 集中在0,"+str(percent)+"的值 ----")
-    # print(sorted(link_dic['rails'])[math.ceil(len(link_dic['rails']) * percent)])
-    # print(sorted(link_dic['kubernetes'])[math.ceil(len(link_dic['kubernetes']) * percent)])
-    # print(sorted(link_dic['pandas'])[math.ceil(len(link_dic['pandas']) * percent)])
-    # print(sorted(link_dic['elasticsearch'])[math.ceil(len(link_dic['elasticsearch']) * percent)])
-    # print(sorted(link_dic['joomla-cms'])[math.ceil(len(link_dic['joomla-cms']) * percent)])
-    print("---- create time interval positive 均值 ----")
-    print(create_posi_dic.mean())
-    print("---- create time interval positive 中位数 ----")
-    print(create_posi_dic.median())
-    print("---- create time interval positive 最大值 ----")
-    print(create_posi_dic.max())
-    print("---- create time interval positive 最小值 ----")
-    print(create_posi_dic.min())
-
-    print("---- create time interval negative 均值 ----")
-    print(create_neg_dic.mean())
-    print("---- create time interval negative 中位数 ----")
-    print(create_neg_dic.median())
-    print("---- create time interval negative最大值 ----")
-    print(create_neg_dic.max())
-    print("---- create time interval negative最小值 ----")
-    print(create_neg_dic.min())
-
-    print("---- Link time interval 均值 ----")
-    print(link_dic.mean())
-    print("---- Link time interval 中位数 ----")
-    print(link_dic.median())
-    print("---- Link time interval 最大值 ----")
-    print(link_dic.max())
-    print("---- Link time interval 最小值 ----")
-    print(link_dic.min())
+def autolabel(rects,ax):
+    """Attach a text label above each bar in *rects*, displaying its height."""
+    for rect in rects:
+        height = rect.get_height()
+        ax.annotate('{}'.format(height),
+                    xy=(rect.get_x() + rect.get_width() / 2, height),
+                    xytext=(0, 3),  # 3 points vertical offset
+                    textcoords="offset points",
+                    ha='center', va='bottom', size=8)
 
 def plot_RQ3(dataset):
     # 层叠柱状图
@@ -460,71 +391,122 @@ def plot_RQ3(dataset):
         create_time_neg_list.append(create_time_neg)
         link_time_list.append(link_time)
 
-    cnt_p, cnt_n = 0, 0
-    for item_p, item_n in zip(create_time_posi_list, create_time_neg_list):
-        cnt_p += len(item_p)
-        cnt_n += len(item_n)
-    print("positive link occupies %s \%, negative link occupies %s \%", ( cnt_p/(cnt_p+cnt_n), cnt_n/(cnt_p+cnt_n)))
+    cnt_1_y, total = 0, 0
+    for item in link_time_list:
+        total += len(item)
+        for value in item:
+            if value > 31536000:
+                cnt_1_y += 1
+    print("link more than 1 year", ( cnt_1_y/total))
 
-    create_posi_dic, create_neg_dic, link_dic = {}, {}, {}
+    create_posi_dic, create_neg_dic, link_dic, create_posi_len, create_neg_len = {}, {}, {}, [], []
     for i in range(0,len(repo_list)):
         create_posi_dic[repo_list[i].strip()] = create_time_posi_list[i]
         create_neg_dic[repo_list[i].strip()] = create_time_neg_list[i]
         link_dic[repo_list[i].strip()] = link_time_list[i]
+        create_posi_len.append(len(create_time_posi_list[i]))
+        create_neg_len.append(len(create_time_neg_list[i]))
 
     create_posi_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in create_posi_dic.items()]))
     create_neg_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in create_neg_dic.items()]))
     link_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in link_dic.items()]))
+    CTI = create_posi_dic.append(create_neg_dic)
 
     # 打印特征数据
-    RQ3_print_statistics(create_posi_dic, create_neg_dic, link_dic)
+    print("create time interval")
+    print(CTI.describe())
+    print("positive create time interval")
+    print(create_posi_dic.describe())
+    print("negative create time interval")
+    print(create_neg_dic.describe())
+    print("link time interval")
+    print(link_dic.describe())
 
     # todo 对数的部分还是有问题，要在考虑一下，现在的时间是天
     create_posi_dic = create_posi_dic.apply(np.log10)
     create_neg_dic = create_neg_dic.apply(np.log10)
     link_dic = link_dic.apply(np.log10)
 
-
     sns.violinplot(data=create_posi_dic,color="Lightgrey", linewidth=1, cut=0)
     plt.yticks([math.log10(seconds_a_minit), math.log10(seconds_a_minit * 60), math.log10(seconds_a_minit * 60 * 24),
                 math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365)],
                ['1 minite', '1 hour', '1 day', '1 month', '1 year'])
-    plt.ylabel("Positive create time (log)")
+    plt.ylabel("Positive CTI (log)")
     plt.show()
 
     sns.violinplot(data=create_neg_dic,color="Lightgrey", linewidth=1, cut=0)
     plt.yticks([math.log10(seconds_a_minit), math.log10(seconds_a_minit * 60), math.log10(seconds_a_minit * 60 * 24),
                 math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365)],
                ['1 minite', '1 hour', '1 day', '1 month', '1 year'])
-    plt.ylabel("Negative create time (log)")
+    plt.ylabel("Negative CTI (log)")
     plt.show()
 
     sns.violinplot(data=link_dic,color="Lightgrey", linewidth=1, cut=0)
     plt.yticks([math.log10(seconds_a_minit), math.log10(seconds_a_minit * 60), math.log10(seconds_a_minit * 60 * 24),
                 math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365)],
                ['1 minite', '1 hour', '1 day', '1 month', '1 year'])
-    plt.ylabel("Link time (log)")
+    plt.ylabel("LTI (log)")
     plt.show()
 
+    # 用百分比的图表示数据
 
-def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
-    list_1_1, list_1_n = [], []
+    percent_neg, percent_posi = [], []
+    for neg_item, posi_item in zip(create_neg_len, create_posi_len):
+        percent_neg.append(neg_item / (neg_item + posi_item))
+        percent_posi.append(posi_item / (neg_item + posi_item))
+
+    create_neg_list = np.array(percent_neg)
+    create_posi_list = np.array(percent_posi)
+
+    a = plt.bar(repo_list,height=create_neg_list,bottom=0,color="dimgrey",label="Negative")
+    b = plt.bar(repo_list,height=create_posi_list,bottom=create_neg_list,color="darkgray",label="Positive")
+    auto_label(a)
+    auto_label(b,former_bar=[a])
+    plt.ylim(0, 1)
+    plt.ylabel("Percentage of positive and negative CTI")
+    plt.gca().yaxis.set_major_formatter(FuncFormatter(to_percent))
+    plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
+    plt.show()
+
+def plot_RQ4_1(RQ4_1_1,RQ4_1_n):
+    '''multi-target link的可视化'''
+    time_format = "%Y-%m-%dT%H:%M:%SZ"
+    list_1_1, list_1_n, list_target_cnt = [], [], 0
+    duration_1_1, duration_1_N = [], []
     for links in RQ4_1_1:
+        sub_duration_1_1 = []
         list_1_1.append(len(links))
+        for link in links:
+            duration = abs(datetime.strptime(link['target'][0]['createdAt'],time_format).
+                            __sub__(datetime.strptime(link['source']['createdAt'], time_format)).total_seconds())
+            if duration < 0.001:
+                duration = 1
+            sub_duration_1_1.append(duration/seconds_in_day)
+        duration_1_1.append(sub_duration_1_1)
     for links in RQ4_1_n:
+        sub_duration_1_N = []
         count = 0
         for link in links:
+            link_cti_list = []
             count += len(link['target'])
+            link_cti_list.append(link['source']['createdAt'])
+            for t in link['target']:
+                link_cti_list.append(t['createdAt'])
+            link_cti_list_s = sorted(link_cti_list, key=lambda data: get_time(data))
+            sub_duration_1_N.append((datetime.strptime(link_cti_list_s[-1], time_format).__sub__(datetime.strptime(
+                link_cti_list_s[0], time_format)).total_seconds())/seconds_in_day)
         list_1_n.append(count)
-    # 转换成百分比
+        duration_1_N.append(sub_duration_1_N)
 
+    # 转成百分比
     for i in range(0,len(list_1_1)):
         sum = list_1_1[i] + list_1_n[i]
         list_1_1[i] = list_1_1[i] / sum
         list_1_n[i] = list_1_n[i] / sum
 
-    a = plt.bar(repo_list,height=list_1_1,bottom=0,color="grey",label="1 to 1")
-    b = plt.bar(repo_list,height=list_1_n,bottom=list_1_1,color="lightgrey",label="1 to N")
+    # 画比例图
+    a = plt.bar(repo_list,height=list_1_1,bottom=0,color="dimgrey",label="1 to 1")
+    b = plt.bar(repo_list,height=list_1_n,bottom=list_1_1,color="darkgray",label="1 to N")
     auto_label(a)
     auto_label(b,former_bar=[a])
     plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
@@ -534,10 +516,54 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
     plt.legend(loc="upper right", ncol=2, bbox_to_anchor=(1, 1.1))
     plt.show()
 
+    # 画时间持续的图
+    duration_1_1_dic, duration_1_N_dic, = {}, {}
+    for i in range(0,len(repo_list)):
+        duration_1_1_dic[repo_list[i].strip()] = duration_1_1[i]
+        duration_1_N_dic[repo_list[i].strip()] = duration_1_N[i]
+
+    duration_1_1_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in duration_1_1_dic.items()]))
+    duration_1_N_dic = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in duration_1_N_dic.items()]))
+
+    # 打印特征数据
+    print("duration 1-1")
+    print(duration_1_1_dic.describe())
+    print("duration 1-N")
+    print(duration_1_N_dic.describe())
+
+    # todo 对数的部分还是有问题，要在考虑一下，现在的时间是天
+    duration_1_1_dic = duration_1_1_dic.apply(np.log10)
+    duration_1_N_dic = duration_1_N_dic.apply(np.log10)
+
+    seconds_a_minit = 60
+
+    sns.violinplot(data=duration_1_1_dic,color="Lightgrey", linewidth=1, cut=0)
+    plt.yticks([math.log10(seconds_a_minit * 60 * 24),
+                math.log10(seconds_a_minit * 60 * 24 * 30),
+                math.log10(seconds_a_minit * 60 * 24 * 365),
+                math.log10(seconds_a_minit * 60 * 24 * 365 * 5), ],
+               ['1 day', '1 month', '1 year', '5 years'])
+    plt.ylabel("Duration of singel-target links in days (log)")
+    plt.show()
+
+    sns.violinplot(data=duration_1_N_dic,color="Lightgrey", linewidth=1, cut=0)
+    plt.yticks([math.log10(seconds_a_minit * 60 * 24),
+                math.log10(seconds_a_minit * 60 * 24 * 30),
+                math.log10(seconds_a_minit * 60 * 24 * 365),
+                math.log10(seconds_a_minit * 60 * 24 * 365 * 5), ],
+               ['1 day', '1 month', '1 year', '5 years'])
+    plt.ylabel("Duration of multi-target links in days (log)")
+    plt.show()
+
+def plot_RQ4_2(RQ4_cluster):
+    '''cluster的可视化'''
     layer_list, nodes_list, duration_list = {}, {}, {}
     for i in range(0,len(repo_list)):
-        cluster_layer, cluster_node, duration = [], [], []
+        cluster_layer, cluster_node, duration, layer_equal_2, cluster_cnt = [], [], [], 0, 0
+        cluster_cnt += len(RQ4_cluster[i])
         for cluster in RQ4_cluster[i]:
+            if cluster["layers_count"] == 2:
+                layer_equal_2 += 1
             cluster_layer.append(cluster["layers_count"])
             cluster_node.append(cluster["nodes_count"])
             if cluster["cluster_time_interval"] == 0:
@@ -548,62 +574,50 @@ def plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster):
         nodes_list[repo_list[i]] = cluster_node
         duration_list [repo_list[i]] = sorted(duration)
 
+    print("layer = 2 accounts for ", layer_equal_2 / cluster_cnt)
+
     layer_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in layer_list.items()]))
     nodes_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in nodes_list.items()]))
     duration_list = pd.DataFrame(dict([(k, pd.Series(v)) for k, v in duration_list.items()]))
 
     # 显示数字特征
-    print("---- layer 均值 ----")
-    print(layer_list.mean())
-    print("---- layer 中位数 ----")
-    print(layer_list.median())
-    print("---- layer 最大值 ----")
-    print(layer_list.max())
-    print("---- layer 最小值 ----")
-    print(layer_list.min())
-
-    print("---- layer node 均值 ----")
-    print(nodes_list.mean())
-    print("---- layer node 中位数 ----")
-    print(nodes_list.median())
-    print("---- layer node 最大值 ----")
-    print(nodes_list.max())
-    print("---- layer node 最小值 ----")
-    print(nodes_list.min())
-
-    print("---- duration 均值 ----")
-    print(duration_list.mean())
-    print("---- duration 中位数 ----")
-    print(duration_list.median())
-    print("---- duration 最大值 ----")
-    print(duration_list.max())
-    print("---- duration 最小值 ----")
-    print(duration_list.min())
+    print("cluster layer")
+    print(layer_list.describe())
+    print("cluster node")
+    print(nodes_list.describe())
+    print("cluster duration")
+    print(duration_list.describe())
 
     # 对cluster的三个变量取对数
     # layer_list = layer_list.apply(np.log)
-    nodes_list = nodes_list.apply(np.log10)
+    # nodes_list = nodes_list.apply(np.log10)
     duration_list = duration_list.apply(np.log10)
 
     sns.violinplot(data=layer_list,color="Lightgrey", linewidth=1)
-    plt.ylabel("Cluster layers")
+    plt.ylabel("Cluster depth")
     plt.show()
 
     sns.violinplot(data=nodes_list,color="Lightgrey", linewidth=1)
-    plt.ylabel("Cluster nodes (log)")
+    plt.ylabel("Cluster size (log)")
     plt.show()
 
     seconds_a_minit = 60
     sns.violinplot(data=duration_list,color="Lightgrey", linewidth=1, cut=0)
-    plt.yticks([math.log10(seconds_a_minit * 60 * 24 * 30), math.log10(seconds_a_minit * 60 * 24 * 365),
+    plt.yticks([math.log10(seconds_a_minit * 60 * 24),
+                math.log10(seconds_a_minit * 60 * 24 * 30),
+                math.log10(seconds_a_minit * 60 * 24 * 365),
                 math.log10(seconds_a_minit * 60 * 24 * 365 * 5)],
-               ['1 month', '1 year', '5 years'])
-    # plt.yticks([seconds_a_minit * 60 * 24 * 30, seconds_a_minit * 60 * 24 * 365,
-    #             seconds_a_minit * 60 * 24 * 365 * 5, seconds_a_minit * 60 * 24 * 365 * 10],
-    #            ['1 month', '1 year', '5 years', '10 years'])
-    # plt.grid()
+               ['1 day','1 month', '1 year', '5 years'])
     plt.ylabel("Cluster duration (log)")
     plt.show()
+
+def check_longest_link(dataset):
+    for project in dataset:
+        longest_link = project[0]
+        for item in project:
+            if item['target']['create_time_interval'] > longest_link['target']['create_time_interval']:
+                longest_link = item
+        print(longest_link)
 
 if __name__ == '__main__':
     # 对论文中RQ1，2，3，4的结果进行汇总
@@ -617,8 +631,10 @@ if __name__ == '__main__':
     RQ4_1_n = read_repos_data("link_1_N.json")
     RQ4_cluster = read_repos_data("link_cluster.json")
 
-    # plot_RQ1(RQ1)
+    plot_RQ1(RQ1)
     # plot_RQ2(RQ2)
     # plot_RQ3(RQ3)
-    plot_RQ4(RQ4_1_1,RQ4_1_n,RQ4_cluster)
+    # plot_RQ4_1(RQ4_1_1,RQ4_1_n)
+    # plot_RQ4_2(RQ4_cluster)
 
+    # check_longest_link(RQ1)

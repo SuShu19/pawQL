@@ -743,7 +743,7 @@
                 "test/e2e_node/util.go",
                 "test/integration/etcd/etcd_storage_path_test.go"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "fixed by pr"
         }
     },
     {
@@ -1096,7 +1096,7 @@
                 "administrator/components/com_tags/tmpl/tag/edit_options.php",
                 "administrator/components/com_templates/tmpl/style/edit_options.php"
             ],
-            "reason": "provide suggestion to the issue"
+            "reason": "report defect"
         }
     },
     {

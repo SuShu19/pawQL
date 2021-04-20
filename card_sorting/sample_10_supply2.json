@@ -37,7 +37,7 @@
             "type": "pullRequest to issue",
             "location": "comment",
             "files": [],
-            "reason": "test for issue"
+            "reason": "fix defect"
         }
     },
     {
@@ -214,7 +214,7 @@
             "type": "pullRequest to issue",
             "location": "body",
             "files": [],
-            "reason": "related issue"
+            "reason": "issue resolution"
         }
     },
     {

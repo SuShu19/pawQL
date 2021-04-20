@@ -1,3 +1,8 @@
+"""
+清楚掉self link
+"""
+
+
 import sys
 sys.path.append('/home/zhangyu/pawQL/')  #导入文件夹的.py文件
 import re

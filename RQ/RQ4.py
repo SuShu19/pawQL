@@ -8,10 +8,34 @@ from datetime import datetime
 
 renew = 1
 
+
+# def parse_link_list(linkset):
+#     # 没写完，估计是用不上了
+#     link_list = []
+#     for i in range(0,len(linkset)-1):
+#         sub_link_list = []      # 每次创建一个新的list
+#         new_link = linkset[i]
+#         while new_link not in sub_link_list:
+#             sub_link_list.append(new_link)  # 从当前的link开始索引
+#             target_for_search_number = int(linkset[i]['target']['number'])
+#             for j in range(0, len(linkset)-1):       # 查找当前的target对应的下一个target
+#                 if int(linkset[j]['source']['number']) == target_for_search_number:
+#                     new_link = linkset[j]           # 找到后继的target
+#         link_list.append(sub_link_list)
+#     return link_list
+#
+#
+# def parse_list_2_cluster(link_list):
+#     # 和parse_link_list配套使用，没写完，估计用不上了
+#
+#     return link_cluster
+
 def extract_link_mode(linkset,renew,save_file_path):
     if renew == 1:
         link_1_1, link_1_N = parse_1_and_N(linkset)
         link_cluster = parse_link_cluster(link_1_1,link_1_N)
+        # link_list = parse_link_list(linkset)
+        # link_cluster = parse_list_2_cluster(link_list)
         link_self_bilateral, link_bilateral = parse_bilateral(linkset)
 
         file_opt.save_json_to_file(save_file_path+"link_1_1.json",link_1_1)
@@ -162,16 +186,10 @@ def work(fullrepo):
     link_type = file_opt.read_json_from_file(init.local_data_filepath+owner+"/"+name+"/links_type.json")
     link_1_1, link_1_N, link_self_bilateral, link_bilateral, link_cluster = \
         extract_link_mode(link_type,renew,init.local_data_filepath+owner+"/"+name+"/")
-
-    # 查看单个repo的分布
-    # vis.visualization_how_1_or_N(link_1_1, link_1_N, repo=owner+'/'+name)
-    # vis.visualization_how_self_or_bilateral(link_self_bilateral, link_bilateral, repo=owner+'/'+name)
-    vis.visualization_how_cluster(link_cluster, repo=owner+'/'+name)
-    # visulize_link_self_bila()       # 查看多个repo链自己和相互链接的统计
     print("-------------------finish " + owner + "/" + name + "---------------------------")
 if __name__ == '__main__':
     from concurrent.futures import ThreadPoolExecutor as PoolExecutor
     repolist = init.repos_to_get_info
-    with PoolExecutor(max_workers=5) as executor:
+    with PoolExecutor(max_workers=1) as executor:
         for _ in executor.map(work, repolist):
             pass
